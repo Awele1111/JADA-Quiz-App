@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-export const Register = () => {
+export const Register = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -11,7 +11,7 @@ export const Register = () => {
        <>
         <form onSubmit={handleSubmit}>
             <label htmlFor="name">Full Name</label>
-            <input  name="name" id="name" placeholder="Type your full name here"/>
+            <input name="name" id="name" placeholder="Type your full name here"/>
             <label htmlFor="email">email</label>
             <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="type your email here" id="email" name="email" />
             <label htmlFor="password">email</label>
