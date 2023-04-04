@@ -17,6 +17,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import CreateQuiz from './pages/CreateQuiz';
 import { useState } from "react";
+import Nav from './components/Nav/Navbar'
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -51,15 +52,18 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <Route exact path='/createQuiz' component={CreateQuiz} />
-          <Route exact path='/login' render={() => currentForm === 'login' ? <Login /> : <Register />} />
-          <Route exact path='/signUp' render={() => currentForm === 'signup' ? <Register /> : <Login/>} />
-          {/* <Route exact path='/login' component={Login} />
-          <Route exact path='/signUp' component={Register} /> */}
-          <Route render={() => <h1>Wrong page!</h1>} />
-        </Switch>
+        <>
+          <Nav />
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/createQuiz' component={CreateQuiz} />
+            <Route exact path='/login' render={() => currentForm === 'login' ? <Login /> : <Register />} />
+            <Route exact path='/signUp' render={() => currentForm === 'signup' ? <Register /> : <Login/>} />
+            {/* <Route exact path='/login' component={Login} />
+            <Route exact path='/signUp' component={Register} /> */}
+            <Route render={() => <h1>Wrong page!</h1>} />
+          </Switch>
+        </>
       </Router>
     </ApolloProvider>
   );
