@@ -1,4 +1,9 @@
 import React from 'react';
+import logo from "./logo.svg";
+import './App.css';
+import { Login } from "./Login";
+import { Register } from "./Register";
+
 
 import {
   ApolloClient,
@@ -11,6 +16,7 @@ import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import CreateQuiz from './pages/CreateQuiz';
+import { useState } from "react";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -37,12 +43,21 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const [currentForm, setCurrentForm] = useState ('login');
+
+  const toggleForm = (formName) => {
+    setCurrentForm(formName);
+  }
   return (
     <ApolloProvider client={client}>
       <Router>
         <Switch>
           <Route exact path='/' component={Home} />
           <Route exact path='/createQuiz' component={CreateQuiz} />
+          <Route exact path='/login' render={() => currentForm === 'login' ? <Login /> : <Register />} />
+          <Route exact path='/signUp' render={() => currentForm === 'signup' ? <Register /> : <Login/>} />
+          {/* <Route exact path='/login' component={Login} />
+          <Route exact path='/signUp' component={Register} /> */}
           <Route render={() => <h1>Wrong page!</h1>} />
         </Switch>
       </Router>
