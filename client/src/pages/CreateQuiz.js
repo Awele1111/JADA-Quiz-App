@@ -1,25 +1,31 @@
 import React, { useState } from 'react'
 
 const CreateQuiz = () => {
-	const [quizValues, setQuizValues] = useState({title: '', public: true, style: 'defualt'});
+	const [quizValues, setQuizValues] = useState({title: '', public: true, style: 'defualt', category: 'General', description: ''});
 	const [questionValues, setQuestionValues] = useState([{ question: "", choices: [{choice: '', correct: false}]}])
 	
 	let handleInfoChange = (event) => {
 		let newQuizValues = quizValues;
 		switch (event.target.name) {
 			case 'quizTitle':
-			newQuizValues.title = event.target.value;
-			break
+				newQuizValues.title = event.target.value;
+				break
 			case 'quizSecurity':
-			if(event.target.value === 'private'){
-				newQuizValues.public = false;
-			} else {
-				newQuizValues.public = true;
-			}
-			break
+				if(event.target.value === 'private'){
+					newQuizValues.public = false;
+				} else {
+					newQuizValues.public = true;
+				}
+				break
 			case 'quizStyling':
-			newQuizValues.style = event.target.value;
-			break
+				newQuizValues.style = event.target.value;
+				break
+			case 'quizCategory':
+				newQuizValues.category = event.target.value;
+				break
+			case 'quizDescription':
+				newQuizValues.description = event.target.value;
+				break
 		}
 		setQuizValues(newQuizValues)
 	}
@@ -68,35 +74,93 @@ const CreateQuiz = () => {
 
 	let handleSubmit = (event) => {
 		event.preventDefault();
-		//include some sort of form validation that checks to ensure each question has one correct answer
-		quizValues.questions = questionValues;
-		console.log(quizValues);
+		let allErrors = document.querySelectorAll('.errorMessage');
+		for(let error of allErrors){
+			error.innerHTML = '';
+		}
+		let valid = true;
+		if(!quizValues.title){
+			valid = false;
+			document.getElementById('quizTitleError').innerHTML = "All Quizzes Requires a Title";
+		}
+		let questionIndex = 0;
+		for(let questionObj of questionValues){
+			if(!questionObj.question){
+				document.getElementById(`question${questionIndex}error`).innerHTML = `Question ${questionIndex + 1} cannot be left blank`;
+				valid = false;
+			}
+			let choiceIndex = 0;
+			let correctCount = 0;
+			for(let choiceObj of questionObj.choices){
+				if(!choiceObj.choice){
+					document.getElementById(`choice${questionIndex}-${choiceIndex}error`).innerHTML = `Choice ${choiceIndex + 1} cannot be left blank`;
+					valid = false;
+				}
+				if(choiceObj.correct){
+					correctCount++;
+				}
+				choiceIndex++;
+			}
+			if(correctCount !== 1){
+				document.getElementById(`question${questionIndex}error`).innerHTML = "Question requires exactly 1 correct choice";
+				valid = false;
+			}
+			questionIndex++;
+		}
+		if(valid){
+			quizValues.questions = questionValues;
+			alert("Success")
+			console.log(quizValues);
+		} else {
+			document.getElementById("overallFormError").innerHTML = "Your quiz has errors, double check all required values are present";
+		}
 	}
 	
 	return (
 		<form className='form row-cols-lg-auto g-3 align-items-center mx-auto' onSubmit={handleSubmit}>
-			<div className='d-flex justify-content-between w-100'>
-				<div className='form-floating quizInfo'>
-					<input id='quizTitle'
-					className="form-control"
-					type='text'
-					name='quizTitle'
-					placeholder='Title'
-					onChange={event => handleInfoChange(event)} 
-					style={{width: "150%"}}/>
-					<label htmlFor="quizTitle">Quiz Title</label>
+			<div style={{background: "lightblue"}}>
+				<div className='d-flex justify-content-between w-100'>
+					<div className='form-floating quizInfo'>
+						<input id='quizTitle'
+						className="form-control"
+						type='text'
+						name='quizTitle'
+						placeholder='Title'
+						onChange={event => handleInfoChange(event)} 
+						style={{width: "150%"}}/>
+						<label htmlFor="quizTitle">Quiz Title</label>
+					</div>
+					<select name="quizSecurity" onChange={event => handleInfoChange(event)}>
+						<option value="public">Quiz Accessability</option>					
+						<option value="public">Public</option>
+						<option value="private">Private</option>
+					</select>
+					<select name="quizCategory" onChange={event => handleInfoChange(event)}>
+						<option value="General">Category</option>
+						<option value="General">General</option>					
+						<option value="School">School</option>
+						<option value="Sports">Sports</option>
+						<option value="Games">Games</option>					
+						<option value="Pop Culture">Pop Culture</option>
+						<option value="Music">Music</option>
+						<option value="Other">Other</option>
+					</select>
+					<select name="quizStyling" onChange={event => handleInfoChange(event)}>
+						<option value="default">Quiz Styling</option>					
+						<option value="default">Default</option>
+					</select>
 				</div>
-				<select name="quizSecurity" placeholder='Title' onChange={event => handleInfoChange(event)}>
-					<option value="public">Quiz Accessability</option>					
-					<option value="public">Public</option>
-					<option value="private">Private</option>
-				</select>
-				<select name="quizStyling" onChange={event => handleInfoChange(event)}>
-					<option value="default">Quiz Styling</option>					
-					<option value="default">Default</option>
-				</select>
+				<p id="quizTitleError" className='errorMessage' style={{color: 'red'}}></p>
+				<div className='form-floating d-flex pb-4 mb-3'>
+					<textarea id="quizDescription"
+							type="text"
+							name="question"
+							className="form-control"
+							placeholder='Description String'
+							onChange={event => handleInfoChange(event)} />
+					<label htmlFor="quizDescription">{`Quiz Description (Optional)`}</label>
+				</div>
 			</div>
-			<p id="quizTitleError" className='errorMessage' style={{color: 'red'}}>Error Message</p>
 			{questionValues.map((questionElement, questionIndex) => (
 				<div className="questionInfo" key={questionIndex}>
 					<div className='form-floating d-flex'>
@@ -114,11 +178,11 @@ const CreateQuiz = () => {
 							: null
 						}
 					</div>
-					<p id={`question${questionIndex}error`} className='errorMessage' style={{color: 'red'}}>Error Message</p>
+					<p id={`question${questionIndex}error`} className='errorMessage' style={{color: 'red'}}></p>
 					{questionElement.choices.map((choiceElement, choiceIndex) => (
-						<div key={questionIndex + choiceIndex / 10} className=''>
+						<div key={`${questionIndex}.${choiceIndex}`} className=''>
 							<div className="form-floating choiceInfo d-flex">
-								<input  id={`choice${questionIndex + choiceIndex / 10}`}
+								<input  id={`choice${questionIndex + choiceIndex / 100}`}
 										type="text"
 										name="choice"
 										className="form-control w-50"
@@ -136,17 +200,20 @@ const CreateQuiz = () => {
 									: null
 								}
 							</div>
-							<p id={`question${questionIndex + choiceIndex / 10}error`} className='errorMessage' style={{color: 'red'}}>Error Message</p>
+							<p id={`choice${questionIndex}-${choiceIndex}error`} className='errorMessage' style={{color: 'red'}}></p>
 						</div>
 					))}
 					<div className="button-section">
-						<button className="button add" type="button" onClick={() => addChoice(questionIndex)}>Add Choice</button>
+						<button className="btn btn-secondary" type="button" onClick={() => addChoice(questionIndex)}>Add Choice</button>
 					</div>
 				</div>
 			))}
-			<div className="button-section">
-				<button className="button add" type="button" onClick={() => addQuestion()}>Add Question</button>
-				<button className="button submit" type="submit">Submit</button>
+			<div className="button-section d-flex justify-content-center">
+				<button className="btn btn-secondary m-3" type="button" onClick={() => addQuestion()}>Add Question</button>
+				<button className="btn btn-primary m-3" type="submit">Submit</button>
+			</div>
+			<div className="button-section d-flex justify-content-center">
+				<p id="overallFormError" className='errorMessage' style={{color: 'red'}}></p>
 			</div>
 		</form>
 )};
