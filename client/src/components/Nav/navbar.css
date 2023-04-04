@@ -1,0 +1,21 @@
+.customHeader {
+    background-color: salmon;
+    height: 75px;
+    margin-bottom: 25px;
+  }
+  
+  .customNav {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  .customNav a {
+    font-size: 50px;
+    text-decoration: none;
+    color: black;
+  }
+  
+  .customNav a:hover {
+    color: white;
+  }
+  
