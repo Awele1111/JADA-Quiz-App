@@ -1,0 +1,14 @@
+.quizList {
+    place-items: center;
+    list-style-position: inside;
+    padding-bottom: 200px;
+}
+
+.quizItem {
+    font-size: x-large;
+}
+
+.quizItem:hover {
+    color: crimson;
+    cursor: pointer;
+}
