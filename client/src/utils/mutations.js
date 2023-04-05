@@ -84,4 +84,10 @@ mutation login($email: String!, $password: String!) {
   }
   `;
 
-// I need to add remove favorite once I get that working
+export const REMOVE_FAVORITE = gql`
+mutation removeFavorite($quizId: ID!, $userId: ID!) {
+    removeFavorite(quizId: $quizId, userId: $userId) {
+      username
+    }
+  }
+  `;

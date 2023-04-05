@@ -8,18 +8,22 @@ const resolvers = {
     users: async () => {
       return User.find();
     },
+
     user: async (parent, { _id }) => {
       return User.findOne({ _id });
     },
+
     me: async (parent, args, context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError("You need to be logged in");
     },
+
     quizzes: async () => {
       return Quiz.find();
     },
+
     quiz: async (parent, { _id }) => {
       return Quiz.findOne({ _id });
     }
@@ -107,9 +111,7 @@ const resolvers = {
         { _id: userId },
         {
           $pull: {
-            favoriteQuizzes: {
-              _id: quizId
-            },
+            favoriteQuizzes: quizId
           },
         },
         { new: true }
