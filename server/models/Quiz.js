@@ -25,6 +25,14 @@ const QuizSchema = new Schema(
     },
     questions: [questionSchema],
     highscores: [quizAttemptSchema],
+    discription: {
+      type: String,
+    },
+    category: {
+      type: String,
+      required: true,
+      default: 'general'
+    }
   },
   {
     toJSON: {
