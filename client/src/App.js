@@ -14,8 +14,8 @@ import {
 import { setContext } from '@apollo/client/link/context';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import CreateQuiz from './pages/CreateQuiz';
+import Home from './pages/Home/Home';
+import CreateQuiz from './pages/CreateQuiz/CreateQuiz';
 import { useState } from "react";
 import Nav from './components/Nav/Navbar'
 
