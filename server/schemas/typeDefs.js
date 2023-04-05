@@ -14,9 +14,19 @@ const typeDefs = gql`
         correct: Boolean
     }
 
+    input ChoiceInput {
+        choice: String
+        correct: Boolean
+    }
+
     type Question {
         question: String
         choices: [Choice]
+    }
+
+    input QuestionInput {
+        question: String
+        choices: [ChoiceInput]
     }
 
     type Attempt {
@@ -24,14 +34,21 @@ const typeDefs = gql`
         score: Int
     }
 
+    input AttemptInput {
+        userId: ID
+        score: Int
+    }
+
     type Quiz {
         _id: ID
         title: String
-        creator: User
+        creator: String
         public: Boolean
         style: String
         questions: [Question]
         highscores: [Attempt]
+        description: String
+        category: String
     }
 
     type Auth {
@@ -50,7 +67,22 @@ const typeDefs = gql`
     type Mutation {
         addUser(username: String!, email: String!, password: String!): Auth
         login(email: String!, password: String!): Auth
-        createQuiz(title: String!, creator: String, public: Boolean, style: String, questions: [String]!): User
+        
+        createQuiz(
+            title: String!, 
+            creator: String, 
+            public: Boolean, 
+            style: String, 
+            questions: [QuestionInput]!, 
+            discription: String, 
+            category: String, 
+            highscores: [AttemptInput]
+            ): Quiz
+
+        addAttempt(userId: ID!, score: Int): Quiz
+        addFavorite(quizId: ID!): User
+        deleteQuiz(quizId: ID!): Quiz
+        removeFavorite(quizId: ID!): User
     }
 `;
 
