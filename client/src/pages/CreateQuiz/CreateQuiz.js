@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './createQuiz.css'
 
 const CreateQuiz = (props) => {
-	const [quizValues, setQuizValues] = useState({title: '', public: true, style: 'defualt', category: 'General', description: ''});
+	const [quizValues, setQuizValues] = useState({title: '', public: true, style: 'defualt', category: '', description: ''});
 	const [questionValues, setQuestionValues] = useState([{ question: "", choices: [{choice: '', correct: false}]}])
 	
 	//if user wants to update quiz then pass the quiz through props and it will render
@@ -86,7 +86,7 @@ const CreateQuiz = (props) => {
 
 	let handleSubmit = (event) => {
 		event.preventDefault();
-		let allErrors = document.querySelectorAll('.errorMessage');
+		let allErrors = document.querySelectorAll('.myError');
 		for(let error of allErrors){
 			error.innerHTML = '';
 		}
@@ -94,6 +94,11 @@ const CreateQuiz = (props) => {
 		if(!quizValues.title){
 			valid = false;
 			document.getElementById('quizTitleError').innerHTML = "All Quizzes Requires a Title";
+		}
+		console.log(quizValues.category);
+		if(!quizValues.category){
+			valid = false;
+			document.getElementById('quizCategoryError').innerHTML = "You Must Select a Category";
 		}
 		let questionIndex = 0;
 		for(let questionObj of questionValues){
@@ -130,39 +135,51 @@ const CreateQuiz = (props) => {
 	
 	return (
 		<form className='form row-cols-lg-auto g-3 align-items-center mx-auto' onSubmit={handleSubmit}>
-			<div style={{background: "lightblue"}}>
-				<div className='d-flex justify-content-between w-100 pt-4'>
-					<div className='form-floating quizInfo'>
+			<div className='quizInfoContainer pt-4'>
+				<div id='quizTitleContainer'>
+					<div className='form-floating quizTitle'>
 						<input id='quizTitle'
 						className="form-control"
 						type='text'
 						name='quizTitle'
 						placeholder='Title'
-						onChange={event => handleInfoChange(event)} 
-						style={{width: "150%"}}/>
-						<label htmlFor="quizTitle">Quiz Title</label>
+						onChange={event => handleInfoChange(event)}
+						/>
+						<label htmlFor="quizTitle">Quiz Title*</label>
+						<p id="quizTitleError" className='errorMessage myError'></p>
 					</div>
-					<select name="quizSecurity" onChange={event => handleInfoChange(event)}>
-						<option value="public">Quiz Accessability</option>					
-						<option value="public">Public</option>
-						<option value="private">Private</option>
-					</select>
-					<select name="quizCategory" onChange={event => handleInfoChange(event)}>
-						<option value="General">Category</option>
-						<option value="General">General</option>					
-						<option value="School">School</option>
-						<option value="Sports">Sports</option>
-						<option value="Games">Games</option>					
-						<option value="Pop Culture">Pop Culture</option>
-						<option value="Music">Music</option>
-						<option value="Other">Other</option>
-					</select>
-					<select name="quizStyling" onChange={event => handleInfoChange(event)}>
-						<option value="default">Quiz Styling</option>					
-						<option value="default">Default</option>
-					</select>
 				</div>
-				<p id="quizTitleError" className='errorMessage' style={{color: 'red'}}></p>
+				<div className='d-flex justify-content-between w-100 pt-4 pb-4'>
+					<div>
+						<label className='me-2'>Quiz Accessability:</label>
+						<select name="quizSecurity" onChange={event => handleInfoChange(event)}>
+							<option value="public">Public</option>
+							<option value="private">Private</option>
+						</select>
+					</div>
+					<div>
+						<label className='me-2'>Category*</label>
+						<select name="quizCategory" onChange={event => handleInfoChange(event)}>
+							<option value="">--</option>
+							<option value="General">General</option>					
+							<option value="School">School</option>
+							<option value="Sports">Sports</option>
+							<option value="Games">Games</option>					
+							<option value="Pop Culture">Pop Culture</option>
+							<option value="Music">Music</option>
+							<option value="Other">Other</option>
+						</select>
+					</div>
+					<div>
+						<label className='me-2'>Quiz Styling:</label>
+						<select name="quizStyling" onChange={event => handleInfoChange(event)}>
+							<option value="default">Default</option>
+						</select>
+					</div>
+				</div>
+				<div className='ms-5 text-center'>
+					<p id="quizCategoryError" className='errorMessage myError'></p>
+				</div>
 				<div className='form-floating d-flex pb-4 mb-3'>
 					<textarea id="quizDescription"
 							type="text"
@@ -174,12 +191,12 @@ const CreateQuiz = (props) => {
 				</div>
 			</div>
 			{questionValues.map((questionElement, questionIndex) => (
-				<div className="questionInfo" key={questionIndex}>
-					<div className='form-floating d-flex'>
+				<div id="oneQuestionContainer" key={questionIndex}>
+					<div className='form-floating'>
 						<textarea id={`question${questionIndex}`}
 								type="text"
 								name="question"
-								className="form-control"
+								className="form-control questionInput"
 								placeholder='Question String'
 								value={questionElement.question || ""}
 								onChange={event => handleQuestionChange(questionIndex, event)} />
@@ -190,7 +207,7 @@ const CreateQuiz = (props) => {
 							: null
 						}
 					</div>
-					<p id={`question${questionIndex}error`} className='errorMessage' style={{color: 'red'}}></p>
+					<p id={`question${questionIndex}error`} className='errorMessage myError'></p>
 					{questionElement.choices.map((choiceElement, choiceIndex) => (
 						<div key={`${questionIndex}.${choiceIndex}`} className=''>
 							<div className="form-floating choiceInfo d-flex">
@@ -212,7 +229,7 @@ const CreateQuiz = (props) => {
 									: null
 								}
 							</div>
-							<p id={`choice${questionIndex}-${choiceIndex}error`} className='errorMessage' style={{color: 'red'}}></p>
+							<p id={`choice${questionIndex}-${choiceIndex}error`} className='errorMessage myError'></p>
 						</div>
 					))}
 					<div className="button-section">
@@ -225,7 +242,7 @@ const CreateQuiz = (props) => {
 				<button className="btn btn-primary m-3" type="submit">Submit</button>
 			</div>
 			<div className="button-section d-flex justify-content-center">
-				<p id="overallFormError" className='errorMessage' style={{color: 'red'}}></p>
+				<p id="overallFormError" className='errorMessage myError'></p>
 			</div>
 		</form>
 )};

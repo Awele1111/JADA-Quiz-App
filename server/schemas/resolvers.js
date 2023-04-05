@@ -108,7 +108,9 @@ const resolvers = {
         {
           $pull: {
             favoriteQuizzes: {
-              _id: quizId
+              0: {
+                _id: quizId
+              }
             },
           },
         },

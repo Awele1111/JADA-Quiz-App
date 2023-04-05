@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import "../css/register.css"
+// import "../css/register.css"
 export const Register = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
