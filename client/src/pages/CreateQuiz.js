@@ -78,7 +78,7 @@ const CreateQuiz = () => {
             <div className='quizInfo'>
               <label>Title</label>
               <input type='text' name='quizTitle' placeholder='Title' onChange={event => handleInfoChange(event)} />
-              <label>Quiz Accessability</label>
+              <label>Quiz Accessibility</label>
               <select name="quizSecurity" placeholder='Title' onChange={event => handleInfoChange(event)}>
                 <option value="public">Public</option>
                 <option value="private">Private</option>
