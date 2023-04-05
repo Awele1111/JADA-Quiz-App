@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './createQuiz.css'
 
 const CreateQuiz = () => {
 	const [quizValues, setQuizValues] = useState({title: '', public: true, style: 'defualt', category: 'General', description: ''});
