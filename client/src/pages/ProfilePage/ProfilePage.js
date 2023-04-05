@@ -65,14 +65,14 @@ const ProfilePage = () => {
 
     return (
         <>
-            <h2 className='ms-5 mb-5'>{testUser.username}</h2>
-            <div className='d-flex justify-content-between w-100'>
-                <div className='ms-5 profileContainer position-relative'>
-                    <h3 className='mb-4'>Your Favorite Quizzes</h3>
+            <h2 className='ms-5 mb-4'>{testUser.username}</h2>
+            <div className='mainContainer'>
+                <div className='profileContainer position-relative'>
+                    <h3 className='mb-4 mt-3'>Your Favorite Quizzes</h3>
                     <ul>
                     {testUser.favoriteQuizes.map((quiz, index) => (
                             <li className='mb-3' key={index}>
-                                <h4 className='text-start'>
+                                <h4 className='text-start link-container'>
                                     <a className='quizLink' onClick={() => console.log(`navigating to ${quiz.title}`)}>
                                         {quiz.title} by {quiz.creator}
                                     </a>
@@ -90,19 +90,19 @@ const ProfilePage = () => {
                         ))}
                     </ul>
                 </div>
-                <div className='me-5 profileContainer position-relative'>
-                    <h3 className='mb-4'>Your Created Quizzes</h3>
+                <div className='profileContainer position-relative'>
+                    <h3 className='mb-4 mt-3'>Your Created Quizzes</h3>
                     <ul>
                         {myQuizes.map((quiz, index) => (
                             <li className='mb-3' key={index}>
-                                <h4 className='text-start'>
+                                <h4 className='text-start link-container'>
                                     <a className='quizLink' onClick={() => console.log(`navigating to ${quiz.title}`)}>
                                         {quiz.title}
                                     </a>
-                                    <span className='position-absolute end-0 me-3'>
+                                    <span className='position-absolute end-0 me-2'>
                                         <Link to={{ pathname: '/createQuiz', state: {quizData: quiz}}}>
                                             <img src={editLogo} 
-                                                className='logo me-4' 
+                                                className='logo me-2' 
                                                 alt='Edit Quiz Logo' 
                                                 data-id={quiz._id} 
                                                 data-title={quiz.title}>
