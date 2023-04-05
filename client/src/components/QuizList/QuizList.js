@@ -1,19 +1,19 @@
 import './quizList.css';
 
 const QuizList = ({category}) => {
-    // replace with query 
+    // replace with query
     let testQuizList = [
         {
-            title: `${category} Quiz 1`,
-            creator: 'username 1'
+            title: `${category} Quiz #1`,
+            creator: 'username1'
         },
         {
-            title: `${category} Quiz 2`,
-            creator: 'username 2'
+            title: `${category} Quiz #2`,
+            creator: 'username2'
         },
         {
-            title: `${category} Quiz 3`,
-            creator: 'username 3'
+            title: `${category} Quiz #3`,
+            creator: 'username3'
         }
     ]
     return (

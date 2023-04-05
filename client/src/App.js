@@ -18,6 +18,7 @@ import Home from './pages/Home/Home';
 import CreateQuiz from './pages/CreateQuiz/CreateQuiz';
 import { useState } from "react";
 import Nav from './components/Nav/Navbar'
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -59,6 +60,7 @@ function App() {
             <Route exact path='/createQuiz' component={CreateQuiz} />
             <Route exact path='/login' render={() => currentForm === 'login' ? <Login /> : <Register />} />
             <Route exact path='/signUp' render={() => currentForm === 'signup' ? <Register /> : <Login/>} />
+            <Route exact path='/profile' component={ProfilePage} />
             {/* <Route exact path='/login' component={Login} />
             <Route exact path='/signUp' component={Register} /> */}
             <Route render={() => <h1>Wrong page!</h1>} />
