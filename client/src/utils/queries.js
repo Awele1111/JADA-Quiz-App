@@ -9,7 +9,17 @@ query user($id: ID!) {
         _id
       }
     }
-  }`;
+  }
+  `;
+
+  export const QUERY_USERS = gql`
+  query users {
+    users {
+      _id
+      username
+    }
+  }
+  `;
 
   export const QUERY_QUIZZES = gql`
   query quizzes {
@@ -20,6 +30,44 @@ query user($id: ID!) {
       creator
     }
   }
-  `
+  `;
 
+  export const QUERY_QUIZ = gql`
+  query quiz($id: ID!) {
+    quiz(_id: $id) {
+      title
+      public
+      style
+      category
+      description
+      creator
+      questions {
+        question
+        choices {
+          choice
+          correct
+        }
+      }
+      highscores {
+        score
+        userId {
+          _id
+        }
+      }
+    }
+  }
+  `;
+
+export const QUERY_ME = gql`
+query Me {
+  me {
+    _id
+    username
+    email
+    favoriteQuizzes {
+      _id
+    }
+  }
+}
+`;
   
