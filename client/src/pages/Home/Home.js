@@ -28,7 +28,7 @@ const Home = () => {
         <>
             <div className='welcomeInfo'>
                 <h3>Welcome To The Quiz App!</h3>
-                <p>Browse our user created Quizzes and test your knowledge! Login or sign up to save your favorite quizzes, for the ability to save your highscores and to create your own quiz other users!</p>
+                <p>Browse our user created Quizzes and test your knowledge! Login or sign up to save your favorite quizzes, to save your highscores and to create your own quizzes for other users!</p>
             </div>
             
             <main className='container text-center position-relative'>
@@ -65,6 +65,11 @@ const Home = () => {
                 <div>
                     <Link to={{ pathname: `/createQuiz`}}>
                         Create a new Quiz Here!
+                    </Link>
+                </div>
+                <div>
+                    <Link to={{ pathname: `/profile`}}>
+                        View Profile Page Here!
                     </Link>
                 </div>
             </footer>
