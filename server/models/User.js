@@ -18,7 +18,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    favoriteQuizes: [      
+    favoriteQuizzes: [      
         {
         type: Schema.Types.ObjectId,
         ref: 'Quiz',
