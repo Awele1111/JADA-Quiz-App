@@ -5,11 +5,21 @@ query user($id: ID!) {
     user(_id: $id) {
       _id
       username
-      email
       favoriteQuizes {
         _id
       }
     }
   }`;
+
+  export const QUERY_QUIZZES = gql`
+  query quizzes {
+    quizzes {
+      _id
+      title
+      category
+      creator
+    }
+  }
+  `
 
   
