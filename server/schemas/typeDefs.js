@@ -6,7 +6,7 @@ const typeDefs = gql`
         username: String
         email: String
         password: String
-        favoriteQuizes: [Quiz]
+        favoriteQuizzes: [Quiz]
     }
 
     type Choice {
@@ -82,7 +82,7 @@ const typeDefs = gql`
         addAttempt(userId: ID!, score: Int, quizId: ID!): Quiz
         addFavorite(quizId: ID!, userId: ID!): User
         deleteQuiz(quizId: ID!): Quiz
-        removeFavorite(quizId: ID!): User
+        removeFavorite(quizId: ID!, userId: ID!): User
     }
 `;
 
