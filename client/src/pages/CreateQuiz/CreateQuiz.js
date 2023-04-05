@@ -1,9 +1,18 @@
 import React, { useState } from 'react'
+import './createQuiz.css'
 
-const CreateQuiz = () => {
+const CreateQuiz = (props) => {
 	const [quizValues, setQuizValues] = useState({title: '', public: true, style: 'defualt', category: 'General', description: ''});
 	const [questionValues, setQuestionValues] = useState([{ question: "", choices: [{choice: '', correct: false}]}])
 	
+	//if user wants to update quiz then pass the quiz through props and it will render
+	if(props.location.state) {
+		console.log(props.location.state);
+		// let quiz = props.location.state;
+		// setQuizValues({title: quiz.title, public: quiz.public, style: quiz.style, category: quiz.category, description: quiz.description});
+		// setQuestionValues(quiz.questions);
+	}
+
 	let handleInfoChange = (event) => {
 		let newQuizValues = quizValues;
 		switch (event.target.name) {
@@ -26,6 +35,9 @@ const CreateQuiz = () => {
 			case 'quizDescription':
 				newQuizValues.description = event.target.value;
 				break
+			default:
+				console.log("Something went wrong!");
+				break;
 		}
 		setQuizValues(newQuizValues)
 	}
@@ -119,7 +131,7 @@ const CreateQuiz = () => {
 	return (
 		<form className='form row-cols-lg-auto g-3 align-items-center mx-auto' onSubmit={handleSubmit}>
 			<div style={{background: "lightblue"}}>
-				<div className='d-flex justify-content-between w-100'>
+				<div className='d-flex justify-content-between w-100 pt-4'>
 					<div className='form-floating quizInfo'>
 						<input id='quizTitle'
 						className="form-control"
@@ -174,7 +186,7 @@ const CreateQuiz = () => {
 						<label htmlFor={`question${questionIndex}`}>Question {questionIndex + 1}</label>
 						{
 							questionIndex ? 
-							<button type="button"  className="button remove" onClick={() => removeQuestion(questionIndex)}>Remove Question</button> 
+							<button type="button"  className="btn btn-danger" onClick={() => removeQuestion(questionIndex)}>Remove Question</button> 
 							: null
 						}
 					</div>
@@ -196,7 +208,7 @@ const CreateQuiz = () => {
 								</select>
 								{
 									choiceIndex ? 
-									<button type="button"  className="button remove" onClick={() => removeChoice(questionIndex, choiceIndex)}>Remove Choice</button> 
+									<button type="button"  className="btn btn-danger" onClick={() => removeChoice(questionIndex, choiceIndex)}>Remove Choice</button> 
 									: null
 								}
 							</div>
