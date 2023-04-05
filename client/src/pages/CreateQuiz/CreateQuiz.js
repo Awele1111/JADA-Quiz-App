@@ -1,10 +1,18 @@
 import React, { useState } from 'react'
 import './createQuiz.css'
 
-const CreateQuiz = () => {
+const CreateQuiz = (props) => {
 	const [quizValues, setQuizValues] = useState({title: '', public: true, style: 'defualt', category: 'General', description: ''});
 	const [questionValues, setQuestionValues] = useState([{ question: "", choices: [{choice: '', correct: false}]}])
 	
+	//if user wants to update quiz then pass the quiz through props and it will render
+	if(props.location.state) {
+		console.log(props.location.state);
+		// let quiz = props.location.state;
+		// setQuizValues({title: quiz.title, public: quiz.public, style: quiz.style, category: quiz.category, description: quiz.description});
+		// setQuestionValues(quiz.questions);
+	}
+
 	let handleInfoChange = (event) => {
 		let newQuizValues = quizValues;
 		switch (event.target.name) {
@@ -27,6 +35,9 @@ const CreateQuiz = () => {
 			case 'quizDescription':
 				newQuizValues.description = event.target.value;
 				break
+			default:
+				console.log("Something went wrong!");
+				break;
 		}
 		setQuizValues(newQuizValues)
 	}

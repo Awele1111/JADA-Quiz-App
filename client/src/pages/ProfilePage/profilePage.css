@@ -1,0 +1,26 @@
+.profileContainer {
+    background: salmon;
+    width: 42%;
+    text-align: center;
+    min-height: 70vh;
+}
+
+.logo {
+    height: 25px;
+    filter: invert(1) brightness(500%);
+}
+
+.logo:hover {
+    filter: invert(0);
+    cursor: pointer;
+}
+
+.quizLink {
+    color: black;
+    text-decoration: none;
+}
+
+.quizLink:hover {
+    cursor: pointer;
+    color: white;
+}
