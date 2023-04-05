@@ -58,8 +58,9 @@ const resolvers = {
       return quiz;
     },
 
-    addAttempt: async (parent, { quizId, score, userId }) => {
- 
+    addAttempt: async (parent, { quizId, score, userId }, //context
+    ) => {
+      //if (context.user) {
       return Quiz.findOneAndUpdate(
         { _id: quizId },
         {
@@ -68,6 +69,7 @@ const resolvers = {
           }
         }
       ); 
+    //} throw new AuthenticationError('You need to be logged in')
   },
 
   deleteQuiz: async (parent, { quizId }, //context
@@ -82,27 +84,35 @@ const resolvers = {
     // throw new AuthenticationError('You need to be logged in');
    },
 
-   addFavorite: async (parent, { quizId }, //context
+   addFavorite: async (parent, { quizId, userId }, //context
    ) => {
    // if (context.user) {
       const favorite = await User.findOneAndUpdate(
-        { _id: context.user._id },
-        { $addToSet: { favoriteQuizes: quizId } }
+        { _id: userId },
+        { $addToSet: { favoriteQuizzes: quizId } }
       );
       return favorite;
     //} throw new AuthenticationError('You need to be logged in');
    },
 
+   removeFavorite: async (parent, { quizId, userId }, //context
+    ) => {
+    //if (context.user) {
+      return User.findOneAndUpdate(
+        { _id: userId },
+        {
+          $pull: {
+            favoriteQuizzes: {
+              quizId
+            },
+          },
+        },
+        { new: true }
+      );
+    //} throw new AuthenticationError('You need to be logged in');
+   }
    
   },
-
-   
-   
-
-   
-  //  removeFavorite: {
-
-  //  }
   }
 ;
 

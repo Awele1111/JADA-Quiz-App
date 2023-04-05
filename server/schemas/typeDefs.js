@@ -80,7 +80,7 @@ const typeDefs = gql`
             ): Quiz
 
         addAttempt(userId: ID!, score: Int, quizId: ID!): Quiz
-        addFavorite(quizId: ID!): User
+        addFavorite(quizId: ID!, userId: ID!): User
         deleteQuiz(quizId: ID!): Quiz
         removeFavorite(quizId: ID!): User
     }
