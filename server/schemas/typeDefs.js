@@ -79,7 +79,7 @@ const typeDefs = gql`
             highscores: [AttemptInput]
             ): Quiz
 
-        addAttempt(userId: ID!, score: Int): Quiz
+        addAttempt(userId: ID!, score: Int, quizId: ID!): Quiz
         addFavorite(quizId: ID!): User
         deleteQuiz(quizId: ID!): Quiz
         removeFavorite(quizId: ID!): User

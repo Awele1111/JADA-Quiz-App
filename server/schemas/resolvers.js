@@ -44,7 +44,7 @@ const resolvers = {
     return { token, user };
    },
  
-   createQuiz: async (parent, { title, public, style, questions, description, categroy }) => {
+   createQuiz: async (parent, { title, public, style, questions, description, categroy, creator }) => {
     
       const quiz = await Quiz.create({
         title,  
@@ -56,21 +56,50 @@ const resolvers = {
         creator
       });
       return quiz;
-    }
+    },
+
+    addAttempt: async (parent, { quizId, score, userId }) => {
+ 
+      return Quiz.findOneAndUpdate(
+        { _id: quizId },
+        {
+          $addToSet: {
+            highscores: { score, userId },
+          }
+        }
+      ); 
+  },
+
+  deleteQuiz: async (parent, { quizId }, //context
+  ) => {
+    // if (context.user) {
+      const quiz = await Quiz.findOneAndDelete({
+        _id: quizId,
+        // creator: context.user._id
+      });
+      return quiz;
+    //}
+    // throw new AuthenticationError('You need to be logged in');
    },
 
-  //  addAttempt: {
+   addFavorite: async (parent, { quizId }, //context
+   ) => {
+   // if (context.user) {
+      const favorite = await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: { favoriteQuizes: quizId } }
+      );
+      return favorite;
+    //} throw new AuthenticationError('You need to be logged in');
+   },
 
-  //  },
+   
+  },
 
-  //  deleteQuiz: {
+   
+   
 
-  //  },
-
-  //  addFavorite: {
-
-  //  },
-
+   
   //  removeFavorite: {
 
   //  }
