@@ -22,6 +22,7 @@ const MyQuizzes = ({ userId }) => {
             const { deleteData } = await deleteQuiz({
                 variables: { quizId: _id }
             });
+            window.location.reload();
         } catch (err) {
             console.error(err);
         }
@@ -35,10 +36,11 @@ const MyQuizzes = ({ userId }) => {
 
     const myQuizzes = data?.myQuizzes || [];
 
-    // if (!myQuizzes.lenght) {
-    //     return <h3>No Quizzes Created</h3>
-    // }
-  
+    if (!myQuizzes.length) {
+        return <h3>No Quizzes Created</h3>
+        
+    }
+
     return (
         <>
             <div className='container'>
