@@ -30,17 +30,17 @@ export const Register = (props) => {
         <body className="register-body">
         <div className="auth-form-container">
         <h2 className="register-h2">Register</h2>
-        <form className="form-class"onSubmit={handleSubmit}>
+        <form className="register-form"onSubmit={handleSubmit}>
             <label className="register-label" htmlFor="name">Username</label>
             <input className="register-input"   name="name" value={username} onChange={(e) => setUsername(e.target.value)} id="name" placeholder="Type your username here"/>
-            <label className="register-label" value="name" htmlFor="email">Email</label>
+            <label className="register-label" value="name" htmlFor="email">Email Address</label>
             <input className="register-input" value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Type your email here" id="email" name="email" />
             <label className="register-label" htmlFor="password">Password</label>
             <input className="register-input" value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="********" id="password" name="password" />
             <button className="register-button" type="submit">Register/signup</button>
         </form>
         
-        <button onClick={() => window.location.assign('/login')}>Already have an account? Login here</button>
+        <button className="link-button" onClick={() => window.location.assign('/login')}>Already have an account? Login here</button>
         </div>
     </body>
     </div>

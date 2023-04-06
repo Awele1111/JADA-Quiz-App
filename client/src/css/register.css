@@ -15,7 +15,7 @@
   padding-bottom: 30px;
   }
   
-  .form-class {
+  .register-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -64,9 +64,15 @@
     align-items: center;
     margin-bottom: 27px;
     border-radius: 50px;
+    border-style: solid;
+    background-color: #ccc;
+  }
+  .link-button:hover{
+    background-color: rgb(197, 197, 51);
+
   }
   
-  .login-form{
+  .register-form{
     display: flex;
     flex-direction: column;
   }
@@ -76,6 +82,8 @@
     margin-top: 30px;
     padding-bottom: 5px;
     margin-top: 45px;
+    font-weight: bold;
+    padding-top: 40px;
   }
   .register-body {
     /* background: linear-gradient( #7c99b8, #7e4ab2, rgb(160, 135, 160)); */

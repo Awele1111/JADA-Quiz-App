@@ -25,20 +25,23 @@ export const Login = (props ) => {
         
     }
     return (
-        <body>
+
+        <div className="login-body">
+        <body className="login-body">
 
         <div className="auth-form-container">
-            <h2>Login</h2>
+            <h2 className="login-h2">Login</h2>
         <form className="login-form" onSubmit={handleSubmit}>
-            <label className="login-label" htmlFor="email">Email:</label>
+            <label className="login-label" htmlFor="email">Email Address:</label>
             <input className="login-input" value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Type your email here" id="email" name="email" />
             <label className="login-label" htmlFor="password">Password:</label>
             <input className="login-input" value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="********" id="password" name="password" />
-            <button classname="login-button" type="submit">Login</button>
+            <button className="login-button" type="submit">Login</button>
         </form>
 
         <button className="link-button" onClick={() => window.location.assign('/signup')}>Don't have an account? signup/register here</button>
         </div>
         </body>
+        </div>
     )
 }
