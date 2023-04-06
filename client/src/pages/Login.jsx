@@ -1,13 +1,28 @@
 import React, { useState } from "react"
-import "../css/login.css"
+// import "../css/login.css";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../utils/mutations";
+import Auth from '../utils/auth';
 
 export const Login = (props ) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [login, { error, data }] = useMutation(LOGIN_USER);
 
-    const  handleSubmit = (e) =>  {
+    const  handleSubmit = async (e) =>  {
         e.preventDefault();
         console.log(email);
+        try {
+            const { data } = await login({
+                variables: { email, password }
+            });
+            
+            Auth.login(data.login.token);
+
+        } catch (e) {
+            console.error(e);
+        }
+        
     }
     return (
         <body>
