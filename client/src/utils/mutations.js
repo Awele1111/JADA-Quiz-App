@@ -45,8 +45,8 @@ mutation addAttempt($userId: ID!, $quizId: ID!, $score: Int) {
   `;
   
 export const ADD_FAVORITE = gql`
-mutation addFavorite($quizId: ID!, $userId: ID!) {
-    addFavorite(quizId: $quizId, userId: $userId) {
+mutation addFavorite($quizId: ID!) {
+    addFavorite(quizId: $quizId) {
       _id
       username
       favoriteQuizzes {
@@ -85,8 +85,8 @@ mutation login($email: String!, $password: String!) {
   `;
 
 export const REMOVE_FAVORITE = gql`
-mutation removeFavorite($quizId: ID!, $userId: ID!) {
-    removeFavorite(quizId: $quizId, userId: $userId) {
+mutation removeFavorite($quizId: ID!) {
+    removeFavorite(quizId: $quizId) {
       username
     }
   }
