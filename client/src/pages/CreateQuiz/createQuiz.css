@@ -1,0 +1,59 @@
+.quizInfoContainer {
+    background: salmon;
+    margin: 0 50px;
+    padding: 0 50px;
+    border-radius: 40px;
+}
+
+#quizTitleContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.quizTitle {
+    width: 50%;
+}
+
+#quizDescription {
+    height: 100px;
+}
+
+.myError {
+    color: red;
+}
+
+.questionInputContainer, 
+.choiceInfoContainer {
+    background-color: salmon;
+    width: 46vw;
+    margin: 2vw;
+    border-radius: 20px;
+}
+
+.questionInput {
+    width: 90%;
+    margin: 20px 0 0 20px;
+}
+
+.questionInputContainer>label {
+    top: 20px;
+    left: 20px;
+}
+
+.questionInputContainer>.questionInput {
+    min-height: 40%;
+    height: calc(100% - 115px)
+}
+
+.oneChoiceInput {
+    margin: 0 20px;
+}
+
+.correctRadio {
+    scale: 1.5;
+}
+
+.choiceInfo,
+#noAnswerError {
+    margin-right: 30px;
+}
