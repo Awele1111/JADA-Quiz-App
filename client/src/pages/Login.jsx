@@ -11,7 +11,7 @@ export const Login = (props ) => {
 
     const  handleSubmit = async (e) =>  {
         e.preventDefault();
-        console.log(email);
+       
         try {
             const { data } = await login({
                 variables: { email, password }
