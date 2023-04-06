@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 const QuizQuestion = ({ quizData, questionNumber, setQuestionNumber, score, setScore }) => {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
 
-    console.log(score);
-
     const handleAnswerSubmit = (event) => {
         event.preventDefault();
 
@@ -14,7 +12,6 @@ const QuizQuestion = ({ quizData, questionNumber, setQuestionNumber, score, setS
 
         if (quizData.questions[questionNumber-1].choices[selectedAnswer].correct) {
             setScore(score+1);
-            console.log(score);
         }
 
         setSelectedAnswer(null);
