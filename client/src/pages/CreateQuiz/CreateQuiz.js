@@ -153,15 +153,15 @@ const CreateQuiz = (props) => {
 						<p id="quizTitleError" className='errorMessage myError'></p>
 					</div>
 				</div>
-				<div className='d-flex justify-content-between w-100 pt-4'>
-					<div>
+				<div className='dropDownFlex d-flex justify-content-between w-100 pt-4'>
+					<div className='dropDownElement'>
 						<label className='me-2'>Quiz Accessability:</label>
 						<select name="quizSecurity" onChange={event => handleInfoChange(event)}>
 							<option value="public">Public</option>
 							<option value="private">Private</option>
 						</select>
 					</div>
-					<div>
+					<div className='dropDownElement'>
 						<label className='me-2'>Category*</label>
 						<select name="quizCategory" onChange={event => handleInfoChange(event)}>
 							<option value="">--</option>
@@ -174,7 +174,7 @@ const CreateQuiz = (props) => {
 							<option value="Other">Other</option>
 						</select>
 					</div>
-					<div>
+					<div className='dropDownElement'>
 						<label className='me-2'>Quiz Styling:</label>
 						<select name="quizStyling" onChange={event => handleInfoChange(event)}>
 							<option value="default">Default</option>
@@ -206,10 +206,10 @@ const CreateQuiz = (props) => {
 									value={questionElement.question || ""}
 									onChange={event => handleQuestionChange(questionIndex, event)} />
 							<label htmlFor={`question${questionIndex}`}>Question {questionIndex + 1}</label>
-							<p id={`question${questionIndex}error`} className='errorMessage myError ps-4'></p>
+							<p id={`question${questionIndex}error`} className='questionError errorMessage myError ps-4'></p>
 							{
 								questionIndex ? (
-									<div className='d-flex justify-content-center mt-3'>
+									<div className='d-flex justify-content-center mt-3 removeQuestionContainer'>
 										<button type="button"  className="btn btn-danger mb-3" onClick={() => removeQuestion(questionIndex)}>Remove Question</button> 
 									</div>
 								)

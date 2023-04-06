@@ -42,7 +42,7 @@ const typeDefs = gql`
     type Quiz {
         _id: ID
         title: String
-        creator: String
+        creator: User
         public: Boolean
         style: String
         questions: [Question]

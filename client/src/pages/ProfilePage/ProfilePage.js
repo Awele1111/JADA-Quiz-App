@@ -1,10 +1,38 @@
 import './profilePage.css'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import trashLogo from '../../assets/trashLogo.svg';
 import favoriteLogo from '../../assets/favoriteLogo.svg';
 import editLogo from '../../assets/editLogo.svg';
+import { useQuery } from '@apollo/client';
+import { QUERY_ME } from '../../utils/queries';
+import Auth from '../../utils/auth';
+
 
 const ProfilePage = () => {
+    const { _id: userParam } = useParams();
+    const { loading, data } = useQuery(QUERY_ME, {
+        variables: { _id: userParam },
+    })
+
+    const user = data?.me || {};
+    // const favoriteQizzes = data.me?.favoriteQuizes
+    if (Auth.loggedIn() && Auth.getProfile().data._id === userParam) {
+        return <Link to='/profile' />;
+    }
+
+    console.log(user.favoriteQuizzes);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (!user?._id) {
+        return (
+            <h4>
+                You need to be logged in to see this. Use the navigation links above to sign up or log in!
+            </h4>
+        );
+    }
     //replace with userQuery
     let testUser = {
         username: "dmanaglia",
@@ -30,6 +58,11 @@ const ProfilePage = () => {
                 title: "Elder Scrolls 101",
                 creator: "The Dragonborn",
                 _id: 4
+            },
+            {
+                title: "Everton Quiz",
+                creator: "coleman4Life",
+                _id: 1
             },
         ]
     }
@@ -63,63 +96,73 @@ const ProfilePage = () => {
         console.log(`Are you sure you want to delete the quiz "${title}"? (This cannot be undone!)`)
     }
 
+// console.log(user.favoriteQuizses[0]._id);
+
     return (
-        <>
-            <h2 className='ms-5 mb-5'>{testUser.username}</h2>
-            <div className='d-flex justify-content-between w-100'>
-                <div className='ms-5 profileContainer position-relative'>
-                    <h3 className='mb-4'>Your Favorite Quizzes</h3>
-                    <ul>
-                    {testUser.favoriteQuizes.map((quiz, index) => (
-                            <li className='mb-3' key={index}>
-                                <h4 className='text-start'>
-                                    <a className='quizLink' onClick={() => console.log(`navigating to ${quiz.title}`)}>
-                                        {quiz.title} by {quiz.creator}
-                                    </a>
-                                    <span className='position-absolute end-0 me-3'>
-                                        <img src={favoriteLogo} 
-                                            className='logo' 
+        <div className='mb-5'>
+
+            <h2 className='ms-5 mb-4'>{user.username}</h2>
+            <div className='mainContainer'>
+                <div className='profileContainer'>
+                    <h1 className='mb-5 mt-3'>Your Favorite Quizzes</h1>
+                    <div className='container'>
+                    {user.favoriteQuizzes.map((quiz, index) => (
+
+                        <div className='row mb-4' key={index}>
+                            <div className='col-2 col-sm-1 d-flex align-items-center p-0'>
+                                <img src={favoriteLogo} 
+                                            className='logo ms-3' 
                                             alt='Favorite Logo' 
                                             data-id={quiz._id} 
                                             data-title={quiz.title} 
                                             onClick={(event) => handleUnlike(event)}>
-                                        </img>
-                                    </span>
-                                </h4>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-                <div className='me-5 profileContainer position-relative'>
-                    <h3 className='mb-4'>Your Created Quizzes</h3>
-                    <ul>
-                        {myQuizes.map((quiz, index) => (
-                            <li className='mb-3' key={index}>
-                                <h4 className='text-start'>
+                                </img>
+                            </div>
+                            <div className='col'>
+                                <h4 className='text-start link-container mb-0'>
                                     <a className='quizLink' onClick={() => console.log(`navigating to ${quiz.title}`)}>
-                                        {quiz.title}
+
+                                        {quiz.title} by {quiz.creator.username}
+
                                     </a>
-                                    <span className='position-absolute end-0 me-3'>
-                                        <Link to={{ pathname: '/createQuiz', state: {quizData: quiz}}}>
-                                            <img src={editLogo} 
-                                                className='logo me-4' 
-                                                alt='Edit Quiz Logo' 
-                                                data-id={quiz._id} 
-                                                data-title={quiz.title}>
-                                            </img>
-                                        </Link>
-                                        <img src={trashLogo} 
-                                            className='logo' 
-                                            alt='Trash Logo' 
-                                            data-id={quiz._id} 
-                                            data-title={quiz.title} 
-                                            onClick={(event) => handleDelete(event)}>
-                                        </img>
-                                    </span>
                                 </h4>
-                            </li>
+                            </div>
+                        </div>
+                    ))}
+                    </div>
+                </div>
+                <div className='profileContainer'>
+                    <h1 className='mb-5 mt-3'>Your Created Quizzes</h1>
+                    <div className='container'>
+                        {myQuizes.map((quiz, index) => (
+                            <div className='row mb-4' key={index}>
+                                <div className='col-4 col-sm-2 d-flex align-items-center justify-content-end p-0'>
+                                    <img src={trashLogo} 
+                                        className='logo ps-3 pe-3' 
+                                        alt='Trash Logo' 
+                                        data-id={quiz._id} 
+                                        data-title={quiz.title} 
+                                        onClick={(event) => handleDelete(event)}>
+                                    </img>
+                                    <Link to={{ pathname: '/createQuiz', state: {quizData: quiz}}}>
+                                        <img src={editLogo} 
+                                            className='logo' 
+                                            alt='Edit Quiz Logo' 
+                                            data-id={quiz._id} 
+                                            data-title={quiz.title}>
+                                        </img>
+                                    </Link>
+                                </div>
+                                <div className='col'>
+                                    <h4 className='link-container text-start m-0'>
+                                        <a className='quizLink' onClick={() => console.log(`navigating to ${quiz.title}`)}>
+                                            {quiz.title}
+                                        </a>
+                                    </h4>
+                                </div>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                     <div className='mt-5'>
                         <button className='btn btn-secondary'
                                 onClick={() => window.location.assign('/createQuiz')}>
@@ -128,8 +171,9 @@ const ProfilePage = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
+
 
 export default ProfilePage;
