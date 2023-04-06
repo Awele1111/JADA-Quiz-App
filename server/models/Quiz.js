@@ -31,7 +31,7 @@ const QuizSchema = new Schema(
     category: {
       type: String,
       required: true,
-      default: 'general'
+      default: 'General'
     }
   },
   {
