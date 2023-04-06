@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import './createQuiz.css'
+import trashLogo from '../../assets/trashLogo.svg';
+
 
 const CreateQuiz = (props) => {
 	const [quizValues, setQuizValues] = useState({title: '', public: true, style: 'defualt', category: '', description: ''});
@@ -50,14 +52,17 @@ const CreateQuiz = (props) => {
 	
 	let handleChoiceChange = (questionIndex, choiceIndex, event) => {
 		let newQuestionValues = [...questionValues];
-		if(event.target.name === 'toggleCorrect'){
-			if(event.target.value === 'correct'){
+		if(event.target.name === 'choice'){
+			newQuestionValues[questionIndex].choices[choiceIndex].choice = event.target.value;
+		} else {
+			for(let choice of newQuestionValues[questionIndex].choices){
+				choice.correct = false;
+			}
+			if(event.target.value === 'on'){
 				newQuestionValues[questionIndex].choices[choiceIndex].correct = true;
 			} else {
 				newQuestionValues[questionIndex].choices[choiceIndex].correct = false;
 			}
-		} else {
-			newQuestionValues[questionIndex].choices[choiceIndex].choice = event.target.value;
 		}
 		setQuestionValues(newQuestionValues);
 	}
@@ -95,7 +100,6 @@ const CreateQuiz = (props) => {
 			valid = false;
 			document.getElementById('quizTitleError').innerHTML = "All Quizzes Requires a Title";
 		}
-		console.log(quizValues.category);
 		if(!quizValues.category){
 			valid = false;
 			document.getElementById('quizCategoryError').innerHTML = "You Must Select a Category";
@@ -119,7 +123,7 @@ const CreateQuiz = (props) => {
 				choiceIndex++;
 			}
 			if(correctCount !== 1){
-				document.getElementById(`question${questionIndex}error`).innerHTML = "Question requires exactly 1 correct choice";
+				document.getElementById(`question${questionIndex}noAnswerError`).innerHTML = "Must Specify Answer";
 				valid = false;
 			}
 			questionIndex++;
@@ -149,7 +153,7 @@ const CreateQuiz = (props) => {
 						<p id="quizTitleError" className='errorMessage myError'></p>
 					</div>
 				</div>
-				<div className='d-flex justify-content-between w-100 pt-4 pb-4'>
+				<div className='d-flex justify-content-between w-100 pt-4'>
 					<div>
 						<label className='me-2'>Quiz Accessability:</label>
 						<select name="quizSecurity" onChange={event => handleInfoChange(event)}>
@@ -178,12 +182,12 @@ const CreateQuiz = (props) => {
 					</div>
 				</div>
 				<div className='ms-5 text-center'>
-					<p id="quizCategoryError" className='errorMessage myError'></p>
+					<p id="quizCategoryError" className='errorMessage myError pb-4'></p>
 				</div>
 				<div className='form-floating d-flex pb-4 mb-3'>
 					<textarea id="quizDescription"
 							type="text"
-							name="question"
+							name="quizDescription"
 							className="form-control"
 							placeholder='Description String'
 							onChange={event => handleInfoChange(event)} />
@@ -191,49 +195,80 @@ const CreateQuiz = (props) => {
 				</div>
 			</div>
 			{questionValues.map((questionElement, questionIndex) => (
-				<div id="oneQuestionContainer" key={questionIndex}>
-					<div className='form-floating'>
-						<textarea id={`question${questionIndex}`}
-								type="text"
-								name="question"
-								className="form-control questionInput"
-								placeholder='Question String'
-								value={questionElement.question || ""}
-								onChange={event => handleQuestionChange(questionIndex, event)} />
-						<label htmlFor={`question${questionIndex}`}>Question {questionIndex + 1}</label>
-						{
-							questionIndex ? 
-							<button type="button"  className="btn btn-danger" onClick={() => removeQuestion(questionIndex)}>Remove Question</button> 
-							: null
-						}
-					</div>
-					<p id={`question${questionIndex}error`} className='errorMessage myError'></p>
-					{questionElement.choices.map((choiceElement, choiceIndex) => (
-						<div key={`${questionIndex}.${choiceIndex}`} className=''>
-							<div className="form-floating choiceInfo d-flex">
-								<input  id={`choice${questionIndex + choiceIndex / 100}`}
-										type="text"
-										name="choice"
-										className="form-control w-50"
-										value={choiceElement.choice || ""}
-										placeholder='Choice String'
-										onChange={event => handleChoiceChange(questionIndex, choiceIndex, event)} />
-								<label htmlFor={`choice${questionIndex + choiceIndex / 10}`}>Choice {choiceIndex + 1}</label>
-								<select name="toggleCorrect" onChange={event => handleChoiceChange(questionIndex, choiceIndex, event)}>
-									<option value="incorrect">Incorrect</option>
-									<option value="correct">Correct</option>
-								</select>
-								{
-									choiceIndex ? 
-									<button type="button"  className="btn btn-danger" onClick={() => removeChoice(questionIndex, choiceIndex)}>Remove Choice</button> 
-									: null
-								}
-							</div>
-							<p id={`choice${questionIndex}-${choiceIndex}error`} className='errorMessage myError'></p>
+				<div className="oneQuestionContainer" key={questionIndex}>
+					<div className='row g-0' id={`question${questionIndex}`}>
+						<div className='form-floating questionInputContainer'>
+							<textarea id={`question${questionIndex}`}
+									type="text"
+									name="question"
+									className="form-control questionInput"
+									placeholder='Question String'
+									value={questionElement.question || ""}
+									onChange={event => handleQuestionChange(questionIndex, event)} />
+							<label htmlFor={`question${questionIndex}`}>Question {questionIndex + 1}</label>
+							<p id={`question${questionIndex}error`} className='errorMessage myError ps-4'></p>
+							{
+								questionIndex ? (
+									<div className='d-flex justify-content-center mt-3'>
+										<button type="button"  className="btn btn-danger mb-3" onClick={() => removeQuestion(questionIndex)}>Remove Question</button> 
+									</div>
+								)
+								: null
+							}
 						</div>
-					))}
-					<div className="button-section">
-						<button className="btn btn-secondary" type="button" onClick={() => addChoice(questionIndex)}>Add Choice</button>
+						<div className='choiceInfoContainer'>
+							<div className='d-flex justify-content-between choiceInfo ms-4 mb-1 mt-2'>
+								<h5 className='mb-0'>{`Question #${questionIndex + 1}`}</h5>
+								<p className='mb-0'>Select Answer</p>
+							</div>
+							<p id={`question${questionIndex}noAnswerError`} className='text-end myError'></p>
+							{questionElement.choices.map((choiceElement, choiceIndex) => (
+								<div key={`${questionIndex}.${choiceIndex}`}>
+									<div className="form-floating d-flex oneChoiceInput">
+										<input  id={`choice${questionIndex + choiceIndex / 100}`}
+												type="text"
+												name="choice"
+												className="form-control choiceInput"
+												value={choiceElement.choice || ""}
+												placeholder='Choice String'
+												onChange={event => handleChoiceChange(questionIndex, choiceIndex, event)} />
+										<label htmlFor={`choice${questionIndex + choiceIndex / 10}`}>Choice {choiceIndex + 1}</label>
+										{choiceElement.correct ? (
+											<input name={`question${questionIndex}`}
+													className="correctRadio m-3" 
+													type="radio"
+													checked
+													onChange={event => handleChoiceChange(questionIndex, choiceIndex, event)}>
+											</input>
+										): (
+											<input name={`question${questionIndex}`}
+													className="correctRadio m-3" 
+													type="radio"
+													onChange={event => handleChoiceChange(questionIndex, choiceIndex, event)}>
+											</input>	
+										)}
+										{
+											choiceIndex ? (
+												<img src={trashLogo} 
+													className='logo mt-3 ms-3 mb-3' 
+													alt='Trash Logo' 
+													onClick={() => removeChoice(questionIndex, choiceIndex)}>
+                                        		</img>
+											)
+											: (
+												<div className='m-1 p-3'></div>
+											)
+										}
+									</div>
+									<p id={`choice${questionIndex}-${choiceIndex}error`} className='errorMessage myError ms-4'></p>
+								</div>
+							))}
+							<div className="button-section">
+							<div className='d-flex justify-content-center mt-3 mb-3'>
+								<button className="btn btn-secondary" type="button" onClick={() => addChoice(questionIndex)}>Add Choice</button>
+							</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			))}

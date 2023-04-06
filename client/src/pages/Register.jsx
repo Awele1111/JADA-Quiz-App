@@ -1,10 +1,8 @@
 import React, {useState} from "react";
-import "../css/register.css";
+// import "../css/register.css";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../utils/mutations";
 import Auth from '../utils/auth';
-
-
 
 export const Register = (props) => {
     const [addUser, { error, data }] = useMutation(ADD_USER);

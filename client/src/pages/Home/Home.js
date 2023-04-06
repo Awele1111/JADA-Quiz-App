@@ -57,22 +57,6 @@ const Home = () => {
                     <QuizList category={pageCategory}/>
                 )}
             </main>
-            
-            
-
-            {/* delete once login is working... */}
-            <footer className='mt-5 pt-5'>
-                <div>
-                    <Link to={{ pathname: `/createQuiz`}}>
-                        Create a new Quiz Here!
-                    </Link>
-                </div>
-                <div>
-                    <Link to={{ pathname: `/profile`}}>
-                        View Profile Page Here!
-                    </Link>
-                </div>
-            </footer>
         </>
     )
 };
