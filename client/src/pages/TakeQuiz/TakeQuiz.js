@@ -9,6 +9,12 @@ const TakeQuiz = () => {
     const [questionNumber, setQuestionNumber] = useState(0);
     const [score, setScore] = useState(0);
 
+    const { loading, data } = useQuery(QUERY_QUIZ, {
+        variables: { _id: id },
+    });
+
+    console.log(data);
+
     // QUERY_QUIZ by id rather than using testQuiz
     const testQuiz = {
         title: "test2",

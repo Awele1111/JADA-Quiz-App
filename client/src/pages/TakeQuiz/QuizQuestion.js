@@ -7,7 +7,7 @@ const QuizQuestion = ({ quizData, questionNumber, setQuestionNumber, score, setS
 
     const [addAttempt, { error }] = useMutation(ADD_ATTEMPT);
 
-    const handleAnswerSubmit = (event) => {
+    const handleAnswerSubmit = async (event) => {
         event.preventDefault();
 
         if (selectedAnswer === null) {
@@ -18,8 +18,14 @@ const QuizQuestion = ({ quizData, questionNumber, setQuestionNumber, score, setS
             setScore(score+1);
         }
 
-        if (questionNumber===quizData.questions.length) {
-            
+        if (questionNumber===quizData.questions.length) { // && logged in
+            try {
+                await addAttempt({
+                    variables: { userId: 1, quizId: quizData._id, score: score },
+                });
+            } catch (err) {
+                console.error(err);
+            }
         }
 
         setSelectedAnswer(null);
