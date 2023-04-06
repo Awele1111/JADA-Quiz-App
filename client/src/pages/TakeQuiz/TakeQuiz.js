@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import QuizStart from './QuizStart';
 import QuizQuestion from './QuizQuestion';
 import QuizScore from './QuizScore';
+import { useQuery } from '@apollo/client';
 import { QUERY_QUIZ } from '../../utils/queries';
 
 const TakeQuiz = () => {
