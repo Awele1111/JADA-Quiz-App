@@ -1,17 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { QUERY_USER } from '../../utils/queries';
 
-const QuizStart = ({quizData}) => {
+const QuizStart = ({ quizData, setQuestionNumber }) => {
     return (
         <main>
             <h2>{quizData.title}</h2>
-            <h3>by {quizData.author}</h3>
+            <h3>by {quizData.creator}</h3>
             <p>{quizData.description}</p>
-            <Link to="">
-                <button>
-                    Start Quiz
-                </button>
-            </Link>
+            <button onClick={setQuestionNumber(1)}>Start Quiz</button>
         </main>
     )
 }

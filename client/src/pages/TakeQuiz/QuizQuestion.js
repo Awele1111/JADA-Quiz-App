@@ -1,10 +1,10 @@
 import React from 'react';
 
-const QuizQuestion = ({ quizData }) => {
+const QuizQuestion = ({ quizData, questionNumber, setQuestionNumber }) => {
     return (
         <main>
-            <p>{questionNumber}: {quizData.questions[questionNumber-1]}</p>
-            {quizData.questions[questionNumber-1].choices.map((choice) => {
+            <p>{questionNumber+1}: {quizData.questions[questionNumber].question}</p>
+            {quizData.questions[questionNumber].choices.map((choice) => {
                 return (
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"/>
@@ -13,10 +13,8 @@ const QuizQuestion = ({ quizData }) => {
                         </label>
                     </div>
                 )
-            })};
-            <button>
-                Next Question
-            </button>
+            })}
+            <button onClick={() => setQuestionNumber(questionNumber++)}>Next Question</button>
         </main>
     )
 }

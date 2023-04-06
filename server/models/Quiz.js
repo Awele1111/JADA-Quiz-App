@@ -25,7 +25,7 @@ const QuizSchema = new Schema(
     },
     questions: [questionSchema],
     highscores: [quizAttemptSchema],
-    discription: {
+    description: {
       type: String,
     },
     category: {

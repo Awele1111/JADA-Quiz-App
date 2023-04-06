@@ -74,7 +74,7 @@ const typeDefs = gql`
             public: Boolean, 
             style: String, 
             questions: [QuestionInput]!, 
-            discription: String, 
+            description: String, 
             category: String, 
             highscores: [AttemptInput]
             ): Quiz
