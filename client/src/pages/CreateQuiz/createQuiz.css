@@ -1,5 +1,5 @@
 .quizInfoContainer {
-    background: salmon;
+    background: rgba(181, 52, 188, 0.439) ;
     margin: 0 5vw;
     padding: 0 5vw;
     border-radius: 40px;
@@ -25,7 +25,7 @@
 
 .questionInputContainer, 
 .choiceInfoContainer {
-    background-color: salmon;
+    background-color: rgba(181, 52, 188, 0.439);
     width: 46vw;
     margin: 2vw;
     border-radius: 20px;
