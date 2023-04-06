@@ -119,7 +119,7 @@ const ProfilePage = () => {
                             </div>
                             <div className='col'>
                                 <h4 className='text-start link-container mb-0'>
-                                    <a className='quizLink' onClick={() => console.log(`navigating to ${quiz.title}`)}>
+                                    <a className='quizLink' href={`/takeQuiz/${quiz._id}`}>
 
                                         {quiz.title} by {quiz.creator.username}
 
