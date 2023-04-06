@@ -30,7 +30,7 @@ const CreateQuiz = (props) => {
 	}
 
 	let handleInfoChange = (event) => {
-		let newQuizValues = quizValues;
+		let newQuizValues = {...quizValues};
 		switch (event.target.name) {
 			case 'quizTitle':
 				newQuizValues.title = event.target.value;
@@ -47,6 +47,7 @@ const CreateQuiz = (props) => {
 				break
 			case 'quizCategory':
 				newQuizValues.category = event.target.value;
+				console.log(newQuizValues.category);
 				break
 			case 'quizDescription':
 				newQuizValues.description = event.target.value;
@@ -152,6 +153,7 @@ const CreateQuiz = (props) => {
 					alert("success");
 					window.location.assign('/profile');
 				} catch (error){
+					document.getElementById("overallFormError").innerHTML = "There is already a quiz with this Title!";
 					document.getElementById('quizTitleError').innerHTML = "This Title is already in use. Select a new Title.";
 				}
 			}
@@ -169,8 +171,8 @@ const CreateQuiz = (props) => {
 						className="form-control"
 						type='text'
 						name='quizTitle'
+						value={quizValues.title}
 						placeholder='Title'
-						value={quizValues.title || ""}
 						onChange={event => handleInfoChange(event)}
 						/>
 						<label htmlFor="quizTitle">Quiz Title*</label>
@@ -189,7 +191,7 @@ const CreateQuiz = (props) => {
 						<label className='me-2'>Category*</label>
 						<select name="quizCategory" onChange={event => handleInfoChange(event)}>
 							<option value="" selected>--</option>
-							{quizValues.category === "general"? <option value="General" selected>General</option>: <option value="General">General</option>}
+							{quizValues.category === "General"? <option value="General" selected>General</option>: <option value="General">General</option>}
 							{quizValues.category === "School"? <option value="School" selected>School</option>: <option value="School">School</option>}
 							{quizValues.category === "Sports"? <option value="Sports" selected>Sports</option>: <option value="Sports">Sports</option>}
 							{quizValues.category === "Games"? <option value="Games" selected>Games</option>: <option value="Games">Games</option>}
@@ -214,7 +216,7 @@ const CreateQuiz = (props) => {
 							name="quizDescription"
 							className="form-control"
 							placeholder='Description String'
-							value={quizValues.description || ""}
+							value={quizValues.description}
 							onChange={event => handleInfoChange(event)} />
 					<label htmlFor="quizDescription">{`Quiz Description (Optional)`}</label>
 				</div>

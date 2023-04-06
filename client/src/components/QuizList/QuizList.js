@@ -3,30 +3,16 @@ import { useQuery } from "@apollo/client";
 import { QUIZ_CATEGORY } from '../../utils/queries';
 
 const QuizList = ({category}) => {
-    console.log(category);
-  const { loading, data } = useQuery(QUIZ_CATEGORY, {
-    variables: { category: category }
-  });
-  let quizData = data?.quizCategory || [];
-console.log(quizData);
-if (loading) {
-    return <h3>Loading...</h3>
-}
+    const { loading, data } = useQuery(QUIZ_CATEGORY, {
+        variables: { category: category }
+    });
 
-    let testQuizList = [
-        {
-            title: `${category} Quiz #1`,
-            creator: 'username1'
-        },
-        {
-            title: `${category} Quiz #2`,
-            creator: 'username2'
-        },
-        {
-            title: `${category} Quiz #3`,
-            creator: 'username3'
-        }
-    ]
+    let quizData = data?.quizCategory || [];
+
+    if (loading) {
+        return <h3>Loading...</h3>
+    }
+
     return (
         <ul className='quizList'>
             {quizData.map((quiz, index) => (

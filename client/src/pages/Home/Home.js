@@ -15,13 +15,13 @@ const Home = () => {
     const [pageCategory, setCategory] = useState('Categories')
 
     let categories = [
-        {category: "General", image: generalPic}, 
-        {category: "School", image: schoolPic}, 
-        {category: "Sports", image: sportsPic}, 
-        {category: "Games", image: gamesPic}, 
-        {category: "Pop Culture", image: popCulturePic}, 
-        {category: "Music", image: musicPic}, 
-        {category: "Other", image: otherPic}
+        {category: "general", image: generalPic}, 
+        {category: "school", image: schoolPic}, 
+        {category: "sports", image: sportsPic}, 
+        {category: "games", image: gamesPic}, 
+        {category: "pop culture", image: popCulturePic}, 
+        {category: "music", image: musicPic}, 
+        {category: "other", image: otherPic}
     ];
 
     return (

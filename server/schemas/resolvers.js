@@ -57,7 +57,7 @@ const resolvers = {
       return { token, user };
     },
 
-    createQuiz: async (parent, { title, public, style, questions, description, categroy }, context) => {
+    createQuiz: async (parent, { title, public, style, questions, description, category }, context) => {
       if (context.user) {
         const quiz = await Quiz.create({
           title,
@@ -65,7 +65,7 @@ const resolvers = {
           style,
           questions,
           description,
-          categroy,
+          category,
           creator: context.user._id
         });
         return quiz;
