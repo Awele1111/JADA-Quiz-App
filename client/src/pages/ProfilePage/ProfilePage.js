@@ -6,7 +6,7 @@ import editLogo from '../../assets/editLogo.svg';
 import { useQuery } from '@apollo/client';
 import { QUERY_ME, QUERY_QUIZZES } from '../../utils/queries';
 import Auth from '../../utils/auth';
-
+import MyQuizzes from './profileComponents/myQuizzes';
 
 const ProfilePage = () => {
     const { _id: userParam } = useParams();
@@ -133,7 +133,8 @@ const ProfilePage = () => {
                 </div>
                 <div className='profileContainer'>
                     <h1 className='mb-5 mt-3'>Your Created Quizzes</h1>
-                    <div className='container'>
+                    <MyQuizzes userId={user._id}/>
+                    {/* <div className='container'>
                         {myQuizes.map((quiz, index) => (
                             <div className='row mb-4' key={index}>
                                 <div className='col-4 col-sm-2 d-flex align-items-center justify-content-end p-0'>
@@ -162,7 +163,7 @@ const ProfilePage = () => {
                                 </div>
                             </div>
                         ))}
-                    </div>
+                    </div> */}
                     <div className='mt-5'>
                         <button className='btn btn-secondary'
                                 onClick={() => window.location.assign('/createQuiz')}>

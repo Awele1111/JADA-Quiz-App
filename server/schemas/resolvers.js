@@ -23,10 +23,9 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in");
     },
 
-  myQuizzes: async (parent, args, context) => {
-      if (context.user) {
-        return Quiz.find({ creator: context.user._id });
-      }
+  myQuizzes: async (parent, { userId }) => {
+        return Quiz.find({ userId });
+     
     },
 
     quiz: async (parent, { _id }) => {
