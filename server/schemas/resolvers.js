@@ -10,12 +10,15 @@ const resolvers = {
     },
 
     user: async (parent, { _id }) => {
-      return User.findOne({ _id });
+      return User.findOne({ _id }).populate('favoriteQuizzes').populate('creator');;
     },
 
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id });
+        return User.findOne({ _id: context.user._id }).populate({
+          path: "favoriteQuizzes",
+          populate: "creator"
+        })
       }
       throw new AuthenticationError("You need to be logged in");
     },
@@ -25,7 +28,7 @@ const resolvers = {
     },
 
     quiz: async (parent, { _id }) => {
-      return Quiz.findOne({ _id });
+      return Quiz.findById({_id}).populate('creator');
     }
   },
 
@@ -49,77 +52,75 @@ const resolvers = {
       return { token, user };
     },
 
-    createQuiz: async (parent, { title, public, style, questions, description, categroy, creator }) => {
-
-      const quiz = await Quiz.create({
-        title,
-        public,
-        style,
-        questions,
-        description,
-        categroy,
-        creator
-      });
-      return quiz;
+    createQuiz: async (parent, { title, public, style, questions, description, categroy }, context) => {
+      if (context.user) {
+        const quiz = await Quiz.create({
+          title,
+          public,
+          style,
+          questions,
+          description,
+          categroy,
+          creator: context.user._id
+        });
+        return quiz;
+      }
     },
 
-    addAttempt: async (parent, { quizId, score, userId }, //context
-    ) => {
-      //if (context.user) {
-      return Quiz.findOneAndUpdate(
-        { _id: quizId },
-        {
-          $addToSet: {
-            highscores: { score, userId },
+    addAttempt: async (parent, { quizId, score }, context) => {
+      if (context.user) {
+        return Quiz.findOneAndUpdate(
+          { _id: quizId },
+          {
+            $addToSet: {
+              highscores: { score, userId: context.user._id },
+            }
           }
-        }
-      );
-      //} throw new AuthenticationError('You need to be logged in')
+        );
+      }
+      throw new AuthenticationError('You need to be logged in')
     },
 
-    deleteQuiz: async (parent, { quizId }, //context
-    ) => {
-      // if (context.user) {
-      const quiz = await Quiz.findOneAndDelete({
-        _id: quizId,
-        // creator: context.user._id
-      });
-      return quiz;
-      //}
-      // throw new AuthenticationError('You need to be logged in');
+    deleteQuiz: async (parent, { quizId }, context) => {
+      if (context.user) {
+        const quiz = await Quiz.findOneAndDelete({
+          _id: quizId,
+          creator: context.user._id
+        });
+        return quiz;
+      }
+      throw new AuthenticationError('You need to be logged in');
     },
 
-    addFavorite: async (parent, { quizId, userId }, //context
+    addFavorite: async (parent, { quizId }, context
     ) => {
-      // if (context.user) {
-      const favorite = await User.findOneAndUpdate(
-        { _id: userId },
-        {
-          $addToSet: {
-            favoriteQuizzes: { _id: quizId }
+      if (context.user) {
+        const favorite = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          {
+            $addToSet: {
+              favoriteQuizzes: { _id: quizId }
+            },
+          }
+        );
+        return favorite;
+      } throw new AuthenticationError('You need to be logged in');
+    },
+
+    removeFavorite: async (parent, { quizId }, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          {
+            $pull: {
+              favoriteQuizzes: quizId
+            },
           },
-        }
-      );
-      return favorite;
-      //} throw new AuthenticationError('You need to be logged in');
-    },
-
-    removeFavorite: async (parent, { quizId, userId }, //context
-    ) => {
-      //if (context.user) {
-      return User.findOneAndUpdate(
-        { _id: userId },
-        {
-          $pull: {
-            favoriteQuizzes: quizId
-          },
-        },
-        { new: true }
-      );
-      //} throw new AuthenticationError('You need to be logged in');
+          { new: true }
+        );
+      } throw new AuthenticationError('You need to be logged in');
     }
   },
-}
-  ;
+};
 
 module.exports = resolvers;

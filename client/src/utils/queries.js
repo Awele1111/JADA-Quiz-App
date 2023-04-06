@@ -27,7 +27,10 @@ query user($id: ID!) {
       _id
       title
       category
-      creator
+      creator {
+        username
+        _id
+      }
     }
   }
   `;
@@ -40,7 +43,9 @@ query user($id: ID!) {
       style
       category
       description
-      creator
+      creator {
+        username
+      }
       questions {
         question
         choices {
@@ -66,6 +71,11 @@ query Me {
     email
     favoriteQuizzes {
       _id
+      title
+      description
+      creator {
+        username
+      }
     }
   }
 }

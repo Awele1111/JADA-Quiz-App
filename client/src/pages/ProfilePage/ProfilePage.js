@@ -1,10 +1,38 @@
 import './profilePage.css'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import trashLogo from '../../assets/trashLogo.svg';
 import favoriteLogo from '../../assets/favoriteLogo.svg';
 import editLogo from '../../assets/editLogo.svg';
+import { useQuery } from '@apollo/client';
+import { QUERY_ME } from '../../utils/queries';
+import Auth from '../../utils/auth';
+
 
 const ProfilePage = () => {
+    const { _id: userParam } = useParams();
+    const { loading, data } = useQuery(QUERY_ME, {
+        variables: { _id: userParam },
+    })
+
+    const user = data?.me || {};
+    // const favoriteQizzes = data.me?.favoriteQuizes
+    if (Auth.loggedIn() && Auth.getProfile().data._id === userParam) {
+        return <Link to='/profile' />;
+    }
+
+    console.log(user.favoriteQuizzes);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (!user?._id) {
+        return (
+            <h4>
+                You need to be logged in to see this. Use the navigation links above to sign up or log in!
+            </h4>
+        );
+    }
     //replace with userQuery
     let testUser = {
         username: "dmanaglia",
@@ -68,14 +96,18 @@ const ProfilePage = () => {
         console.log(`Are you sure you want to delete the quiz "${title}"? (This cannot be undone!)`)
     }
 
+// console.log(user.favoriteQuizses[0]._id);
+
     return (
         <div className='mb-5'>
-            <h2 className='ms-5 mb-4'>{testUser.username}</h2>
+
+            <h2 className='ms-5 mb-4'>{user.username}</h2>
             <div className='mainContainer'>
                 <div className='profileContainer'>
                     <h1 className='mb-5 mt-3'>Your Favorite Quizzes</h1>
                     <div className='container'>
-                    {testUser.favoriteQuizes.map((quiz, index) => (
+                    {user.favoriteQuizzes.map((quiz, index) => (
+
                         <div className='row mb-4' key={index}>
                             <div className='col-2 col-sm-1 d-flex align-items-center p-0'>
                                 <img src={favoriteLogo} 
@@ -89,7 +121,9 @@ const ProfilePage = () => {
                             <div className='col'>
                                 <h4 className='text-start link-container mb-0'>
                                     <a className='quizLink' onClick={() => console.log(`navigating to ${quiz.title}`)}>
-                                        {quiz.title} by {quiz.creator}
+
+                                        {quiz.title} by {quiz.creator.username}
+
                                     </a>
                                 </h4>
                             </div>
@@ -140,5 +174,6 @@ const ProfilePage = () => {
         </div>
     )
 }
+
 
 export default ProfilePage;
