@@ -1,3 +1,4 @@
 body {
-    background: lightblue;
+    /* background: lightblue; */
+    background: linear-gradient(to bottom right,pink, #0072ff);
 }
