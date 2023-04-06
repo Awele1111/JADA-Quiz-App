@@ -31,6 +31,19 @@ query user($id: ID!) {
   }
   `;
 
+  export const QUIZ_CATEGORY = gql`
+  query quizCategory($category: String!) {
+    quizCategory(category: $category) {
+      _id
+      title
+      creator {
+        _id
+        username
+      }
+    }
+  }
+  `;
+
   export const QUERY_QUIZ = gql`
   query quiz($id: ID!) {
     quiz(_id: $id) {
