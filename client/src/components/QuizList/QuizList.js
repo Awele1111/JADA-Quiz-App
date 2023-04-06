@@ -1,7 +1,18 @@
 import './quizList.css';
+import { useQuery } from "@apollo/client";
+import { QUIZ_CATEGORY } from '../../utils/queries';
 
 const QuizList = ({category}) => {
-    // replace with query
+    console.log(category);
+  const { loading, data } = useQuery(QUIZ_CATEGORY, {
+    variables: { category: category }
+  });
+  let quizData = data?.quizCategory || [];
+console.log(quizData);
+if (loading) {
+    return <h3>Loading...</h3>
+}
+
     let testQuizList = [
         {
             title: `${category} Quiz #1`,
@@ -18,8 +29,8 @@ const QuizList = ({category}) => {
     ]
     return (
         <ul className='quizList'>
-            {testQuizList.map((quiz, index) => (
-                <li onClick={() => console.log(`navigating to ${quiz.title}`)} className='quizItem' key={index}>{`${quiz.title} created by ${quiz.creator}`}</li>
+            {quizData.map((quiz, index) => (
+                <li onClick={() => console.log(`navigating to ${quiz.title}`)} className='quizItem' key={index}>{`${quiz.title} created by ${quiz.creator.username}`}</li>
             ))}
         </ul>
     )

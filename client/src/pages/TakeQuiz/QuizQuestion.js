@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import Auth from '../../utils/auth';
+import { useMutation } from '@apollo/client';
+import { ADD_ATTEMPT } from '../../utils/mutations';
 
 const QuizQuestion = ({ quizData, questionNumber, setQuestionNumber, score, setScore }) => {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
 
-    console.log(score);
+    const [addAttempt, { error }] = useMutation(ADD_ATTEMPT);
 
-    const handleAnswerSubmit = (event) => {
+    const handleAnswerSubmit = async (event) => {
         event.preventDefault();
 
         if (selectedAnswer === null) {
@@ -14,7 +17,16 @@ const QuizQuestion = ({ quizData, questionNumber, setQuestionNumber, score, setS
 
         if (quizData.questions[questionNumber-1].choices[selectedAnswer].correct) {
             setScore(score+1);
-            console.log(score);
+        }
+
+        if (questionNumber===quizData.questions.length && Auth.loggedIn) { // && logged in
+            try {
+                await addAttempt({
+                    variables: { quizId: quizData._id, score: score },
+                });
+            } catch (err) {
+                console.error(err);
+            }
         }
 
         setSelectedAnswer(null);
@@ -27,7 +39,9 @@ const QuizQuestion = ({ quizData, questionNumber, setQuestionNumber, score, setS
             {quizData.questions[questionNumber-1].choices.map((choice, index) => {
                 return (
                     <div className="form-check">
-                        <input className="form-check-input" onClick={() => {setSelectedAnswer(index)}} type="radio" name="choices" id={`choice${index}`} value={`choice${index}`} />
+                        {index===selectedAnswer?
+                            <input className="form-check-input" onClick={() => {setSelectedAnswer(index)}} type="radio" name="choices" id={`choice${index}`} value={`choice${index}`} checked />:
+                            <input className="form-check-input" onClick={() => {setSelectedAnswer(index)}} type="radio" name="choices" id={`choice${index}`} value={`choice${index}`} />}
                         <label className="form-check-label" for={`choice${index}`}>
                             {choice.choice}
                         </label>

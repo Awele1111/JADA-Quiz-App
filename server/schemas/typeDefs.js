@@ -58,6 +58,7 @@ const typeDefs = gql`
   
     type Query {
         myQuizzes(creator: ID!): [Quiz]
+        quizCategory(category: String!): [Quiz]
         users: [User]
         user(_id: ID!): User
         quiz(_id: ID!): Quiz
