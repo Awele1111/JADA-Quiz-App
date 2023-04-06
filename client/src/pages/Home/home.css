@@ -1,13 +1,21 @@
-.welcomeInfo {
+*{
+    font-family: 'Times New Roman', Times, serif;
+}.welcomeInfo {
     text-align: center;
     margin: 30px calc(30vw - 50px);
+    border-style: solid;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: rgba(181, 52, 188, 0.439) ;
+    font-family: 'Times New Roman', Times, serif;
 }
+
 
 #homeMain {
     height: max-content;
     margin: 0 5vw;
     width: 90vw;
-    background-color: salmon;
+    background-color: rgba(181, 52, 188, 0.439) ;
     border-radius: 40px;
 }
 
@@ -16,8 +24,8 @@
 }
 
 .myOverlay:hover {
-    background-color: white;
-    color: black;
+    background-color: purple;
+    color: whitesmoke;
     opacity: 0.9;
     cursor: pointer;
 }
