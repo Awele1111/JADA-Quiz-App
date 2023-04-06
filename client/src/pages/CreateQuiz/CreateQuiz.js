@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import './createQuiz.css'
 import trashLogo from '../../assets/trashLogo.svg';
-
+import { useMutation } from '@apollo/client';
+import { CREATE_QUIZ } from '../../utils/mutations';
 
 const CreateQuiz = (props) => {
 	const [quizValues, setQuizValues] = useState({title: '', public: true, style: 'defualt', category: '', description: ''});
 	const [questionValues, setQuestionValues] = useState([{ question: "", choices: [{choice: '', correct: false}]}])
-	
+	const [createQuiz, {error, data}] = useMutation(CREATE_QUIZ);
+
+
 	//if user wants to update quiz then pass the quiz through props and it will render
 	if(props.location.state) {
 		console.log(props.location.state);
@@ -89,7 +92,7 @@ const CreateQuiz = (props) => {
 		setQuestionValues(newQuestionValues);
 	}
 
-	let handleSubmit = (event) => {
+	let handleSubmit = async (event) => {
 		event.preventDefault();
 		let allErrors = document.querySelectorAll('.myError');
 		for(let error of allErrors){
@@ -130,8 +133,9 @@ const CreateQuiz = (props) => {
 		}
 		if(valid){
 			quizValues.questions = questionValues;
-			alert("Success")
 			console.log(quizValues);
+			let userData = await createQuiz({variables: quizValues});
+			console.log(userData);
 		} else {
 			document.getElementById("overallFormError").innerHTML = "Your quiz has errors, double check all required values are present";
 		}
