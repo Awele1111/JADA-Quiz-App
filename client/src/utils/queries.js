@@ -22,15 +22,11 @@ query user($id: ID!) {
   `;
 
   export const QUERY_QUIZZES = gql`
-  query myQuizzes {
-    quizzes {
+  query MyQuizzes($creator: ID!) {
+    myQuizzes(creator: $creator) {
       _id
       title
       category
-      creator {
-        username
-        _id
-      }
     }
   }
   `;
