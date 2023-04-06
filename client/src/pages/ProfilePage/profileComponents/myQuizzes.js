@@ -1,17 +1,18 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_QUIZZES } from "../../../utils/queries";
 import trashLogo from '../../../assets/trashLogo.svg';
 import editLogo from '../../../assets/editLogo.svg';
+import { DELETE_QUIZ } from "../../../utils/mutations";
 
 const MyQuizzes = ({ userId }) => {
-    console.log(userId);
-
+ 
     const { loading, data } = useQuery(QUERY_QUIZZES, {
         variables: { creator: userId }
     });
-    console.log(data);
+
+    const [deleteQuiz, { error, deleteData }] = useMutation(DELETE_QUIZ);
 
     const handleDelete = (event) => {
         // let _id = event.target.getAttribute("data-id");
@@ -26,7 +27,7 @@ const MyQuizzes = ({ userId }) => {
     
 
     const myQuizzes = data?.myQuizzes || [];
-    console.log(myQuizzes);
+  
     return (
         <>
             <div className='container'>
