@@ -19,7 +19,13 @@ const MyQuizzes = ({ userId }) => {
         console.log(`Are you sure you want to delete the quiz "${title}"? (This cannot be undone!)`)
     }
 
-    const myQuizzes = data.myQuizzes;
+    if (loading) {
+        return <div>Loading...</div>
+    }
+
+    
+
+    const myQuizzes = data?.myQuizzes || [];
     console.log(myQuizzes);
     return (
         <>
