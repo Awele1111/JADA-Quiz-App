@@ -1,12 +1,14 @@
 .welcomeInfo {
     text-align: center;
-    margin: 50px 300px;
+    margin: 30px calc(30vw - 50px);
 }
 
-main {
+#homeMain {
     height: max-content;
-    margin: 0 100px;
+    margin: 0 5vw;
+    width: 90vw;
     background-color: salmon;
+    border-radius: 40px;
 }
 
 .myOverlay {
@@ -18,4 +20,16 @@ main {
     color: black;
     opacity: 0.9;
     cursor: pointer;
+}
+
+@media screen and (max-width: 767px) {
+    .customCard {
+        width: 40% !important;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .customCard {
+        width: 100% !important;
+    }
 }
