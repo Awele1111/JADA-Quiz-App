@@ -21,7 +21,7 @@ const QuizQuestion = ({ quizData, questionNumber, setQuestionNumber, score, setS
         if (questionNumber===quizData.questions.length) { // && logged in
             try {
                 await addAttempt({
-                    variables: { userId: 1, quizId: quizData._id, score: score },
+                    variables: { quizId: quizData._id, score: score },
                 });
             } catch (err) {
                 console.error(err);

@@ -8,7 +8,7 @@ const QuizScore = ({ quizData, score }) => {
     const handleAddFavorite = async () => {
         try {
             await addFavorite({
-                variables: { quizId: quizData._id, userId: 1 }, // userId?
+                variables: { quizId: quizData._id },
             });
         } catch (err) {
             console.error(err);
