@@ -59,6 +59,11 @@ const ProfilePage = () => {
                 creator: "The Dragonborn",
                 _id: 4
             },
+            {
+                title: "Everton Quiz",
+                creator: "coleman4Life",
+                _id: 1
+            },
         ]
     }
     //replace with myQuizzesQuery
@@ -95,12 +100,14 @@ const ProfilePage = () => {
 
     return (
         <div className='mb-5'>
+
             <h2 className='ms-5 mb-4'>{user.username}</h2>
             <div className='mainContainer'>
                 <div className='profileContainer'>
                     <h1 className='mb-5 mt-3'>Your Favorite Quizzes</h1>
                     <div className='container'>
                     {user.favoriteQuizzes.map((quiz, index) => (
+
                         <div className='row mb-4' key={index}>
                             <div className='col-2 col-sm-1 d-flex align-items-center p-0'>
                                 <img src={favoriteLogo} 
@@ -114,7 +121,9 @@ const ProfilePage = () => {
                             <div className='col'>
                                 <h4 className='text-start link-container mb-0'>
                                     <a className='quizLink' onClick={() => console.log(`navigating to ${quiz.title}`)}>
+
                                         {quiz.title} by {quiz.creator.username}
+
                                     </a>
                                 </h4>
                             </div>

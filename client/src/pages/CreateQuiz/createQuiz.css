@@ -1,0 +1,90 @@
+.quizInfoContainer {
+    background: salmon;
+    margin: 0 5vw;
+    padding: 0 5vw;
+    border-radius: 40px;
+}
+
+#quizTitleContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.quizTitle {
+    min-width: 200px;
+    width: 50%;
+}
+
+#quizDescription {
+    height: 100px;
+}
+
+.myError {
+    color: red;
+}
+
+.questionInputContainer, 
+.choiceInfoContainer {
+    background-color: salmon;
+    width: 46vw;
+    margin: 2vw;
+    border-radius: 20px;
+}
+
+.questionInput {
+    width: 90%;
+    margin: 20px 20px 0 20px;
+}
+
+.questionInputContainer>label {
+    top: 20px;
+    left: 20px;
+}
+
+.questionInputContainer>.questionInput {
+    min-height: 40%;
+    height: calc(100% - 115px)
+}
+
+.oneChoiceInput {
+    margin: 0 20px;
+}
+
+.correctRadio {
+    scale: 1.5;
+}
+
+.choiceInfo,
+#noAnswerError {
+    margin-right: 30px;
+}
+
+@media screen and (max-width: 767px) {
+    .questionInputContainer, 
+    .choiceInfoContainer {
+        width: 90vw;
+        margin: 2vw 5vw;
+    }
+
+    .questionInputContainer>.questionInput {
+        min-height: 49%;
+    }
+
+    .questionError {
+        margin-bottom: 12px;
+    }
+
+    .removeQuestionContainer {
+        margin-top: 0 !important;
+    }
+
+    .dropDownFlex{
+        flex-direction: column;
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 500px) {
+
+
+}

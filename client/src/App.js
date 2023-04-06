@@ -2,6 +2,7 @@ import React from 'react';
 // import logo from "./logo.svg";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
+import './App.css'
 
 
 import {
