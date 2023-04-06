@@ -1,11 +1,9 @@
 import './profilePage.css'
 import { Link, useParams } from 'react-router-dom';
-import trashLogo from '../../assets/trashLogo.svg';
 import favoriteLogo from '../../assets/favoriteLogo.svg';
-import editLogo from '../../assets/editLogo.svg';
 import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_ME, QUERY_QUIZZES } from '../../utils/queries';
-import { REMOVE_FAVORITE, DELETE_QUIZ } from '../../utils/mutations';
+import { QUERY_ME } from '../../utils/queries';
+import { REMOVE_FAVORITE } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 import MyQuizzes from './profileComponents/myQuizzes';
 
@@ -15,7 +13,7 @@ const ProfilePage = () => {
         variables: { _id: userParam },
     });
     const [removeFavorite, { error, removeData }] = useMutation(REMOVE_FAVORITE);
-    const [deleteQuiz, { deleteError, deleteData }] = useMutation(DELETE_QUIZ);
+
 
     const user = data?.me || {};
 
@@ -89,22 +87,15 @@ const ProfilePage = () => {
         let _id = event.target.getAttribute("data-id");
         let title = event.target.getAttribute("data-title");
         console.log(`Are you sure you want to unlike the quiz "${title}"?`)
-
-        const { removeData } = await removeFavorite({
-            variables: { _id }
-        });
+        try {
+            const { removeData } = await removeFavorite({
+                variables: { quizId: _id }
+            });
+        } catch (err) {
+            console.error(err)
+        }
        
-        
     }
-
-
-    const handleDelete = (event) => {
-        // let _id = event.target.getAttribute("data-id");
-        let title = event.target.getAttribute("data-title");
-        console.log(`Are you sure you want to delete the quiz "${title}"? (This cannot be undone!)`)
-    }
-
-// console.log(user.favoriteQuizses[0]._id);
 
     return (
         <div className='mb-5'>
