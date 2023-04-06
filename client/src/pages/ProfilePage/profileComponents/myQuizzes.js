@@ -65,7 +65,7 @@ const MyQuizzes = ({ userId }) => {
                         </div>
                         <div className='col'>
                             <h4 className='link-container text-start m-0'>
-                                <a className='quizLink' onClick={() => console.log(`navigating to ${quiz.title}`)}>
+                                <a className='quizLink' href={`/takeQuiz/${quiz._id}`}>
                                     {quiz.title}
                                 </a>
                             </h4>
