@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 const QuizQuestion = ({ quizData, questionNumber, setQuestionNumber, score, setScore }) => {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
 
+    console.log(score);
+
     const handleAnswerSubmit = (event) => {
         event.preventDefault();
 
@@ -12,6 +14,7 @@ const QuizQuestion = ({ quizData, questionNumber, setQuestionNumber, score, setS
 
         if (quizData.questions[questionNumber-1].choices[selectedAnswer].correct) {
             setScore(score+1);
+            console.log(score);
         }
 
         setSelectedAnswer(null);
@@ -24,8 +27,8 @@ const QuizQuestion = ({ quizData, questionNumber, setQuestionNumber, score, setS
             {quizData.questions[questionNumber-1].choices.map((choice, index) => {
                 return (
                     <div className="form-check">
-                        <input className="form-check-input" onClick={() => {setSelectedAnswer(index)}} type="radio" name="choices" id="exampleRadios2" value="option2"/>
-                        <label className="form-check-label" for="exampleRadios2">
+                        <input className="form-check-input" onClick={() => {setSelectedAnswer(index)}} type="radio" name="choices" id={`choice${index}`} value={`choice${index}`} />
+                        <label className="form-check-label" for={`choice${index}`}>
                             {choice.choice}
                         </label>
                     </div>

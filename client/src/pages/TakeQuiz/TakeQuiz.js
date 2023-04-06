@@ -8,6 +8,8 @@ const TakeQuiz = () => {
     const [questionNumber, setQuestionNumber] = useState(0);
     const [score, setScore] = useState(0);
 
+    console.log(score);
+
     // QUERY_QUIZ by id rather than using testQuiz
     const testQuiz = {
         title: "test2",
