@@ -14,10 +14,17 @@ const MyQuizzes = ({ userId }) => {
 
     const [deleteQuiz, { error, deleteData }] = useMutation(DELETE_QUIZ);
 
-    const handleDelete = (event) => {
-        // let _id = event.target.getAttribute("data-id");
+    const handleDelete = async (event) => {
+        let _id = event.target.getAttribute("data-id");
         let title = event.target.getAttribute("data-title");
         console.log(`Are you sure you want to delete the quiz "${title}"? (This cannot be undone!)`)
+        try {
+            const { deleteData } = await deleteQuiz({
+                variables: { quizId: _id }
+            });
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     if (loading) {
@@ -27,6 +34,10 @@ const MyQuizzes = ({ userId }) => {
     
 
     const myQuizzes = data?.myQuizzes || [];
+
+    // if (!myQuizzes.lenght) {
+    //     return <h3>No Quizzes Created</h3>
+    // }
   
     return (
         <>
