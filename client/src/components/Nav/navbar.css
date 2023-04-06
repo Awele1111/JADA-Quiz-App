@@ -1,21 +1,20 @@
-.customHeader {
-    background-color: mediumpurple;
-    height: 75px;
-    margin-bottom: 25px;
-  }
-  
-  .customNav {
-    display: flex;
-    justify-content: space-evenly;
-  }
-  
-  .customNav a {
-    font-size: 50px;
-    text-decoration: none;
-    color: black;
-  }
-  
-  .customNav a:hover {
-    color: white;
-  }
-  
+.nav-item a,
+#logOutLink {
+  color: salmon;
+  text-decoration: none;
+}
+
+.nav-item a:hover,
+#logOutLink:hover {
+  cursor: pointer;
+  color: white;
+}
+
+#offcanvasDarkNavbarLabel {
+  color: salmon;
+  text-decoration: underline;
+}
+
+#pageTitle {
+  color: salmon;
+}

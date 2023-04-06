@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import Auth from '../../utils/auth';
 import './home.css';
 import generalPic from '../../assets/generalCategory.jpeg';
 import schoolPic from '../../assets/schoolCategory.jpeg';
@@ -26,12 +26,19 @@ const Home = () => {
 
     return (
         <>
-            <div className='welcomeInfo'>
-                <h3>Welcome To The Quiz App!</h3>
-                <p>Browse our user created Quizzes and test your knowledge! Login or sign up to save your favorite quizzes, to save your highscores and to create your own quizzes for other users!</p>
-            </div>
+                {Auth.loggedIn() ? (
+                    <div className='welcomeInfo'>
+                        <h3>Welcome!</h3>
+                        <p>Browse our user created Quizzes and test your knowledge or create your very own quiz to test the knowledge of others!</p>
+                    </div>
+                ) : (
+                    <div className='welcomeInfo'>
+                        <h3>Welcome To The Quiz App!</h3>
+                        <p>Browse our user created Quizzes and test your knowledge! Login or sign up to save your favorite quizzes, to save your highscores and to create your own quizzes for other users!</p>
+                    </div>
+                )}
             
-            <main className='container text-center position-relative'>
+            <main id="homeMain" className='text-center position-relative mb-5'>
                 {
                     pageCategory !== "Categories" ? (
                         <button className='position-absolute start-0 top-0 btn btn-secondary mt-4 ms-5'
