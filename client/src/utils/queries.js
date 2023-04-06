@@ -22,7 +22,7 @@ query user($id: ID!) {
   `;
 
   export const QUERY_QUIZZES = gql`
-  query quizzes {
+  query myQuizzes {
     quizzes {
       _id
       title

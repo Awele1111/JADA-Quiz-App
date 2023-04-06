@@ -57,7 +57,7 @@ const typeDefs = gql`
     }
   
     type Query {
-        quizzes: [Quiz]
+        myQuizzes: [Quiz]
         users: [User]
         user(_id: ID!): User
         quiz(_id: ID!): Quiz

@@ -23,8 +23,10 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in");
     },
 
-    quizzes: async () => {
-      return Quiz.find();
+  myQuizzes: async (parent, args, context) => {
+      if (context.user) {
+        return Quiz.find({ creator: context.user._id });
+      }
     },
 
     quiz: async (parent, { _id }) => {

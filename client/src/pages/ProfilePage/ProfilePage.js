@@ -4,7 +4,7 @@ import trashLogo from '../../assets/trashLogo.svg';
 import favoriteLogo from '../../assets/favoriteLogo.svg';
 import editLogo from '../../assets/editLogo.svg';
 import { useQuery } from '@apollo/client';
-import { QUERY_ME } from '../../utils/queries';
+import { QUERY_ME, QUERY_QUIZZES } from '../../utils/queries';
 import Auth from '../../utils/auth';
 
 
@@ -20,8 +20,6 @@ const ProfilePage = () => {
         return <Link to='/profile' />;
     }
 
-    console.log(user.favoriteQuizzes);
-
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -33,6 +31,8 @@ const ProfilePage = () => {
             </h4>
         );
     }
+
+
     //replace with userQuery
     let testUser = {
         username: "dmanaglia",
