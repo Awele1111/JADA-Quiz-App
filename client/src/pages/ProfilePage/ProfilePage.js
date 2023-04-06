@@ -3,24 +3,25 @@ import { Link, useParams } from 'react-router-dom';
 import trashLogo from '../../assets/trashLogo.svg';
 import favoriteLogo from '../../assets/favoriteLogo.svg';
 import editLogo from '../../assets/editLogo.svg';
-import { useQuery } from '@apollo/client';
-import { QUERY_ME } from '../../utils/queries';
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_ME, QUERY_QUIZZES } from '../../utils/queries';
+import { REMOVE_FAVORITE, DELETE_QUIZ } from '../../utils/mutations';
 import Auth from '../../utils/auth';
-
+import MyQuizzes from './profileComponents/myQuizzes';
 
 const ProfilePage = () => {
     const { _id: userParam } = useParams();
     const { loading, data } = useQuery(QUERY_ME, {
         variables: { _id: userParam },
-    })
+    });
+    const [removeFavorite, { error, removeData }] = useMutation(REMOVE_FAVORITE);
+    const [deleteQuiz, { deleteError, deleteData }] = useMutation(DELETE_QUIZ);
 
     const user = data?.me || {};
-    // const favoriteQizzes = data.me?.favoriteQuizes
+
     if (Auth.loggedIn() && Auth.getProfile().data._id === userParam) {
         return <Link to='/profile' />;
     }
-
-    console.log(user.favoriteQuizzes);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -33,6 +34,7 @@ const ProfilePage = () => {
             </h4>
         );
     }
+ 
     //replace with userQuery
     let testUser = {
         username: "dmanaglia",
@@ -83,10 +85,16 @@ const ProfilePage = () => {
     ]
 
 
-    const handleUnlike = (event) => {
-        // let _id = event.target.getAttribute("data-id");
+    const handleUnlike = async (event) => {
+        let _id = event.target.getAttribute("data-id");
         let title = event.target.getAttribute("data-title");
         console.log(`Are you sure you want to unlike the quiz "${title}"?`)
+
+        const { removeData } = await removeFavorite({
+            variables: { _id }
+        });
+       
+        
     }
 
 
@@ -133,36 +141,7 @@ const ProfilePage = () => {
                 </div>
                 <div className='profileContainer'>
                     <h1 className='mb-5 mt-3'>Your Created Quizzes</h1>
-                    <div className='container'>
-                        {myQuizes.map((quiz, index) => (
-                            <div className='row mb-4' key={index}>
-                                <div className='col-4 col-sm-2 d-flex align-items-center justify-content-end p-0'>
-                                    <img src={trashLogo} 
-                                        className='logo ps-3 pe-3' 
-                                        alt='Trash Logo' 
-                                        data-id={quiz._id} 
-                                        data-title={quiz.title} 
-                                        onClick={(event) => handleDelete(event)}>
-                                    </img>
-                                    <Link to={{ pathname: '/createQuiz', state: {quizData: quiz}}}>
-                                        <img src={editLogo} 
-                                            className='logo' 
-                                            alt='Edit Quiz Logo' 
-                                            data-id={quiz._id} 
-                                            data-title={quiz.title}>
-                                        </img>
-                                    </Link>
-                                </div>
-                                <div className='col'>
-                                    <h4 className='link-container text-start m-0'>
-                                        <a className='quizLink' onClick={() => console.log(`navigating to ${quiz.title}`)}>
-                                            {quiz.title}
-                                        </a>
-                                    </h4>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                    <MyQuizzes userId={user._id}/>
                     <div className='mt-5'>
                         <button className='btn btn-secondary'
                                 onClick={() => window.location.assign('/createQuiz')}>
