@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-// import "../css/login.css";
+import "../css/login.css";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
 import Auth from '../utils/auth';
@@ -30,14 +30,14 @@ export const Login = (props ) => {
         <div className="auth-form-container">
             <h2>Login</h2>
         <form className="login-form" onSubmit={handleSubmit}>
-            <label htmlFor="email">Email:</label>
-            <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Type your email here" id="email" name="email" />
-            <label htmlFor="password">Password:</label>
-            <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="********" id="password" name="password" />
-            <button type="submit">Login</button>
+            <label className="login-label" htmlFor="email">Email:</label>
+            <input className="login-input" value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Type your email here" id="email" name="email" />
+            <label className="login-label" htmlFor="password">Password:</label>
+            <input className="login-input" value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="********" id="password" name="password" />
+            <button classname="login-button" type="submit">Login</button>
         </form>
 
-        <button onClick={() => window.location.assign('/signup')}>Don't have an account? signup/register here</button>
+        <button className="link-button" onClick={() => window.location.assign('/signup')}>Don't have an account? signup/register here</button>
         </div>
         </body>
     )
