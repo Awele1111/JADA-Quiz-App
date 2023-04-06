@@ -1,21 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const QuizQuestion = ({ quizData, questionNumber, setQuestionNumber }) => {
+const QuizQuestion = ({ quizData, questionNumber, setQuestionNumber, score, setScore }) => {
+    const [selectedAnswer, setSelectedAnswer] = useState(null);
+
+    const handleAnswerSubmit = (event) => {
+        event.preventDefault();
+
+        if (selectedAnswer === null) {
+            return; // tell player to pick an answer to continue?
+        }
+
+        if (quizData.questions[questionNumber-1].choices[selectedAnswer].correct) {
+            setScore(score+1);
+        }
+
+        setSelectedAnswer(null);
+        setQuestionNumber(questionNumber+1);
+    }
+
     return (
-        <main>
-            <p>{questionNumber+1}: {quizData.questions[questionNumber].question}</p>
-            {quizData.questions[questionNumber].choices.map((choice) => {
+        <div>
+            <p>{questionNumber}: {quizData.questions[questionNumber-1].question}</p>
+            {quizData.questions[questionNumber-1].choices.map((choice, index) => {
                 return (
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"/>
-                        <label class="form-check-label" for="exampleRadios2">
+                    <div className="form-check">
+                        <input className="form-check-input" onClick={() => {setSelectedAnswer(index)}} type="radio" name="choices" id="exampleRadios2" value="option2"/>
+                        <label className="form-check-label" for="exampleRadios2">
                             {choice.choice}
                         </label>
                     </div>
                 )
             })}
-            <button onClick={() => setQuestionNumber(questionNumber++)}>Next Question</button>
-        </main>
+            <button onClick={handleAnswerSubmit}>Next Question</button>
+        </div>
     )
 }
 
