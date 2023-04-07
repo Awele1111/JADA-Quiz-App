@@ -30,13 +30,15 @@ const typeDefs = gql`
     }
 
     type Attempt {
-        userId: User
+        username: String
         score: Int
+        time: Float
     }
 
     input AttemptInput {
-        userId: ID
+        username: String
         score: Int
+        time: Float
     }
 
     type Quiz {
@@ -49,6 +51,7 @@ const typeDefs = gql`
         highscores: [Attempt]
         description: String
         category: String
+        getScoreboard: [Attempt]
     }
 
     type Auth {
@@ -63,6 +66,7 @@ const typeDefs = gql`
         user(_id: ID!): User
         quiz(_id: ID!): Quiz
         me: User
+        highScores(_id: ID!): Quiz
     }
 
     type Mutation {
@@ -80,6 +84,8 @@ const typeDefs = gql`
             highscores: [AttemptInput]
             ): Quiz
 
+        addAttempt(score: Int, time: Float, quizId: ID!): Quiz
+        
         updateQuiz(
             title: String!, 
             creator: String, 
@@ -90,8 +96,7 @@ const typeDefs = gql`
             category: String, 
             highscores: [AttemptInput]
             ): Quiz
-
-        addAttempt(userId: ID!, score: Int, quizId: ID!): Quiz
+            
         addFavorite(quizId: ID!): User
         deleteQuiz(quizId: ID!): Quiz
         removeFavorite(quizId: ID!): User

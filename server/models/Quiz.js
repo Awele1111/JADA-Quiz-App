@@ -46,16 +46,24 @@ QuizSchema.virtual('questionCount').get(function () {
 });
 
 QuizSchema.virtual('getScoreboard').get(function () {
-    let arr = [...this.highscores]
-    //function to sort score attempts
-    for(let i = 0; i < arr.length; i++){
-        for(let j = 0; j < arr.length - i - 1; j++){
-            if(arr[j + 1].score < arr[j].score){
-                [arr[j + 1],arr[j]] = [arr[j],arr[j + 1]]
-            }
-        }
-    };
-    return arr;
+    const data = [...this.highscores];
+    data.sort((a, b) => {
+      if (a.score > b.score) {
+        return -1;
+      } else {
+        return 1;
+      }
+    
+    });
+    // //function to sort score attempts
+    // for(let i = 0; i < arr.length; i++){
+    //     for(let j = 0; j < arr.length - i - 1; j++){
+    //         if(arr[j + 1].score < arr[j].score){
+    //             [arr[j + 1],arr[j]] = [arr[j],arr[j + 1]]
+    //         }
+    //     }
+    // };
+    return data;
 });
 
 const Quiz = model('Quiz', QuizSchema);
