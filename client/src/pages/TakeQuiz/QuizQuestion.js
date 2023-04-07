@@ -3,6 +3,9 @@ import Auth from '../../utils/auth';
 import { useMutation } from '@apollo/client';
 import { ADD_ATTEMPT } from '../../utils/mutations';
 
+import { useQuizContext } from '../../utils/quizContext';
+import { TOGGLE_TAKING_QUIZ } from '../../utils/actions';
+
 const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, score, setScore }) => {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [addAttempt, { error }] = useMutation(ADD_ATTEMPT);

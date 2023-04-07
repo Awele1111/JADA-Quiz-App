@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import Auth from '../../utils/auth';
 import { useMutation } from '@apollo/client';
 import { ADD_FAVORITE } from '../../utils/mutations';
+import { useQuizContext } from '../../utils/quizContext';
 
 const QuizScore = ({ quizData, quizId, score }) => {
+    const [state, dispatch] = useQuizContext();
+    console.log(state.pauseTime / 1000);
+
     const [addFavorite, { error }] = useMutation(ADD_FAVORITE);
 
     const handleAddFavorite = async () => {
