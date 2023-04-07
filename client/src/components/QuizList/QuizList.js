@@ -16,7 +16,7 @@ const QuizList = ({category}) => {
     return (
         <ul className='quizList'>
             {quizData.map((quiz, index) => (
-                <li onClick={() => console.log(`navigating to ${quiz.title}`)} className='quizItem' key={index}>{`${quiz.title} created by ${quiz.creator.username}`}</li>
+                <li className='quizItem' key={index}><a className='quizLink' href={`/takeQuiz/${quiz._id}`}>{`${quiz.title} created by ${quiz.creator.username}`}</a></li>
             ))}
         </ul>
     )

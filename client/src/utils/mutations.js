@@ -24,6 +24,31 @@ mutation createQuiz($title: String!, $questions: [QuestionInput]!, $creator: Str
   }
   `;
 
+
+export const UPDATE_QUIZ = gql`
+mutation updateQuiz($title: String!, $questions: [QuestionInput]!, $creator: String, $public: Boolean, $style: String, $description: String, $category: String) {
+    updateQuiz(title: $title, questions: $questions, creator: $creator, public: $public, style: $style, description: $description, category: $category) {
+      _id
+      category
+      creator {
+        _id
+        username
+      }
+      description
+      public
+      questions {
+        question
+        choices {
+          choice
+          correct
+        }
+      }
+      style
+      title
+    }
+  }
+  `;
+
 export const DELETE_QUIZ = gql`
 mutation deleteQuiz($quizId: ID!) {
     deleteQuiz(quizId: $quizId) {
@@ -34,8 +59,8 @@ mutation deleteQuiz($quizId: ID!) {
   `;
 
 export const ADD_ATTEMPT = gql`
-mutation addAttempt($userId: ID!, $quizId: ID!, $score: Int) {
-    addAttempt(userId: $userId, quizId: $quizId, score: $score) {
+mutation addAttempt($quizId: ID!, $score: Int) {
+    addAttempt(quizId: $quizId, score: $score) {
       _id
       highscores {
         score
