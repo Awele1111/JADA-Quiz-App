@@ -64,9 +64,7 @@ mutation addAttempt($quizId: ID!, $score: Int) {
       _id
       highscores {
         score
-        userId {
-          _id
-        }
+        username
       }
     }
   }
