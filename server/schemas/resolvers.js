@@ -91,13 +91,13 @@ const resolvers = {
       }
     },
 
-    addAttempt: async (parent, { quizId, score }, context) => {
+    addAttempt: async (parent, { quizId, score, time }, context) => {
       if (context.user) {
         return Quiz.findOneAndUpdate(
           { _id: quizId },
           {
             $addToSet: {
-              highscores: { score, username: context.user.username },
+              highscores: { score, time, username: context.user.username },
             }
           }
         );

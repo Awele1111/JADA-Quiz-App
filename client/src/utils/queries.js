@@ -95,6 +95,7 @@ query HighScores($id: ID!) {
     _id
     highscores {
       username
+      time
       score
     }
   }

@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import Auth from '../../utils/auth';
 import { useMutation } from '@apollo/client';
-import { ADD_ATTEMPT } from '../../utils/mutations';
 
 const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, score, setScore }) => {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [answerMessage, setAnswerMessage] = useState("");
-
-    const [addAttempt, { error }] = useMutation(ADD_ATTEMPT);
 
     const handleAnswerSubmit = async (event) => {
         event.preventDefault();
@@ -25,17 +22,9 @@ const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, sco
                 if (questionNumber===quizData.questions.length && Auth.loggedIn) {
                     const finishTime = new Date();
                     localStorage.setItem("finishTime", finishTime.getTime());
-        
-                    try {
-                        await addAttempt({
-                            variables: { quizId: quizId, score: score },
-                        });
-                    } catch (err) {
-                        console.error(err);
-                    }
                 }
                 setQuestionNumber(questionNumber+1);
-            }, 2000)
+            }, 1000)
         } else {
             setAnswerMessage("Incorrect!")
             setTimeout(async function(){
@@ -44,17 +33,9 @@ const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, sco
                 if (questionNumber===quizData.questions.length && Auth.loggedIn) {
                     const finishTime = new Date();
                     localStorage.setItem("finishTime", finishTime.getTime());
-        
-                    try {
-                        await addAttempt({
-                            variables: { quizId: quizId, score: score },
-                        });
-                    } catch (err) {
-                        console.error(err);
-                    }
                 }
                 setQuestionNumber(questionNumber+1);
-            }, 2000)
+            }, 1000)
         }
     }
 
