@@ -5,6 +5,8 @@ import { ADD_ATTEMPT } from '../../utils/mutations';
 
 const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, score, setScore }) => {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
+    const [answerMessage, setAnswerMessage] = useState("");
+
     const [addAttempt, { error }] = useMutation(ADD_ATTEMPT);
 
     const handleAnswerSubmit = async (event) => {
@@ -15,21 +17,45 @@ const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, sco
         }
 
         if (quizData.questions[questionNumber-1].choices[selectedAnswer].correct) {
-            setScore(score+1);
+            setAnswerMessage("Correct!")
+            setTimeout(async function(){
+                setScore(score+1);
+                setAnswerMessage("");
+                setSelectedAnswer(null);
+                if (questionNumber===quizData.questions.length && Auth.loggedIn) {
+                    const finishTime = new Date();
+                    localStorage.setItem("finishTime", finishTime.getTime());
+        
+                    try {
+                        await addAttempt({
+                            variables: { quizId: quizId, score: score },
+                        });
+                    } catch (err) {
+                        console.error(err);
+                    }
+                }
+                setQuestionNumber(questionNumber+1);
+            }, 2000)
+        } else {
+            setAnswerMessage("Incorrect!")
+            setTimeout(async function(){
+                setAnswerMessage("");
+                setSelectedAnswer(null);
+                if (questionNumber===quizData.questions.length && Auth.loggedIn) {
+                    const finishTime = new Date();
+                    localStorage.setItem("finishTime", finishTime.getTime());
+        
+                    try {
+                        await addAttempt({
+                            variables: { quizId: quizId, score: score },
+                        });
+                    } catch (err) {
+                        console.error(err);
+                    }
+                }
+                setQuestionNumber(questionNumber+1);
+            }, 2000)
         }
-
-        if (questionNumber===quizData.questions.length && Auth.loggedIn) { // && logged in
-            try {
-                await addAttempt({
-                    variables: { quizId: quizId, score: score },
-                });
-            } catch (err) {
-                console.error(err);
-            }
-        }
-
-        setSelectedAnswer(null);
-        setQuestionNumber(questionNumber+1);
     }
 
     return (
@@ -48,6 +74,7 @@ const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, sco
                 )
             })}
             <button onClick={handleAnswerSubmit}>Next Question</button>
+            {answerMessage}
         </div>
     )
 }
