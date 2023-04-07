@@ -1,11 +1,14 @@
 import { gql } from '@apollo/client';
 
 export const CREATE_QUIZ = gql`
-mutation createQuiz($title: String!, $questions: [QuestionInput]!, $creator: String, $public: Boolean, $style: String, $discription: String, $category: String) {
-    createQuiz(title: $title, questions: $questions, creator: $creator, public: $public, style: $style, discription: $discription, category: $category) {
+mutation createQuiz($title: String!, $questions: [QuestionInput]!, $creator: String, $public: Boolean, $style: String, $description: String, $category: String) {
+    createQuiz(title: $title, questions: $questions, creator: $creator, public: $public, style: $style, description: $description, category: $category) {
       _id
       category
-      creator
+      creator {
+        _id
+        username
+      }
       description
       public
       questions {

@@ -1,22 +1,36 @@
 import React, { useState } from 'react'
 import './createQuiz.css'
 import trashLogo from '../../assets/trashLogo.svg';
-
+import { useMutation, useQuery } from '@apollo/client';
+import { CREATE_QUIZ } from '../../utils/mutations';
+import { QUERY_QUIZ } from '../../utils/queries'
 
 const CreateQuiz = (props) => {
 	const [quizValues, setQuizValues] = useState({title: '', public: true, style: 'defualt', category: '', description: ''});
 	const [questionValues, setQuestionValues] = useState([{ question: "", choices: [{choice: '', correct: false}]}])
-	
-	//if user wants to update quiz then pass the quiz through props and it will render
+	const [createQuiz, {error, newData}] = useMutation(CREATE_QUIZ);
+	const [loaded, setLoaded] = useState(false);
+
+	let quizId;
 	if(props.location.state) {
-		console.log(props.location.state);
-		// let quiz = props.location.state;
-		// setQuizValues({title: quiz.title, public: quiz.public, style: quiz.style, category: quiz.category, description: quiz.description});
-		// setQuestionValues(quiz.questions);
+		quizId = props.location.state.quizData._id || null;
+	}
+	const { loading, data } = useQuery(QUERY_QUIZ, { variables: {id: quizId}});
+	let quizData = data?.quiz || null;
+	
+	if(quizData && !loaded) {
+		setLoaded(true);
+		setQuizValues({title: quizData.title, public: quizData.public, style: quizData.style, category: quizData.category, description: quizData.description});
+		setQuestionValues(quizData.questions);
+		console.log(quizData)
+	}
+
+	if(loading) {
+		return (<div>Loading...</div>)
 	}
 
 	let handleInfoChange = (event) => {
-		let newQuizValues = quizValues;
+		let newQuizValues = {...quizValues};
 		switch (event.target.name) {
 			case 'quizTitle':
 				newQuizValues.title = event.target.value;
@@ -33,6 +47,7 @@ const CreateQuiz = (props) => {
 				break
 			case 'quizCategory':
 				newQuizValues.category = event.target.value;
+				console.log(newQuizValues.category);
 				break
 			case 'quizDescription':
 				newQuizValues.description = event.target.value;
@@ -89,7 +104,7 @@ const CreateQuiz = (props) => {
 		setQuestionValues(newQuestionValues);
 	}
 
-	let handleSubmit = (event) => {
+	let handleSubmit = async (event) => {
 		event.preventDefault();
 		let allErrors = document.querySelectorAll('.myError');
 		for(let error of allErrors){
@@ -130,13 +145,23 @@ const CreateQuiz = (props) => {
 		}
 		if(valid){
 			quizValues.questions = questionValues;
-			alert("Success")
-			console.log(quizValues);
+			if(loaded){
+				//add functionality to update quiz
+			} else {
+				try {
+					await createQuiz({variables: quizValues});
+					alert("success");
+					window.location.assign('/profile');
+				} catch (error){
+					document.getElementById("overallFormError").innerHTML = "There is already a quiz with this Title!";
+					document.getElementById('quizTitleError').innerHTML = "This Title is already in use. Select a new Title.";
+				}
+			}
 		} else {
 			document.getElementById("overallFormError").innerHTML = "Your quiz has errors, double check all required values are present";
 		}
 	}
-	
+
 	return (
 		<form className='form row-cols-lg-auto g-3 align-items-center mx-auto' onSubmit={handleSubmit}>
 			<div className='quizInfoContainer pt-4'>
@@ -146,6 +171,7 @@ const CreateQuiz = (props) => {
 						className="form-control"
 						type='text'
 						name='quizTitle'
+						value={quizValues.title}
 						placeholder='Title'
 						onChange={event => handleInfoChange(event)}
 						/>
@@ -157,27 +183,27 @@ const CreateQuiz = (props) => {
 					<div className='dropDownElement'>
 						<label className='me-2'>Quiz Accessability:</label>
 						<select name="quizSecurity" onChange={event => handleInfoChange(event)}>
-							<option value="public">Public</option>
-							<option value="private">Private</option>
+							<option value="public" selected>Public</option>
+							{quizValues.category === "private"? <option value="private" selected>private</option>: <option value="private">private</option>}
 						</select>
 					</div>
 					<div className='dropDownElement'>
 						<label className='me-2'>Category*</label>
 						<select name="quizCategory" onChange={event => handleInfoChange(event)}>
-							<option value="">--</option>
-							<option value="General">General</option>					
-							<option value="School">School</option>
-							<option value="Sports">Sports</option>
-							<option value="Games">Games</option>					
-							<option value="Pop Culture">Pop Culture</option>
-							<option value="Music">Music</option>
-							<option value="Other">Other</option>
+							<option value="" selected>--</option>
+							{quizValues.category === "General"? <option value="General" selected>General</option>: <option value="General">General</option>}
+							{quizValues.category === "School"? <option value="School" selected>School</option>: <option value="School">School</option>}
+							{quizValues.category === "Sports"? <option value="Sports" selected>Sports</option>: <option value="Sports">Sports</option>}
+							{quizValues.category === "Games"? <option value="Games" selected>Games</option>: <option value="Games">Games</option>}
+							{quizValues.category === "Pop Culture"? <option value="Pop Culture" selected>Pop Culture</option>: <option value="Pop Culture">Pop Culture</option>}
+							{quizValues.category === "Music"? <option value="Music" selected>Music</option>: <option value="Music">Music</option>}
+							{quizValues.category === "Other"? <option value="Other" selected>Other</option>: <option value="Other">Other</option>}
 						</select>
 					</div>
 					<div className='dropDownElement'>
 						<label className='me-2'>Quiz Styling:</label>
 						<select name="quizStyling" onChange={event => handleInfoChange(event)}>
-							<option value="default">Default</option>
+							<option value="default" selected>Default</option>
 						</select>
 					</div>
 				</div>
@@ -190,6 +216,7 @@ const CreateQuiz = (props) => {
 							name="quizDescription"
 							className="form-control"
 							placeholder='Description String'
+							value={quizValues.description}
 							onChange={event => handleInfoChange(event)} />
 					<label htmlFor="quizDescription">{`Quiz Description (Optional)`}</label>
 				</div>
@@ -274,7 +301,11 @@ const CreateQuiz = (props) => {
 			))}
 			<div className="button-section d-flex justify-content-center">
 				<button className="btn btn-secondary m-3" type="button" onClick={() => addQuestion()}>Add Question</button>
-				<button className="btn btn-primary m-3" type="submit">Submit</button>
+				{loaded ? (
+					<button className="btn btn-primary m-3 ps-4 pe-4" type="submit">Save</button>
+				):(
+					<button className="btn btn-primary m-3" type="submit">Submit</button>
+				)}
 			</div>
 			<div className="button-section d-flex justify-content-center">
 				<p id="overallFormError" className='errorMessage myError'></p>

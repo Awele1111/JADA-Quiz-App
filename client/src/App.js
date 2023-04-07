@@ -60,7 +60,7 @@ function App() {
             <Route exact path='/profile' component={ProfilePage} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/signUp' component={Register} />
-            <Route exact path='/takeQuiz' component={TakeQuiz} />
+            <Route path='/takeQuiz/:id' component={TakeQuiz} />
             <Route render={() => <h1>Wrong page!</h1>} />
           </Switch>
         </>
