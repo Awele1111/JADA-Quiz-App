@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import Auth from '../../utils/auth';
 import { useMutation } from '@apollo/client';
+import { useQuizContext } from '../../utils/quizContext';
 import { ADD_FAVORITE, ADD_ATTEMPT } from '../../utils/mutations';
 import HighScores from './HighScore';
 
 const QuizScore = ({ quizData, quizId, score }) => {
     const [attemptAdded, setAttemptAdded] = useState(false);
-
-    const timeTaken = localStorage.getItem("finishTime") - localStorage.getItem("startTime");
+    const [state, dispatch] = useQuizContext();
+    
+    const timeTaken = localStorage.getItem("finishTime") - localStorage.getItem("startTime") - state.pauseTime;
 
     const [addFavorite, { favError }] = useMutation(ADD_FAVORITE);
     const [addAttempt, { attemptError }] = useMutation(ADD_ATTEMPT);
-
+    
+    
     if(!attemptAdded && Auth.loggedIn()) {
         setAttemptAdded(true);
         try {

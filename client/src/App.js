@@ -1,10 +1,5 @@
 import React from 'react';
-// import logo from "./logo.svg";
-import { Login } from "./pages/Login";
-import { Register } from "./pages/Register";
-import './App.css'
-
-
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import {
   ApolloClient,
   InMemoryCache,
@@ -13,10 +8,13 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import './App.css'
+import { QuizProvider } from './utils/quizContext';
+
+import { Login } from "./pages/Login";
+import { Register } from "./pages/Register";
 import Home from './pages/Home/Home';
 import CreateQuiz from './pages/CreateQuiz/CreateQuiz';
-import { useState } from "react";
 import Nav from './components/Nav/Navbar'
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import TakeQuiz from './pages/TakeQuiz/TakeQuiz';
@@ -53,23 +51,25 @@ function App() {
   
   return (
     <ApolloProvider client={client}>
-      <Router>
-        <>
-          <Nav />
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <Route exact path='/createQuiz' component={CreateQuiz} />
-            <Route path='/createQuiz/:id' component={CreateQuiz} />
-            <Route exact path='/profile' component={ProfilePage} />
-            <Route exact path='/login' component={Login} />
-            <Route exact path='/signUp' component={Register} />
-            <Route path='/takeQuiz/:id' component={TakeQuiz} />
-            <Route path='/highScores/:id' component={HighScores} />
-            <Route render={() => <h1>Wrong page!</h1>} />
-          </Switch>
-        </>
-      </Router>
-    </ApolloProvider>
+        <Router>
+          <>
+            <QuizProvider>
+              <Nav />
+              <Switch>
+                <Route exact path='/' component={Home} />
+                <Route exact path='/createQuiz' component={CreateQuiz} />
+                <Route path='/createQuiz/:id' component={CreateQuiz} />
+                <Route exact path='/profile' component={ProfilePage} />
+                <Route exact path='/login' component={Login} />
+                <Route exact path='/signUp' component={Register} />
+                <Route path='/takeQuiz/:id' component={TakeQuiz} />
+                <Route path='/highScores/:id' component={HighScores} />
+                <Route render={() => <h1>Wrong page!</h1>} />
+              </Switch>
+            </QuizProvider>
+          </>
+        </Router>
+      </ApolloProvider>
   );
 }
 
