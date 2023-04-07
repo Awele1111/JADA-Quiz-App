@@ -3,13 +3,14 @@ import React, { useState } from 'react';
 import './createQuiz.css'
 import trashLogo from '../../assets/trashLogo.svg';
 import { useMutation, useQuery } from '@apollo/client';
-import { CREATE_QUIZ } from '../../utils/mutations';
+import { CREATE_QUIZ, UPDATE_QUIZ } from '../../utils/mutations';
 import { QUERY_QUIZ } from '../../utils/queries'
 
 const CreateQuiz = (props) => {
 	const [quizValues, setQuizValues] = useState({title: '', public: true, style: 'defualt', category: '', description: ''});
 	const [questionValues, setQuestionValues] = useState([{ question: "", choices: [{choice: '', correct: false}]}])
 	const [createQuiz, {error, newData}] = useMutation(CREATE_QUIZ);
+	const [updateQuiz, {updateError, updateData}] = useMutation(UPDATE_QUIZ);
 	const [loaded, setLoaded] = useState(false);
 
 	let path = window.location.pathname.split('/')
@@ -19,11 +20,19 @@ const CreateQuiz = (props) => {
 	}
 	const { loading, data } = useQuery(QUERY_QUIZ, { variables: {id: quizId}});
 	let quizData = data?.quiz || null;
-	
+
 	if(quizData && !loaded) {
 		setLoaded(true);
 		setQuizValues({title: quizData.title, public: quizData.public, style: quizData.style, category: quizData.category, description: quizData.description});
-		setQuestionValues(quizData.questions);
+		let questionList = [];
+		for(let questionObj of quizData.questions){
+			let choiceList = [];
+			for(let choiceObj of questionObj.choices){
+				choiceList.push({choice: choiceObj.choice, correct: choiceObj.correct});
+			}
+			questionList.push({question: questionObj.question, choices: choiceList});
+		}
+		setQuestionValues(questionList);
 	}
 
 	if(loading) {
@@ -146,7 +155,13 @@ const CreateQuiz = (props) => {
 		if(valid){
 			quizValues.questions = questionValues;
 			if(loaded){
-				//add functionality to update quiz
+				try {
+					await updateQuiz({variables: quizValues});
+					alert("Saved!");
+					window.location.assign('/profile');
+				} catch (error){
+					console.log(error);
+				}
 			} else {
 				try {
 					await createQuiz({variables: quizValues});

@@ -76,6 +76,21 @@ const resolvers = {
       }
     },
 
+    updateQuiz: async (parent, { title, public, style, questions, description, category }, context) => {
+      if (context.user) {
+        const quiz = await Quiz.findOneAndUpdate({
+          title,
+          public,
+          style,
+          questions,
+          description,
+          category,
+          creator: context.user._id
+        });
+        return quiz;
+      }
+    },
+
     addAttempt: async (parent, { quizId, score }, context) => {
       if (context.user) {
         return Quiz.findOneAndUpdate(

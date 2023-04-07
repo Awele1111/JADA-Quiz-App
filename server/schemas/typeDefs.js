@@ -82,6 +82,18 @@ const typeDefs = gql`
             ): Quiz
 
         addAttempt(score: Int, quizId: ID!): Quiz
+        
+        updateQuiz(
+            title: String!, 
+            creator: String, 
+            public: Boolean, 
+            style: String, 
+            questions: [QuestionInput]!, 
+            description: String, 
+            category: String, 
+            highscores: [AttemptInput]
+            ): Quiz
+            
         addFavorite(quizId: ID!): User
         deleteQuiz(quizId: ID!): Quiz
         removeFavorite(quizId: ID!): User
