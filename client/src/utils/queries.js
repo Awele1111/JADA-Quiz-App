@@ -64,9 +64,7 @@ query user($id: ID!) {
       }
       highscores {
         score
-        userId {
-          _id
-        }
+        username
       }
     }
   }
@@ -90,3 +88,15 @@ query Me {
 }
 `;
   
+export const HIGHSCORES = gql`
+query HighScores($id: ID!) {
+  highScores(_id: $id) {
+    title
+    _id
+    highscores {
+      username
+      score
+    }
+  }
+}
+`;
