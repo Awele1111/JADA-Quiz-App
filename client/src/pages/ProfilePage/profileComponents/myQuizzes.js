@@ -54,14 +54,14 @@ const MyQuizzes = ({ userId }) => {
                                 data-title={quiz.title}
                                 onClick={(event) => handleDelete(event)}>
                             </img>
-                            <Link to={{ pathname: '/createQuiz', state: { quizData: quiz } }}>
+                            <a href={`/createQuiz/${quiz._id}`}>
                                 <img src={editLogo}
                                     className='logo'
                                     alt='Edit Quiz Logo'
                                     data-id={quiz._id}
                                     data-title={quiz.title}>
                                 </img>
-                            </Link>
+                            </a>
                         </div>
                         <div className='col'>
                             <h4 className='link-container text-start m-0'>

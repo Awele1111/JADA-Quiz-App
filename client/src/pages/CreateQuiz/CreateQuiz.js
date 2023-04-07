@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+// import { useParams } from 'react-router-dom';
 import './createQuiz.css'
 import trashLogo from '../../assets/trashLogo.svg';
 import { useMutation, useQuery } from '@apollo/client';
@@ -11,9 +12,10 @@ const CreateQuiz = (props) => {
 	const [createQuiz, {error, newData}] = useMutation(CREATE_QUIZ);
 	const [loaded, setLoaded] = useState(false);
 
+	let path = window.location.pathname.split('/')
 	let quizId;
-	if(props.location.state) {
-		quizId = props.location.state.quizData._id || null;
+	if(path.length > 2) {
+		quizId = path[2];
 	}
 	const { loading, data } = useQuery(QUERY_QUIZ, { variables: {id: quizId}});
 	let quizData = data?.quiz || null;
@@ -22,7 +24,6 @@ const CreateQuiz = (props) => {
 		setLoaded(true);
 		setQuizValues({title: quizData.title, public: quizData.public, style: quizData.style, category: quizData.category, description: quizData.description});
 		setQuestionValues(quizData.questions);
-		console.log(quizData)
 	}
 
 	if(loading) {
@@ -36,10 +37,10 @@ const CreateQuiz = (props) => {
 				newQuizValues.title = event.target.value;
 				break
 			case 'quizSecurity':
-				if(event.target.value === 'private'){
-					newQuizValues.public = false;
-				} else {
+				if(event.target.value === 'true'){
 					newQuizValues.public = true;
+				} else {
+					newQuizValues.public = false;
 				}
 				break
 			case 'quizStyling':
@@ -47,7 +48,6 @@ const CreateQuiz = (props) => {
 				break
 			case 'quizCategory':
 				newQuizValues.category = event.target.value;
-				console.log(newQuizValues.category);
 				break
 			case 'quizDescription':
 				newQuizValues.description = event.target.value;
@@ -182,28 +182,28 @@ const CreateQuiz = (props) => {
 				<div className='dropDownFlex d-flex justify-content-between w-100 pt-4'>
 					<div className='dropDownElement'>
 						<label className='me-2'>Quiz Accessability:</label>
-						<select name="quizSecurity" onChange={event => handleInfoChange(event)}>
-							<option value="public" selected>Public</option>
-							{quizValues.category === "private"? <option value="private" selected>private</option>: <option value="private">private</option>}
+						<select name="quizSecurity" defaultValue={quizValues.public ? 'true': 'false'} onChange={event => handleInfoChange(event)}>
+							<option value='true'>Public</option>
+							<option value='false'>Private</option>
 						</select>
 					</div>
 					<div className='dropDownElement'>
 						<label className='me-2'>Category*</label>
-						<select name="quizCategory" onChange={event => handleInfoChange(event)}>
-							<option value="" selected>--</option>
-							{quizValues.category === "General"? <option value="General" selected>General</option>: <option value="General">General</option>}
-							{quizValues.category === "School"? <option value="School" selected>School</option>: <option value="School">School</option>}
-							{quizValues.category === "Sports"? <option value="Sports" selected>Sports</option>: <option value="Sports">Sports</option>}
-							{quizValues.category === "Games"? <option value="Games" selected>Games</option>: <option value="Games">Games</option>}
-							{quizValues.category === "Pop Culture"? <option value="Pop Culture" selected>Pop Culture</option>: <option value="Pop Culture">Pop Culture</option>}
-							{quizValues.category === "Music"? <option value="Music" selected>Music</option>: <option value="Music">Music</option>}
-							{quizValues.category === "Other"? <option value="Other" selected>Other</option>: <option value="Other">Other</option>}
+						<select name="quizCategory" defaultValue={quizValues.category} onChange={event => handleInfoChange(event)}>
+							<option value="">--</option>
+							<option value="General">General</option>
+							<option value="School">School</option>
+							<option value="Sports">Sports</option>
+							<option value="Games">Games</option>
+							<option value="Pop Culture">Pop Culture</option>
+							<option value="Music">Music</option>
+							<option value="Other">Other</option>
 						</select>
 					</div>
 					<div className='dropDownElement'>
 						<label className='me-2'>Quiz Styling:</label>
-						<select name="quizStyling" onChange={event => handleInfoChange(event)}>
-							<option value="default" selected>Default</option>
+						<select name="quizStyling" defaultValue={quizValues.style} onChange={event => handleInfoChange(event)}>
+							<option value="default">Default</option>
 						</select>
 					</div>
 				</div>
