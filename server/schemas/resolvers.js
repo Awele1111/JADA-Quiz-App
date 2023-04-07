@@ -34,6 +34,10 @@ const resolvers = {
 
     quiz: async (parent, { _id }) => {
       return Quiz.findById({ _id }).populate('creator');
+    },
+
+    highScores: async (parent, { _id }) => {
+      return Quiz.findById({ _id });
     }
   },
 
@@ -78,7 +82,7 @@ const resolvers = {
           { _id: quizId },
           {
             $addToSet: {
-              highscores: { score, userId: context.user._id },
+              highscores: { score, username: context.user.username },
             }
           }
         );
