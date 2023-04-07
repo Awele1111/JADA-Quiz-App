@@ -80,6 +80,17 @@ const typeDefs = gql`
             highscores: [AttemptInput]
             ): Quiz
 
+        updateQuiz(
+            title: String!, 
+            creator: String, 
+            public: Boolean, 
+            style: String, 
+            questions: [QuestionInput]!, 
+            description: String, 
+            category: String, 
+            highscores: [AttemptInput]
+            ): Quiz
+
         addAttempt(userId: ID!, score: Int, quizId: ID!): Quiz
         addFavorite(quizId: ID!): User
         deleteQuiz(quizId: ID!): Quiz
