@@ -17,12 +17,15 @@ const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, sco
         if (quizData.questions[questionNumber-1].choices[selectedAnswer].correct) {
             setScore(score+1);
         }
-
+        
         if (questionNumber===quizData.questions.length && Auth.loggedIn) { // && logged in
             try {
-                await addAttempt({
-                    variables: { quizId: quizId, score: score },
+                let quizScore = 100*score/quizData.questions.length;
+               await addAttempt({
+                    variables: { quizId: quizId, score: quizScore },
                 });
+               console.log(quizScore);
+                
             } catch (err) {
                 console.error(err);
             }

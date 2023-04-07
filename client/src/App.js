@@ -20,6 +20,8 @@ import { useState } from "react";
 import Nav from './components/Nav/Navbar'
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import TakeQuiz from './pages/TakeQuiz/TakeQuiz';
+import HighScores from './pages/TakeQuiz/HighScore';
+
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -62,6 +64,7 @@ function App() {
             <Route exact path='/login' component={Login} />
             <Route exact path='/signUp' component={Register} />
             <Route path='/takeQuiz/:id' component={TakeQuiz} />
+            <Route path='/highScores/:id' component={HighScores} />
             <Route render={() => <h1>Wrong page!</h1>} />
           </Switch>
         </>
