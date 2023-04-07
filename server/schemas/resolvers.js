@@ -23,13 +23,17 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in");
     },
 
-  myQuizzes: async (parent, { creator }) => {
-        return Quiz.find({ creator });
-     
+    myQuizzes: async (parent, { creator }) => {
+      return Quiz.find({ creator });
+
+    },
+
+    quizCategory: async (parent, { category }) => {
+      return Quiz.find({ category }).populate('creator');
     },
 
     quiz: async (parent, { _id }) => {
-      return Quiz.findById({_id}).populate('creator');
+      return Quiz.findById({ _id }).populate('creator');
     }
   },
 
@@ -53,7 +57,7 @@ const resolvers = {
       return { token, user };
     },
 
-    createQuiz: async (parent, { title, public, style, questions, description, categroy }, context) => {
+    createQuiz: async (parent, { title, public, style, questions, description, category }, context) => {
       if (context.user) {
         const quiz = await Quiz.create({
           title,
@@ -61,7 +65,7 @@ const resolvers = {
           style,
           questions,
           description,
-          categroy,
+          category,
           creator: context.user._id
         });
         return quiz;

@@ -1,31 +1,46 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+// import { useParams } from 'react-router-dom';
 import './createQuiz.css'
 import trashLogo from '../../assets/trashLogo.svg';
-
+import { useMutation, useQuery } from '@apollo/client';
+import { CREATE_QUIZ } from '../../utils/mutations';
+import { QUERY_QUIZ } from '../../utils/queries'
 
 const CreateQuiz = (props) => {
 	const [quizValues, setQuizValues] = useState({title: '', public: true, style: 'defualt', category: '', description: ''});
 	const [questionValues, setQuestionValues] = useState([{ question: "", choices: [{choice: '', correct: false}]}])
+	const [createQuiz, {error, newData}] = useMutation(CREATE_QUIZ);
+	const [loaded, setLoaded] = useState(false);
+
+	let path = window.location.pathname.split('/')
+	let quizId;
+	if(path.length > 2) {
+		quizId = path[2];
+	}
+	const { loading, data } = useQuery(QUERY_QUIZ, { variables: {id: quizId}});
+	let quizData = data?.quiz || null;
 	
-	//if user wants to update quiz then pass the quiz through props and it will render
-	if(props.location.state) {
-		console.log(props.location.state);
-		// let quiz = props.location.state;
-		// setQuizValues({title: quiz.title, public: quiz.public, style: quiz.style, category: quiz.category, description: quiz.description});
-		// setQuestionValues(quiz.questions);
+	if(quizData && !loaded) {
+		setLoaded(true);
+		setQuizValues({title: quizData.title, public: quizData.public, style: quizData.style, category: quizData.category, description: quizData.description});
+		setQuestionValues(quizData.questions);
+	}
+
+	if(loading) {
+		return (<div>Loading...</div>)
 	}
 
 	let handleInfoChange = (event) => {
-		let newQuizValues = quizValues;
+		let newQuizValues = {...quizValues};
 		switch (event.target.name) {
 			case 'quizTitle':
 				newQuizValues.title = event.target.value;
 				break
 			case 'quizSecurity':
-				if(event.target.value === 'private'){
-					newQuizValues.public = false;
-				} else {
+				if(event.target.value === 'true'){
 					newQuizValues.public = true;
+				} else {
+					newQuizValues.public = false;
 				}
 				break
 			case 'quizStyling':
@@ -89,7 +104,7 @@ const CreateQuiz = (props) => {
 		setQuestionValues(newQuestionValues);
 	}
 
-	let handleSubmit = (event) => {
+	let handleSubmit = async (event) => {
 		event.preventDefault();
 		let allErrors = document.querySelectorAll('.myError');
 		for(let error of allErrors){
@@ -130,13 +145,23 @@ const CreateQuiz = (props) => {
 		}
 		if(valid){
 			quizValues.questions = questionValues;
-			alert("Success")
-			console.log(quizValues);
+			if(loaded){
+				//add functionality to update quiz
+			} else {
+				try {
+					await createQuiz({variables: quizValues});
+					alert("success");
+					window.location.assign('/profile');
+				} catch (error){
+					document.getElementById("overallFormError").innerHTML = "There is already a quiz with this Title!";
+					document.getElementById('quizTitleError').innerHTML = "This Title is already in use. Select a new Title.";
+				}
+			}
 		} else {
 			document.getElementById("overallFormError").innerHTML = "Your quiz has errors, double check all required values are present";
 		}
 	}
-	
+
 	return (
 		<form className='form row-cols-lg-auto g-3 align-items-center mx-auto' onSubmit={handleSubmit}>
 			<div className='quizInfoContainer pt-4'>
@@ -146,6 +171,7 @@ const CreateQuiz = (props) => {
 						className="form-control"
 						type='text'
 						name='quizTitle'
+						value={quizValues.title}
 						placeholder='Title'
 						onChange={event => handleInfoChange(event)}
 						/>
@@ -156,19 +182,19 @@ const CreateQuiz = (props) => {
 				<div className='dropDownFlex d-flex justify-content-between w-100 pt-4'>
 					<div className='dropDownElement'>
 						<label className='me-2'>Quiz Accessability:</label>
-						<select name="quizSecurity" onChange={event => handleInfoChange(event)}>
-							<option value="public">Public</option>
-							<option value="private">Private</option>
+						<select name="quizSecurity" defaultValue={quizValues.public ? 'true': 'false'} onChange={event => handleInfoChange(event)}>
+							<option value='true'>Public</option>
+							<option value='false'>Private</option>
 						</select>
 					</div>
 					<div className='dropDownElement'>
 						<label className='me-2'>Category*</label>
-						<select name="quizCategory" onChange={event => handleInfoChange(event)}>
+						<select name="quizCategory" defaultValue={quizValues.category} onChange={event => handleInfoChange(event)}>
 							<option value="">--</option>
-							<option value="General">General</option>					
+							<option value="General">General</option>
 							<option value="School">School</option>
 							<option value="Sports">Sports</option>
-							<option value="Games">Games</option>					
+							<option value="Games">Games</option>
 							<option value="Pop Culture">Pop Culture</option>
 							<option value="Music">Music</option>
 							<option value="Other">Other</option>
@@ -176,7 +202,7 @@ const CreateQuiz = (props) => {
 					</div>
 					<div className='dropDownElement'>
 						<label className='me-2'>Quiz Styling:</label>
-						<select name="quizStyling" onChange={event => handleInfoChange(event)}>
+						<select name="quizStyling" defaultValue={quizValues.style} onChange={event => handleInfoChange(event)}>
 							<option value="default">Default</option>
 						</select>
 					</div>
@@ -190,6 +216,7 @@ const CreateQuiz = (props) => {
 							name="quizDescription"
 							className="form-control"
 							placeholder='Description String'
+							value={quizValues.description}
 							onChange={event => handleInfoChange(event)} />
 					<label htmlFor="quizDescription">{`Quiz Description (Optional)`}</label>
 				</div>
@@ -274,7 +301,11 @@ const CreateQuiz = (props) => {
 			))}
 			<div className="button-section d-flex justify-content-center">
 				<button className="btn btn-secondary m-3" type="button" onClick={() => addQuestion()}>Add Question</button>
-				<button className="btn btn-primary m-3" type="submit">Submit</button>
+				{loaded ? (
+					<button className="btn btn-primary m-3 ps-4 pe-4" type="submit">Save</button>
+				):(
+					<button className="btn btn-primary m-3" type="submit">Submit</button>
+				)}
 			</div>
 			<div className="button-section d-flex justify-content-center">
 				<p id="overallFormError" className='errorMessage myError'></p>

@@ -14,10 +14,18 @@ const MyQuizzes = ({ userId }) => {
 
     const [deleteQuiz, { error, deleteData }] = useMutation(DELETE_QUIZ);
 
-    const handleDelete = (event) => {
-        // let _id = event.target.getAttribute("data-id");
+    const handleDelete = async (event) => {
+        let _id = event.target.getAttribute("data-id");
         let title = event.target.getAttribute("data-title");
         console.log(`Are you sure you want to delete the quiz "${title}"? (This cannot be undone!)`)
+        try {
+            const { deleteData } = await deleteQuiz({
+                variables: { quizId: _id }
+            });
+            window.location.reload();
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     if (loading) {
@@ -27,7 +35,12 @@ const MyQuizzes = ({ userId }) => {
     
 
     const myQuizzes = data?.myQuizzes || [];
-  
+
+    if (!myQuizzes.length) {
+        return <h3>No Quizzes Created</h3>
+        
+    }
+
     return (
         <>
             <div className='container'>
@@ -41,18 +54,18 @@ const MyQuizzes = ({ userId }) => {
                                 data-title={quiz.title}
                                 onClick={(event) => handleDelete(event)}>
                             </img>
-                            <Link to={{ pathname: '/createQuiz', state: { quizData: quiz } }}>
+                            <a href={`/createQuiz/${quiz._id}`}>
                                 <img src={editLogo}
                                     className='logo'
                                     alt='Edit Quiz Logo'
                                     data-id={quiz._id}
                                     data-title={quiz.title}>
                                 </img>
-                            </Link>
+                            </a>
                         </div>
                         <div className='col'>
                             <h4 className='link-container text-start m-0'>
-                                <a className='quizLink' onClick={() => console.log(`navigating to ${quiz.title}`)}>
+                                <a className='quizLink' href={`/takeQuiz/${quiz._id}`}>
                                     {quiz.title}
                                 </a>
                             </h4>
