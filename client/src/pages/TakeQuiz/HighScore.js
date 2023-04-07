@@ -10,8 +10,9 @@ const { id } = useParams();
 const { loading, data } = useQuery(HIGHSCORES, {
     variables: { id: id },
 });
-const quizData = data?.highScores || [];
-console.log(data);
+const quizData = data?.highScores || {};
+
+
 
 if (loading) {
     return <div>Loading...</div>
@@ -22,7 +23,7 @@ return (
     <div className='mb-5'>
     <h2 className='ms-5 mb-4'>{quizData.title} Scoreboard:</h2>
     <div className='mainContainer'>
-    <table class="table">
+    <table className="table">
   <thead>
     <tr>
       <th scope="col">#</th>
