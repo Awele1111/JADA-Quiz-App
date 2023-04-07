@@ -95,6 +95,7 @@ query HighScores($id: ID!) {
     title
     getScoreboard {
       score
+      time
       username
     }
   }

@@ -41,9 +41,9 @@ return (
   <tbody>
     {quizData.getScoreboard.map((score, index) => (
     <tr key={index}>
-      <th scope="row">{index + 1}</th>
-      <td>{score.score}</td>
-      <td>time?</td>
+      <th scope="row">{index+1}</th>
+      <td>{score.score}%</td>
+      <td>{score.time} seconds</td>
       <td>{score.username}</td>
     </tr>
     ))}
@@ -57,4 +57,4 @@ return (
 )
 }
 
-export default HighScores
+export default HighScores;

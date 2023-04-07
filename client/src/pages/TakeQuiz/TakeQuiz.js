@@ -15,20 +15,7 @@ const TakeQuiz = () => {
         variables: { id: id },
     });
 
-    console.log(data);
-
     const quizData = data?.quiz || null;
-
-    console.log(quizData);
-
-    const testQuiz = {
-        title: "test2",
-        questions: [
-            {question: "question 1", choices: [{choice: "a", correct: true}, {choice: "b", correct:false}]}, 
-            {question: "question 2", choices: [{choice: "a", correct: true}, {choice: "b", correct:false}]}],
-        creator: "allison",
-        description: "test description"
-    }
 
     return (
         <main>

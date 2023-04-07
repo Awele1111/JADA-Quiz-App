@@ -32,11 +32,13 @@ const typeDefs = gql`
     type Attempt {
         username: String
         score: Int
+        time: Float
     }
 
     input AttemptInput {
         username: String
         score: Int
+        time: Float
     }
 
     type Quiz {
@@ -82,7 +84,7 @@ const typeDefs = gql`
             highscores: [AttemptInput]
             ): Quiz
 
-        addAttempt(score: Int, quizId: ID!): Quiz
+        addAttempt(score: Int, time: Float, quizId: ID!): Quiz
         
         updateQuiz(
             title: String!, 
