@@ -7,14 +7,13 @@ import HighScores from './HighScore';
 
 const QuizScore = ({ quizData, quizId, score }) => {
     const [attemptAdded, setAttemptAdded] = useState(false);
-
-    const timeTaken = localStorage.getItem("finishTime") - localStorage.getItem("startTime");
+    const [state, dispatch] = useQuizContext();
+    
+    const timeTaken = localStorage.getItem("finishTime") - localStorage.getItem("startTime") - state.pauseTime;
 
     const [addFavorite, { favError }] = useMutation(ADD_FAVORITE);
     const [addAttempt, { attemptError }] = useMutation(ADD_ATTEMPT);
     
-    const [state, dispatch] = useQuizContext();
-    console.log(state.pauseTime / 1000);
     
     if(!attemptAdded && Auth.loggedIn()) {
         setAttemptAdded(true);

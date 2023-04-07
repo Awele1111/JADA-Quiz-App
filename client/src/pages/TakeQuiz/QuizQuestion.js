@@ -8,6 +8,8 @@ import { TOGGLE_TAKING_QUIZ } from '../../utils/actions';
 const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, score, setScore }) => {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [answerMessage, setAnswerMessage] = useState("");
+    const [state, dispatch] = useQuizContext();
+
 
     const handleAnswerSubmit = async (event) => {
         event.preventDefault();
@@ -25,6 +27,7 @@ const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, sco
                 if (questionNumber===quizData.questions.length && Auth.loggedIn) {
                     const finishTime = new Date();
                     localStorage.setItem("finishTime", finishTime.getTime());
+                    dispatch({ type: TOGGLE_TAKING_QUIZ})
                 }
                 setQuestionNumber(questionNumber+1);
             }, 1000)
@@ -36,6 +39,7 @@ const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, sco
                 if (questionNumber===quizData.questions.length && Auth.loggedIn) {
                     const finishTime = new Date();
                     localStorage.setItem("finishTime", finishTime.getTime());
+                    dispatch({ type: TOGGLE_TAKING_QUIZ})
                 }
                 setQuestionNumber(questionNumber+1);
             }, 1000)
