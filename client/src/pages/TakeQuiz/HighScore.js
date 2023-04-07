@@ -11,18 +11,25 @@ const { loading, data } = useQuery(HIGHSCORES, {
     variables: { id: id },
 });
 const quizData = data?.highScores || [];
-console.log(data);
+console.log(quizData);
 
 if (loading) {
     return <div>Loading...</div>
 }
 
+// return <code>
+// <pre>
+//   {JSON.stringify(quizData, null, 2)}
+// </pre>
+// </code>
+
 return (
     <>
+    
     <div className='mb-5'>
     <h2 className='ms-5 mb-4'>{quizData.title} Scoreboard:</h2>
     <div className='mainContainer'>
-    <table class="table">
+    <table className="table">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -32,9 +39,9 @@ return (
     </tr>
   </thead>
   <tbody>
-    {quizData.highscores.map((score, index) => (
+    {quizData.getScoreboard.map((score, index) => (
     <tr key={index}>
-      <th scope="row">{index+1}</th>
+      <th scope="row">{index + 1}</th>
       <td>{score.score}</td>
       <td>time?</td>
       <td>{score.username}</td>
