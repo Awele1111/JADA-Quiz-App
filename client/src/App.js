@@ -57,6 +57,7 @@ function App() {
           <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/createQuiz' component={CreateQuiz} />
+            <Route path='/createQuiz/:id' component={CreateQuiz} />
             <Route exact path='/profile' component={ProfilePage} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/signUp' component={Register} />
