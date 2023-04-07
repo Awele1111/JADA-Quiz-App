@@ -36,8 +36,10 @@ const resolvers = {
       return Quiz.findById({ _id }).populate('creator');
     },
 
-    highScores: async (parent, { _id }) => {
+    highScores: async (parent, { _id }) => { 
       return Quiz.findById({ _id });
+     
+      
     }
   },
 

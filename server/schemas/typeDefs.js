@@ -51,6 +51,7 @@ const typeDefs = gql`
         highscores: [Attempt]
         description: String
         category: String
+        getScoreboard: [Attempt]
     }
 
     type Auth {

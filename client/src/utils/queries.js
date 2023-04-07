@@ -91,12 +91,11 @@ query Me {
 export const HIGHSCORES = gql`
 query HighScores($id: ID!) {
   highScores(_id: $id) {
-    title
     _id
-    highscores {
-      username
-      time
+    title
+    getScoreboard {
       score
+      username
     }
   }
 }
