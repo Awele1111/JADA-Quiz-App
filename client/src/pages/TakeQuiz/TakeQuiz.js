@@ -9,16 +9,18 @@ import { QUERY_QUIZ } from '../../utils/queries';
 const TakeQuiz = () => {
     const [questionNumber, setQuestionNumber] = useState(0);
     const [score, setScore] = useState(0);
-    // const [queryParameters] = useParams();
+    const { id } = useParams();
 
-    // const { loading, data } = useQuery(QUERY_QUIZ, {
-    //     variables: { _id: queryParameters.get("id") },
-    // });
+    const { loading, data } = useQuery(QUERY_QUIZ, {
+        variables: { id: id },
+    });
 
-    // console.log(data);
-    // const quiz = data.something
+    console.log(data);
 
-    // QUERY_QUIZ by id rather than using testQuiz
+    const quizData = data?.quiz || null;
+
+    console.log(quizData);
+
     const testQuiz = {
         title: "test2",
         questions: [
@@ -30,15 +32,21 @@ const TakeQuiz = () => {
 
     return (
         <main>
-            {questionNumber===0?(
-                <QuizStart quizData={testQuiz} setQuestionNumber={setQuestionNumber} />
-            ):null}
-            {questionNumber>0 && questionNumber<=testQuiz.questions.length?(
-                <QuizQuestion quizData={testQuiz} questionNumber={questionNumber} setQuestionNumber={setQuestionNumber} score={score} setScore={setScore} />
-            ):null}
-            {questionNumber>testQuiz.questions.length?(
-                <QuizScore quizData={testQuiz} score={score} />
-            ):null}
+            {loading ? (
+                <h2>Loading...</h2>
+            ) : (
+                <div>
+                    {questionNumber===0?(
+                        <QuizStart quizData={quizData} setQuestionNumber={setQuestionNumber} />
+                    ):null}
+                    {questionNumber>0 && questionNumber<=quizData.questions.length?(
+                        <QuizQuestion quizData={quizData} quizId={id} questionNumber={questionNumber} setQuestionNumber={setQuestionNumber} score={score} setScore={setScore} />
+                    ):null}
+                    {questionNumber>quizData.questions.length?(
+                        <QuizScore quizData={quizData} quizId={id} score={score} />
+                    ):null}
+                </div>
+            )}
         </main>
     )
 }

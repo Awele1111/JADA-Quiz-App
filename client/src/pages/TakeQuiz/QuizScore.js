@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import Auth from '../../utils/auth'
+import Auth from '../../utils/auth';
 import { useMutation } from '@apollo/client';
 import { ADD_FAVORITE } from '../../utils/mutations';
 
-const QuizScore = ({ quizData, score }) => {
+const QuizScore = ({ quizData, quizId, score }) => {
     const [addFavorite, { error }] = useMutation(ADD_FAVORITE);
 
     const handleAddFavorite = async () => {
         try {
             await addFavorite({
-                variables: { quizId: quizData._id },
+                variables: { quizId: quizId },
             });
         } catch (err) {
             console.error(err);

@@ -3,9 +3,8 @@ import Auth from '../../utils/auth';
 import { useMutation } from '@apollo/client';
 import { ADD_ATTEMPT } from '../../utils/mutations';
 
-const QuizQuestion = ({ quizData, questionNumber, setQuestionNumber, score, setScore }) => {
+const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, score, setScore }) => {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
-
     const [addAttempt, { error }] = useMutation(ADD_ATTEMPT);
 
     const handleAnswerSubmit = async (event) => {
@@ -22,7 +21,7 @@ const QuizQuestion = ({ quizData, questionNumber, setQuestionNumber, score, setS
         if (questionNumber===quizData.questions.length && Auth.loggedIn) { // && logged in
             try {
                 await addAttempt({
-                    variables: { quizId: quizData._id, score: score },
+                    variables: { quizId: quizId, score: score },
                 });
             } catch (err) {
                 console.error(err);
