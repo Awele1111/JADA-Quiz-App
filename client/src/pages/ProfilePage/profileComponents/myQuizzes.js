@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_QUIZZES } from "../../../utils/queries";
 import trashLogo from '../../../assets/trashLogo.svg';
 import editLogo from '../../../assets/editLogo.svg';
 import { DELETE_QUIZ } from "../../../utils/mutations";
-import { Modal } from 'bootstrap'
 
 const MyQuizzes = ({ userId }) => {
     const [deleteInfo, setDeleteInfo] = useState({_id: '', title: ''});
-    const [quizList, setQuizList] = useState();
     const [deleteQuiz, quizMutation ] = useMutation(DELETE_QUIZ);
     const quizQuery = useQuery(QUERY_QUIZZES, {
         variables: { creator: userId }
@@ -35,6 +33,8 @@ const MyQuizzes = ({ userId }) => {
             await deleteQuiz({
                 variables: { quizId: deleteInfo._id }
             });
+            //in order to easily update the favorites list from child component
+            window.location.reload();
         } catch (err) {
             console.error(err);
         }
