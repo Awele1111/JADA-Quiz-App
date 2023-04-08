@@ -93,6 +93,7 @@ const typeDefs = gql`
         addAttempt(score: Int, time: Float, quizId: ID!): Quiz
         
         updateQuiz(
+            quizId: ID!
             title: String!, 
             creator: String, 
             public: Boolean, 
@@ -104,7 +105,7 @@ const typeDefs = gql`
             ): Quiz
             
         addFavorite(quizId: ID!): User
-        deleteQuiz(quizId: ID!): Quiz
+        deleteQuiz(quizId: ID!): [Quiz]!
         removeFavorite(quizId: ID!): User
     }
 `;

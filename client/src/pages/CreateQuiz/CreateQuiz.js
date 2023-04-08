@@ -5,6 +5,7 @@ import trashLogo from '../../assets/trashLogo.svg';
 import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_QUIZ, UPDATE_QUIZ } from '../../utils/mutations';
 import { QUERY_QUIZ } from '../../utils/queries'
+import { Modal } from 'bootstrap'
 
 const CreateQuiz = (props) => {
 	const [quizValues, setQuizValues] = useState({title: '', public: true, style: 'defualt', category: '', description: ''});
@@ -154,20 +155,23 @@ const CreateQuiz = (props) => {
 		}
 		if(valid){
 			quizValues.questions = questionValues;
+			let successModal = new Modal(document.getElementById('successModal'), {});
 			if(loaded){
 				try {
+					quizValues.quizId = quizId;
 					await updateQuiz({variables: quizValues});
-					alert("Saved!");
-					window.location.assign('/profile');
+					successModal.show();
 				} catch (error){
 					console.log(error);
+					document.getElementById("overallFormError").innerHTML = "There is already a quiz with this Title!";
+					document.getElementById('quizTitleError').innerHTML = "This Title is already in use. Select a new Title.";
 				}
 			} else {
 				try {
 					await createQuiz({variables: quizValues});
-					alert("success");
-					window.location.assign('/profile');
+					successModal.show();
 				} catch (error){
+					console.log(error);
 					document.getElementById("overallFormError").innerHTML = "There is already a quiz with this Title!";
 					document.getElementById('quizTitleError').innerHTML = "This Title is already in use. Select a new Title.";
 				}
@@ -178,154 +182,178 @@ const CreateQuiz = (props) => {
 	}
 
 	return (
-		<form className='form row-cols-lg-auto g-3 align-items-center mx-auto' onSubmit={handleSubmit}>
-			<div className='quizInfoContainer pt-4'>
-				<div id='quizTitleContainer'>
-					<div className='form-floating quizTitle'>
-						<input id='quizTitle'
-						className="form-control"
-						type='text'
-						name='quizTitle'
-						value={quizValues.title}
-						placeholder='Title'
-						onChange={event => handleInfoChange(event)}
-						/>
-						<label htmlFor="quizTitle">Quiz Title*</label>
-						<p id="quizTitleError" className='errorMessage myError'></p>
-					</div>
-				</div>
-				<div className='dropDownFlex d-flex justify-content-between w-100 pt-4'>
-					<div className='dropDownElement'>
-						<label className='me-2'>Quiz Accessability:</label>
-						<select name="quizSecurity" defaultValue={quizValues.public ? 'true': 'false'} onChange={event => handleInfoChange(event)}>
-							<option value='true'>Public</option>
-							<option value='false'>Private</option>
-						</select>
-					</div>
-					<div className='dropDownElement'>
-						<label className='me-2'>Category*</label>
-						<select name="quizCategory" defaultValue={quizValues.category} onChange={event => handleInfoChange(event)}>
-							<option value="">--</option>
-							<option value="General">General</option>
-							<option value="School">School</option>
-							<option value="Sports">Sports</option>
-							<option value="Games">Games</option>
-							<option value="Pop Culture">Pop Culture</option>
-							<option value="Music">Music</option>
-							<option value="Other">Other</option>
-						</select>
-					</div>
-					<div className='dropDownElement'>
-						<label className='me-2'>Quiz Styling:</label>
-						<select name="quizStyling" defaultValue={quizValues.style} onChange={event => handleInfoChange(event)}>
-							<option value="default">Default</option>
-						</select>
-					</div>
-				</div>
-				<div className='ms-5 text-center'>
-					<p id="quizCategoryError" className='errorMessage myError pb-4'></p>
-				</div>
-				<div className='form-floating d-flex pb-4 mb-3'>
-					<textarea id="quizDescription"
-							type="text"
-							name="quizDescription"
+		<>
+			<form className='form row-cols-lg-auto g-3 align-items-center mx-auto' onSubmit={handleSubmit}>
+				<div className='quizInfoContainer pt-4'>
+					<div id='quizTitleContainer'>
+						<div className='form-floating quizTitle'>
+							<input id='quizTitle'
 							className="form-control"
-							placeholder='Description String'
-							value={quizValues.description}
-							onChange={event => handleInfoChange(event)} />
-					<label htmlFor="quizDescription">{`Quiz Description (Optional)`}</label>
-				</div>
-			</div>
-			{questionValues.map((questionElement, questionIndex) => (
-				<div className="oneQuestionContainer" key={questionIndex}>
-					<div className='row g-0' id={`question${questionIndex}`}>
-						<div className='form-floating questionInputContainer'>
-							<textarea id={`question${questionIndex}`}
-									type="text"
-									name="question"
-									className="form-control questionInput"
-									placeholder='Question String'
-									value={questionElement.question || ""}
-									onChange={event => handleQuestionChange(questionIndex, event)} />
-							<label htmlFor={`question${questionIndex}`}>Question {questionIndex + 1}</label>
-							<p id={`question${questionIndex}error`} className='questionError errorMessage myError ps-4'></p>
-							{
-								questionIndex ? (
-									<div className='d-flex justify-content-center mt-3 removeQuestionContainer'>
-										<button type="button"  className="btn btn-danger mb-3" onClick={() => removeQuestion(questionIndex)}>Remove Question</button> 
-									</div>
-								)
-								: null
-							}
+							type='text'
+							name='quizTitle'
+							value={quizValues.title}
+							placeholder='Title'
+							onChange={event => handleInfoChange(event)}
+							/>
+							<label htmlFor="quizTitle">Quiz Title*</label>
+							<p id="quizTitleError" className='errorMessage myError'></p>
 						</div>
-						<div className='choiceInfoContainer'>
-							<div className='d-flex justify-content-between choiceInfo ms-4 mb-1 mt-2'>
-								<h5 className='mb-0'>{`Question #${questionIndex + 1}`}</h5>
-								<p className='mb-0'>Select Answer</p>
+					</div>
+					<div className='dropDownFlex d-flex justify-content-between w-100 pt-4'>
+						<div className='dropDownElement'>
+							<label className='me-2'>Quiz Accessability:</label>
+							<select name="quizSecurity" defaultValue={quizValues.public ? 'true': 'false'} onChange={event => handleInfoChange(event)}>
+								<option value='true'>Public</option>
+								<option value='false'>Private</option>
+							</select>
+						</div>
+						<div className='dropDownElement'>
+							<label className='me-2'>Category*</label>
+							<select name="quizCategory" defaultValue={quizValues.category} onChange={event => handleInfoChange(event)}>
+								<option value="">--</option>
+								<option value="General">General</option>
+								<option value="School">School</option>
+								<option value="Sports">Sports</option>
+								<option value="Games">Games</option>
+								<option value="Pop Culture">Pop Culture</option>
+								<option value="Music">Music</option>
+								<option value="Other">Other</option>
+							</select>
+						</div>
+						<div className='dropDownElement'>
+							<label className='me-2'>Quiz Styling:</label>
+							<select name="quizStyling" defaultValue={quizValues.style} onChange={event => handleInfoChange(event)}>
+								<option value="default">Default</option>
+							</select>
+						</div>
+					</div>
+					<div className='ms-5 text-center'>
+						<p id="quizCategoryError" className='errorMessage myError pb-4'></p>
+					</div>
+					<div className='form-floating d-flex pb-4 mb-3'>
+						<textarea id="quizDescription"
+								type="text"
+								name="quizDescription"
+								className="form-control"
+								placeholder='Description String'
+								value={quizValues.description}
+								onChange={event => handleInfoChange(event)} />
+						<label htmlFor="quizDescription">{`Quiz Description (Optional)`}</label>
+					</div>
+				</div>
+				{questionValues.map((questionElement, questionIndex) => (
+					<div className="oneQuestionContainer" key={questionIndex}>
+						<div className='row g-0' id={`question${questionIndex}`}>
+							<div className='form-floating questionInputContainer'>
+								<textarea id={`question${questionIndex}`}
+										type="text"
+										name="question"
+										className="form-control questionInput"
+										placeholder='Question String'
+										value={questionElement.question || ""}
+										onChange={event => handleQuestionChange(questionIndex, event)} />
+								<label htmlFor={`question${questionIndex}`}>Question {questionIndex + 1}</label>
+								<p id={`question${questionIndex}error`} className='questionError errorMessage myError ps-4'></p>
+								{
+									questionIndex ? (
+										<div className='d-flex justify-content-center mt-3 removeQuestionContainer'>
+											<button type="button"  className="btn btn-danger mb-3" onClick={() => removeQuestion(questionIndex)}>Remove Question</button> 
+										</div>
+									)
+									: null
+								}
 							</div>
-							<p id={`question${questionIndex}noAnswerError`} className='text-end myError'></p>
-							{questionElement.choices.map((choiceElement, choiceIndex) => (
-								<div key={`${questionIndex}.${choiceIndex}`}>
-									<div className="form-floating d-flex oneChoiceInput">
-										<input  id={`choice${questionIndex + choiceIndex / 100}`}
-												type="text"
-												name="choice"
-												className="form-control choiceInput"
-												value={choiceElement.choice || ""}
-												placeholder='Choice String'
-												onChange={event => handleChoiceChange(questionIndex, choiceIndex, event)} />
-										<label htmlFor={`choice${questionIndex + choiceIndex / 10}`}>Choice {choiceIndex + 1}</label>
-										{choiceElement.correct ? (
-											<input name={`question${questionIndex}`}
-													className="correctRadio m-3" 
-													type="radio"
-													checked
-													onChange={event => handleChoiceChange(questionIndex, choiceIndex, event)}>
-											</input>
-										): (
-											<input name={`question${questionIndex}`}
-													className="correctRadio m-3" 
-													type="radio"
-													onChange={event => handleChoiceChange(questionIndex, choiceIndex, event)}>
-											</input>	
-										)}
-										{
-											choiceIndex ? (
-												<img src={trashLogo} 
-													className='logo mt-3 ms-3 mb-3' 
-													alt='Trash Logo' 
-													onClick={() => removeChoice(questionIndex, choiceIndex)}>
-                                        		</img>
-											)
-											: (
-												<div className='m-1 p-3'></div>
-											)
-										}
-									</div>
-									<p id={`choice${questionIndex}-${choiceIndex}error`} className='errorMessage myError ms-4'></p>
+							<div className='choiceInfoContainer'>
+								<div className='d-flex justify-content-between choiceInfo ms-4 mb-1 mt-2'>
+									<h5 className='mb-0'>{`Question #${questionIndex + 1}`}</h5>
+									<p className='mb-0'>Select Answer</p>
 								</div>
-							))}
-							<div className="button-section">
-							<div className='d-flex justify-content-center mt-3 mb-3'>
-								<button className="btn btn-secondary" type="button" onClick={() => addChoice(questionIndex)}>Add Choice</button>
-							</div>
+								<p id={`question${questionIndex}noAnswerError`} className='text-end myError'></p>
+								{questionElement.choices.map((choiceElement, choiceIndex) => (
+									<div key={`${questionIndex}.${choiceIndex}`}>
+										<div className="form-floating d-flex oneChoiceInput">
+											<input  id={`choice${questionIndex + choiceIndex / 100}`}
+													type="text"
+													name="choice"
+													className="form-control choiceInput"
+													value={choiceElement.choice || ""}
+													placeholder='Choice String'
+													onChange={event => handleChoiceChange(questionIndex, choiceIndex, event)} />
+											<label htmlFor={`choice${questionIndex + choiceIndex / 10}`}>Choice {choiceIndex + 1}</label>
+											{choiceElement.correct ? (
+												<input name={`question${questionIndex}`}
+														className="correctRadio m-3" 
+														type="radio"
+														checked
+														onChange={event => handleChoiceChange(questionIndex, choiceIndex, event)}>
+												</input>
+											): (
+												<input name={`question${questionIndex}`}
+														className="correctRadio m-3" 
+														type="radio"
+														onChange={event => handleChoiceChange(questionIndex, choiceIndex, event)}>
+												</input>	
+											)}
+											{
+												choiceIndex ? (
+													<img src={trashLogo} 
+														className='logo mt-3 ms-3 mb-3' 
+														alt='Trash Logo' 
+														onClick={() => removeChoice(questionIndex, choiceIndex)}>
+													</img>
+												)
+												: (
+													<div className='m-1 p-3'></div>
+												)
+											}
+										</div>
+										<p id={`choice${questionIndex}-${choiceIndex}error`} className='errorMessage myError ms-4'></p>
+									</div>
+								))}
+								<div className="button-section">
+								<div className='d-flex justify-content-center mt-3 mb-3'>
+									<button className="btn btn-secondary" type="button" onClick={() => addChoice(questionIndex)}>Add Choice</button>
+								</div>
+								</div>
 							</div>
 						</div>
 					</div>
+				))}
+				<div className="button-section d-flex justify-content-center">
+					<button className="btn btn-secondary m-3" type="button" onClick={() => addQuestion()}>Add Question</button>
+					{loaded ? (
+						<button className="btn btn-primary m-3 ps-4 pe-4" type="submit">Save</button>
+					):(
+						<button className="btn btn-primary m-3" type="submit">Submit</button>
+					)}
 				</div>
-			))}
-			<div className="button-section d-flex justify-content-center">
-				<button className="btn btn-secondary m-3" type="button" onClick={() => addQuestion()}>Add Question</button>
-				{loaded ? (
-					<button className="btn btn-primary m-3 ps-4 pe-4" type="submit">Save</button>
-				):(
-					<button className="btn btn-primary m-3" type="submit">Submit</button>
-				)}
-			</div>
-			<div className="button-section d-flex justify-content-center">
-				<p id="overallFormError" className='errorMessage myError'></p>
-			</div>
-		</form>
+				<div className="button-section d-flex justify-content-center">
+					<p id="overallFormError" className='errorMessage myError'></p>
+				</div>
+			</form>
+			<div className="modal fade" id="successModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                    <div className="modal-header d-flex justify-content-center">
+						{
+							loaded ? (
+								<h1 className="modal-title fs-5" id="staticBackdropLabel">Saved!</h1>
+							): (
+								<h1 className="modal-title fs-5" id="staticBackdropLabel">Quiz Created!</h1>
+							)
+						}
+                    </div>
+					<div className="modal-footer d-flex justify-content-center">
+						<p>You can edit this quiz at any time from you profile page</p>
+					</div>
+                    <div className="modal-footer d-flex justify-content-between">
+                        <button type="button" className="btn btn-primary" onClick={() => window.location.assign('/')}>Home Page</button>
+                        <button type="button" className="btn btn-primary" onClick={() => window.location.assign('/profile')}>Profile Page</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+		</>
 )};
 			
 export default CreateQuiz;

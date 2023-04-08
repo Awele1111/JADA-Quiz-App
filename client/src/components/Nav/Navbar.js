@@ -69,7 +69,6 @@ const Nav = () => {
                             </div>
                         ):(
                             <div className="container-fluid">
-                                {/* <a className="navbar-brand" id='pageTitle' className="btn btn-primary" data-bs-toggle="modal" role="button" onClick={pauseTime}>Pause Quiz</a> */}
                                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onClick={pauseTime}>
                                     Pause Quiz
                                 </button>
@@ -77,7 +76,7 @@ const Nav = () => {
                         )
                     }
             </nav>
-            <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                     <div className="modal-header d-flex justify-content-center">
