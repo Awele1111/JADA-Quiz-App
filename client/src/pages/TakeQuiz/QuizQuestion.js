@@ -48,21 +48,27 @@ const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, sco
 
     return (
         <div>
-            <p>{questionNumber}: {quizData.questions[questionNumber-1].question}</p>
-            {quizData.questions[questionNumber-1].choices.map((choice, index) => {
-                return (
-                    <div className="form-check">
-                        {index===selectedAnswer?
-                            <input className="form-check-input" onClick={() => {setSelectedAnswer(index)}} type="radio" name="choices" id={`choice${index}`} value={`choice${index}`} checked />:
-                            <input className="form-check-input" onClick={() => {setSelectedAnswer(index)}} type="radio" name="choices" id={`choice${index}`} value={`choice${index}`} />}
-                        <label className="form-check-label" for={`choice${index}`}>
-                            {choice.choice}
-                        </label>
-                    </div>
-                )
-            })}
-            <button onClick={handleAnswerSubmit}>Next Question</button>
-            {answerMessage}
+            <div className='d-flex flex-column align-items-center p-4 mx-4'>
+                <div className='d-flex flex-column'>
+                    <h2>{questionNumber}: {quizData.questions[questionNumber-1].question}</h2>
+                    {quizData.questions[questionNumber-1].choices.map((choice, index) => {
+                        return (
+                            <div className="form-check mx-3 fs-4">
+                                {index===selectedAnswer?
+                                    <input className="form-check-input" onClick={() => {setSelectedAnswer(index)}} type="radio" name="choices" id={`choice${index}`} value={`choice${index}`} checked />:
+                                    <input className="form-check-input" onClick={() => {setSelectedAnswer(index)}} type="radio" name="choices" id={`choice${index}`} value={`choice${index}`} />}
+                                <label className="form-check-label" for={`choice${index}`}>
+                                    {choice.choice}
+                                </label>
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
+            <div className='d-flex flex-column align-items-center'>
+                <button className='btn btn-primary w-25 m-3' onClick={handleAnswerSubmit}>Next Question</button>
+                <p className='fs-4'>{answerMessage}</p>
+            </div>
         </div>
     )
 }
