@@ -28,7 +28,7 @@ const resolvers = {
     },
 
     quizCategory: async (parent, { category }) => {
-      return Quiz.find({ category }).populate('creator');
+      return Quiz.find({ category, public: true }).populate('creator');
     },
 
     quiz: async (parent, { _id }) => {
@@ -95,9 +95,9 @@ const resolvers = {
       }
     },
 
-    updateQuiz: async (parent, { title, public, style, questions, description, category }, context) => {
+    updateQuiz: async (parent, { quizId, title, public, style, questions, description, category }, context) => {
       if (context.user) {
-        const quiz = await Quiz.findOneAndUpdate({
+        const quiz = await Quiz.findOneAndUpdate({_id: quizId},{
           title,
           public,
           style,
@@ -126,11 +126,12 @@ const resolvers = {
 
     deleteQuiz: async (parent, { quizId }, context) => {
       if (context.user) {
-        const quiz = await Quiz.findOneAndDelete({
+        await Quiz.findOneAndDelete({
           _id: quizId,
           creator: context.user._id
         });
-        return quiz;
+        const quizzes = Quiz.find({ creator: context.user._id });
+        return quizzes;
       }
       throw new AuthenticationError('You need to be logged in');
     },
