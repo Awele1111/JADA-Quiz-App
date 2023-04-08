@@ -33,6 +33,8 @@ const MyQuizzes = ({ userId }) => {
             await deleteQuiz({
                 variables: { quizId: deleteInfo._id }
             });
+            //in order to easily update the favorites list from child component
+            window.location.reload();
         } catch (err) {
             console.error(err);
         }
