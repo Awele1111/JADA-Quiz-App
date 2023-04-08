@@ -56,6 +56,7 @@ function App() {
           <>
             <QuizProvider>
               <Nav />
+           
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route exact path='/createQuiz' component={CreateQuiz} />
@@ -67,10 +68,13 @@ function App() {
                 <Route path='/highScores/:id' component={HighScores} />
                 <Route render={() => <h1>Wrong page!</h1>} />
               </Switch>
+              
             </QuizProvider>
+            <Footer/>
           </>
         </Router>
       </ApolloProvider>
+
   );
 }
 
