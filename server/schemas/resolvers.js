@@ -161,7 +161,10 @@ const resolvers = {
             },
           },
           { new: true }
-        );
+        ).populate({
+          path: "favoriteQuizzes",
+          populate: "creator"
+        });
       } throw new AuthenticationError('You need to be logged in');
     }
   },

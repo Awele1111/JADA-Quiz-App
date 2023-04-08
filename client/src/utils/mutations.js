@@ -132,7 +132,16 @@ mutation login($email: String!, $password: String!) {
 export const REMOVE_FAVORITE = gql`
 mutation removeFavorite($quizId: ID!) {
     removeFavorite(quizId: $quizId) {
+      _id
       username
+      favoriteQuizzes {
+        _id
+        title
+        description
+        creator {
+          username
+        }
+      }
     }
   }
   `;
