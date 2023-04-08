@@ -41,6 +41,11 @@ const typeDefs = gql`
         time: Float
     }
 
+    type Category {
+        _id: String
+        count: Int
+    }
+
     type Quiz {
         _id: ID
         title: String
@@ -67,6 +72,7 @@ const typeDefs = gql`
         quiz(_id: ID!): Quiz
         me: User
         highScores(_id: ID!): Quiz
+        countByCategory: [Category]!
     }
 
     type Mutation {

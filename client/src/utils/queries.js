@@ -101,3 +101,13 @@ query HighScores($id: ID!) {
   }
 }
 `;
+
+
+export const COUNT_BY_CATEGORY = gql`
+query CountByCategory {
+  countByCategory {
+    _id
+    count
+  }
+}
+`;
