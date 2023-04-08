@@ -41,6 +41,11 @@ const typeDefs = gql`
         time: Float
     }
 
+    type Category {
+        _id: String
+        count: Int
+    }
+
     type Quiz {
         _id: ID
         title: String
@@ -67,6 +72,7 @@ const typeDefs = gql`
         quiz(_id: ID!): Quiz
         me: User
         highScores(_id: ID!): Quiz
+        countByCategory: [Category]!
     }
 
     type Mutation {
@@ -87,6 +93,7 @@ const typeDefs = gql`
         addAttempt(score: Int, time: Float, quizId: ID!): Quiz
         
         updateQuiz(
+            quizId: ID!
             title: String!, 
             creator: String, 
             public: Boolean, 
@@ -98,7 +105,7 @@ const typeDefs = gql`
             ): Quiz
             
         addFavorite(quizId: ID!): User
-        deleteQuiz(quizId: ID!): Quiz
+        deleteQuiz(quizId: ID!): [Quiz]!
         removeFavorite(quizId: ID!): User
     }
 `;

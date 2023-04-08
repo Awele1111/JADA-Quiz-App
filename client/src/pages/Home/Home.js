@@ -11,9 +11,19 @@ import otherPic from '../../assets/otherCategory.webp';
 
 import QuizList from '../../components/QuizList/QuizList';
 
+import { useQuery } from '@apollo/client';
+import { COUNT_BY_CATEGORY } from '../../utils/queries';
+
 const Home = () => {
     const [pageCategory, setCategory] = useState('Categories')
+    const { data, loading } = useQuery(COUNT_BY_CATEGORY)
 
+    const categoryData = data?.countByCategory || [];
+
+    if (loading) {
+        return <div>Loading...</div>
+    }
+    
     let categories = [
         {category: "General", image: generalPic}, 
         {category: "School", image: schoolPic}, 
@@ -23,6 +33,22 @@ const Home = () => {
         {category: "Music", image: musicPic}, 
         {category: "Other", image: otherPic}
     ];
+
+    const getCategoryCount = (categoryName) => {
+        let count = 0;
+        for(let categoryObj of categoryData){
+            if(categoryObj._id === categoryName){
+                count = categoryObj.count;
+            }
+        }
+        let countString;
+        if(count === 1){
+            countString = '1 Quiz';
+        } else {
+            countString = `${count} Quizzes`
+        }
+        return countString
+    }
 
     return (
         <>
@@ -50,16 +76,19 @@ const Home = () => {
                 {pageCategory === "Categories" ? (
                     <div className="d-flex flex-wrap justify-content-center">
                         {categories.map((item, index) => (
-                            <div className="card text-bg-dark customCard m-4 p-0 w-25" key={index}>
-                                <img src={item.image} className="card-img h-100" alt={item.category}></img>
-                                <div className="card-img-overlay myOverlay" onClick={() => {setCategory(item.category)}}>
-                                    <div className='d-flex flex-column position-absolute top-50 start-50 translate-middle'>
-                                        <h1 className="card-title category-title">
-                                            {item.category}
-                                        </h1>
+                            <>
+                                <div className="card text-bg-dark customCard m-4 p-0 w-25" key={index}>
+                                    <img src={item.image} className="card-img h-100" alt={item.category}></img>
+                                    <div className="card-img-overlay myOverlay" onClick={() => {setCategory(item.category)}}>
+                                        <div className='d-flex flex-column position-absolute top-50 start-50 translate-middle'>
+                                            <h1 className="card-title category-title">
+                                                {item.category}
+                                            </h1>
+                                        </div>
                                     </div>
+                                    <p className='mt-2 mb-2'>{getCategoryCount(item.category)}</p>
                                 </div>
-                            </div>
+                            </>
                         ))}
                     </div>
                 ): (
