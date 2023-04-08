@@ -25,7 +25,6 @@ const resolvers = {
 
     myQuizzes: async (parent, { creator }) => {
       return Quiz.find({ creator });
-
     },
 
     quizCategory: async (parent, { category }) => {
@@ -38,8 +37,26 @@ const resolvers = {
 
     highScores: async (parent, { _id }) => { 
       return Quiz.findById({ _id });
-     
-      
+    },
+
+    countByCategory: async (parent, args) => {
+      let myCategories = await Quiz.aggregate(
+        [
+          {
+            $match: {
+              public: true
+            }
+          },
+          {
+            $group : {
+              _id: "$category", 
+              count: {$sum:1}
+            }
+          }
+        ],
+      );
+      console.log(myCategories);
+      return myCategories;
     }
   },
 
