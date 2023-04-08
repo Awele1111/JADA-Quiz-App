@@ -21,6 +21,7 @@ import Nav from './components/Nav/Navbar'
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import TakeQuiz from './pages/TakeQuiz/TakeQuiz';
 import HighScores from './pages/TakeQuiz/HighScore';
+import Footer from './components/Footer/Footer'
 
 
 // Construct our main GraphQL API endpoint
