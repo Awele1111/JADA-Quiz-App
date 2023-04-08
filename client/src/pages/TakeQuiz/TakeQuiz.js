@@ -24,7 +24,7 @@ const TakeQuiz = () => {
             ) : (
                 <div>
                     {questionNumber===0?(
-                        <QuizStart quizData={quizData} setQuestionNumber={setQuestionNumber} />
+                        <QuizStart quizData={quizData} quizId={id} setQuestionNumber={setQuestionNumber} />
                     ):null}
                     {questionNumber>0 && questionNumber<=quizData.questions.length?(
                         <QuizQuestion quizData={quizData} quizId={id} questionNumber={questionNumber} setQuestionNumber={setQuestionNumber} score={score} setScore={setScore} />
