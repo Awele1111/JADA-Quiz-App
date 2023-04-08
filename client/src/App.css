@@ -2,3 +2,8 @@ body {
     /* background: lightblue; */
     background: linear-gradient(to bottom right,pink, #0072ff);
 }
+
+.pageLink a {
+    text-decoration: none;
+    color: black;
+}

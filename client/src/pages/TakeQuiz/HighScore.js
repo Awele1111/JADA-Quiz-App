@@ -11,24 +11,16 @@ const { loading, data } = useQuery(HIGHSCORES, {
     variables: { id: id },
 });
 const quizData = data?.highScores || [];
-console.log(quizData);
 
 if (loading) {
     return <div>Loading...</div>
 }
 
-// return <code>
-// <pre>
-//   {JSON.stringify(quizData, null, 2)}
-// </pre>
-// </code>
-
 return (
     <>
-    
-    <div className='mb-5'>
+    <div className='mb-5 vh-100'>
     <h2 className='ms-5 mb-4'>{quizData.title} Scoreboard:</h2>
-    <div className='mainContainer'>
+    <div className='mainContainer container'>
     <table className="table">
   <thead>
     <tr>
@@ -39,7 +31,7 @@ return (
     </tr>
   </thead>
   <tbody>
-    {quizData.getScoreboard.map((score, index) => (
+    {quizData.getScoreboard.slice(0, 10).map((score, index) => (
     <tr key={index}>
       <th scope="row">{index+1}</th>
       <td>{score.score}%</td>
@@ -49,7 +41,7 @@ return (
     ))}
   </tbody>
 </table>
-
+<button type="button" className="btn btn-light pageLink"><a href={`/takeQuiz/${id}`}>Play again</a></button>
     </div>
 
     </div>
