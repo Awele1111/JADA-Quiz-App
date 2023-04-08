@@ -26,8 +26,8 @@ mutation createQuiz($title: String!, $questions: [QuestionInput]!, $creator: Str
 
 
 export const UPDATE_QUIZ = gql`
-mutation updateQuiz($title: String!, $questions: [QuestionInput]!, $creator: String, $public: Boolean, $style: String, $description: String, $category: String) {
-    updateQuiz(title: $title, questions: $questions, creator: $creator, public: $public, style: $style, description: $description, category: $category) {
+mutation updateQuiz($quizId: ID!, $title: String!, $questions: [QuestionInput]!, $creator: String, $public: Boolean, $style: String, $description: String, $category: String) {
+    updateQuiz(quizId: $quizId, title: $title, questions: $questions, creator: $creator, public: $public, style: $style, description: $description, category: $category) {
       _id
       category
       creator {
@@ -52,18 +52,37 @@ mutation updateQuiz($title: String!, $questions: [QuestionInput]!, $creator: Str
 export const DELETE_QUIZ = gql`
 mutation deleteQuiz($quizId: ID!) {
     deleteQuiz(quizId: $quizId) {
-      title
       _id
+      title
+      public
+      style
+      category
+      description
+      creator {
+        username
+      }
+      questions {
+        question
+        choices {
+          choice
+          correct
+        }
+      }
+      highscores {
+        score
+        username
+      }
     }
   }
   `;
 
 export const ADD_ATTEMPT = gql`
-mutation addAttempt($quizId: ID!, $score: Int) {
-    addAttempt(quizId: $quizId, score: $score) {
+mutation addAttempt($quizId: ID!, $score: Int, $time: Float) {
+    addAttempt(quizId: $quizId, score: $score, time: $time) {
       _id
       highscores {
         score
+        time
         username
       }
     }
@@ -113,7 +132,16 @@ mutation login($email: String!, $password: String!) {
 export const REMOVE_FAVORITE = gql`
 mutation removeFavorite($quizId: ID!) {
     removeFavorite(quizId: $quizId) {
+      _id
       username
+      favoriteQuizzes {
+        _id
+        title
+        description
+        creator {
+          username
+        }
+      }
     }
   }
   `;

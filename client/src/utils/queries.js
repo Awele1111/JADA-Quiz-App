@@ -91,12 +91,23 @@ query Me {
 export const HIGHSCORES = gql`
 query HighScores($id: ID!) {
   highScores(_id: $id) {
-    title
     _id
-    highscores {
-      username
+    title
+    getScoreboard {
       score
+      time
+      username
     }
+  }
+}
+`;
+
+
+export const COUNT_BY_CATEGORY = gql`
+query CountByCategory {
+  countByCategory {
+    _id
+    count
   }
 }
 `;

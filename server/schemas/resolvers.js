@@ -25,19 +25,38 @@ const resolvers = {
 
     myQuizzes: async (parent, { creator }) => {
       return Quiz.find({ creator });
-
     },
 
     quizCategory: async (parent, { category }) => {
-      return Quiz.find({ category }).populate('creator');
+      return Quiz.find({ category, public: true }).populate('creator');
     },
 
     quiz: async (parent, { _id }) => {
       return Quiz.findById({ _id }).populate('creator');
     },
 
-    highScores: async (parent, { _id }) => {
+    highScores: async (parent, { _id }) => { 
       return Quiz.findById({ _id });
+    },
+
+    countByCategory: async (parent, args) => {
+      let myCategories = await Quiz.aggregate(
+        [
+          {
+            $match: {
+              public: true
+            }
+          },
+          {
+            $group : {
+              _id: "$category", 
+              count: {$sum:1}
+            }
+          }
+        ],
+      );
+      console.log(myCategories);
+      return myCategories;
     }
   },
 
@@ -76,9 +95,9 @@ const resolvers = {
       }
     },
 
-    updateQuiz: async (parent, { title, public, style, questions, description, category }, context) => {
+    updateQuiz: async (parent, { quizId, title, public, style, questions, description, category }, context) => {
       if (context.user) {
-        const quiz = await Quiz.findOneAndUpdate({
+        const quiz = await Quiz.findOneAndUpdate({_id: quizId},{
           title,
           public,
           style,
@@ -91,13 +110,13 @@ const resolvers = {
       }
     },
 
-    addAttempt: async (parent, { quizId, score }, context) => {
+    addAttempt: async (parent, { quizId, score, time }, context) => {
       if (context.user) {
         return Quiz.findOneAndUpdate(
           { _id: quizId },
           {
             $addToSet: {
-              highscores: { score, username: context.user.username },
+              highscores: { score, time, username: context.user.username },
             }
           }
         );
@@ -107,11 +126,12 @@ const resolvers = {
 
     deleteQuiz: async (parent, { quizId }, context) => {
       if (context.user) {
-        const quiz = await Quiz.findOneAndDelete({
+        await Quiz.findOneAndDelete({
           _id: quizId,
           creator: context.user._id
         });
-        return quiz;
+        const quizzes = Quiz.find({ creator: context.user._id });
+        return quizzes;
       }
       throw new AuthenticationError('You need to be logged in');
     },
@@ -141,7 +161,10 @@ const resolvers = {
             },
           },
           { new: true }
-        );
+        ).populate({
+          path: "favoriteQuizzes",
+          populate: "creator"
+        });
       } throw new AuthenticationError('You need to be logged in');
     }
   },
