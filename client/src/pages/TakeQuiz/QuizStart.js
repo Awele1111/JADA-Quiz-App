@@ -33,14 +33,14 @@ const QuizStart = ({ quizData, quizId, setQuestionNumber }) => {
     }
 
     return (
-        <div>
+        <div className="d-flex flex-column align-items-center p-4 mx-4">
             <h2>{quizData.title}</h2>
             <h3>by {quizData.creator.username}</h3>
-            <p>{quizData.description}</p>
+            <h4>{quizData.description}</h4>
             {!Auth.loggedIn()?<a href='/login'>Log in to have your score recorded</a>:null}
-            <button onClick={handleQuizStart}>Start Quiz</button>
-            <button type="button" className="" onClick={() => window.location.replace(`/highScores/${quizId}`)}>Highscores</button>
-            {Auth.loggedIn()?<button type="button" className="" onClick={handleAddFavorite}>Save Quiz to Favorites</button>:null}
+            <button className="btn btn-primary w-25 m-1" onClick={handleQuizStart}>Start Quiz</button>
+            <button type="button" className="btn btn-primary w-25 m-1" onClick={() => window.location.replace(`/highScores/${quizId}`)}>Highscores</button>
+            {Auth.loggedIn()?<button type="button" className="btn btn-primary w-25 m-1" onClick={handleAddFavorite}>Save Quiz to Favorites</button>:null}
         </div>
     )
 }

@@ -18,7 +18,7 @@ const TakeQuiz = () => {
     const quizData = data?.quiz || null;
 
     return (
-        <main>
+        <main className='min-vh-100'>
             {loading ? (
                 <h2>Loading...</h2>
             ) : (
