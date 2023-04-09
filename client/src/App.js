@@ -20,6 +20,7 @@ import CreateQuiz from './pages/CreateQuiz/CreateQuiz';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import TakeQuiz from './pages/TakeQuiz/TakeQuiz';
 import HighScores from './pages/TakeQuiz/HighScore';
+import Footer from './components/Footer/Footer'
 
 
 // Construct our main GraphQL API endpoint
@@ -56,6 +57,7 @@ function App() {
           <>
             <QuizProvider>
               <Nav />
+           
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route exact path='/createQuiz' component={CreateQuiz} />
@@ -72,6 +74,7 @@ function App() {
           </>
         </Router>
       </ApolloProvider>
+
   );
 }
 
