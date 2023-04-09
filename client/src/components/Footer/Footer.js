@@ -47,8 +47,8 @@ const Footer = () => {
         <>
             {!state.takingQuiz ? (
                 <>
-                    <footer className='footer'>
-                        <h5 className="m-3" id="donationLink" data-bs-toggle="modal" data-bs-target="#donateModal">Click here if you would like to donate to Education Charities!</h5>
+                    <footer className='footer d-flex justify-content-center align-middle'>
+                        <h5 className="m-3" id="donationLink" data-bs-toggle="modal" data-bs-target="#donateModal">Click here if you would like to donate to Charity!</h5>
                     </footer>
                     <div className="modal fade" id="donateModal" data-bs-backdrop="static" tabIndex="-1" aria-labelledby="donateModalLabel" aria-hidden="true">
                         <div className="modal-dialog modal-dialog-centered">

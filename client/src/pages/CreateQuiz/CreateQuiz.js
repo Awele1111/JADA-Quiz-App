@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { useParams } from 'react-router-dom';
 import './createQuiz.css'
 import trashLogo from '../../assets/trashLogo.svg';
 import { useMutation, useQuery } from '@apollo/client';
@@ -224,6 +223,12 @@ const CreateQuiz = (props) => {
 							<label className='me-2'>Quiz Styling:</label>
 							<select name="quizStyling" defaultValue={quizValues.style} onChange={event => handleInfoChange(event)}>
 								<option value="default">Default</option>
+								<option value="brown">Brown</option>
+								<option value="green">Green</option>
+								<option value="red">Red</option>
+								<option value="yellow">Yellow</option>
+								<option value="orange">Orange</option>
+								<option value="pink">Pink</option>
 							</select>
 						</div>
 					</div>
@@ -344,7 +349,7 @@ const CreateQuiz = (props) => {
 						}
                     </div>
 					<div className="modal-footer d-flex justify-content-center">
-						<p>You can edit this quiz at any time from you profile page</p>
+						<p>You can edit this quiz at any time from your profile page</p>
 					</div>
                     <div className="modal-footer d-flex justify-content-between">
                         <button type="button" className="btn btn-primary" onClick={() => window.location.assign('/')}>Home Page</button>

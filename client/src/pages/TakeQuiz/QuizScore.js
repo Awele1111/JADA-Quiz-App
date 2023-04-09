@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 import { useQuizContext } from '../../utils/quizContext';
 import { ADD_FAVORITE, ADD_ATTEMPT } from '../../utils/mutations';
 
-const QuizScore = ({ quizData, quizId, score }) => {
+const QuizScore = ({ quizData, quizId, score, quizStyle }) => {
     const [attemptAdded, setAttemptAdded] = useState(false);
     const [favMessage, setFavMessage] = useState("");
     const [state, dispatch] = useQuizContext();
@@ -46,14 +46,25 @@ const QuizScore = ({ quizData, quizId, score }) => {
 
     return (
         <div className='d-flex flex-column align-items-center p-4 mx-4'>    
-            <h2>Quiz Finished!</h2>
-            <h4>You scored {Math.round(100*score/quizData.questions.length)}% in {timeTaken/1000} seconds!</h4>
-            <p>{attemptMutation.data?.addAttempt.message}</p>
-            <button type="button" className="btn btn-primary w-25 m-1" onClick={() => window.location.reload()}>Try Again</button>
-            <button type="button" className="btn btn-primary w-25 m-1" onClick={() => window.location.replace(`/highScores/${quizId}`)}>Highscores</button>
-            <button type="button" className="btn btn-primary w-25 m-1" onClick={() => window.location.replace('/')}>View Other Quizzes</button>
-            {Auth.loggedIn()?<button type="button" className="btn btn-primary w-25 m-1" onClick={handleAddFavorite}>Save Quiz to Favorites</button>:null}
-            <p className='fs-4'>{favMessage}</p>
+            <div className="card text-center quizFinishedContainer" style={quizStyle}>
+                <div class="card-header">
+                    <h2 className="card-title">Quiz Finished!</h2>
+                    <h5>You scored {Math.round(100*score/quizData.questions.length)}% in {timeTaken/1000} seconds!</h5>
+                </div>
+                <div className="card-body quizInfoBody">
+                    {Auth.loggedIn() ? (
+                        <p className="card-text">{attemptMutation.data?.addAttempt.message}</p>
+                    ):(
+                        <p className="card-text">Your score will not be saved since you are not logged in</p>
+                    )}
+                    <button type="button" className="btn btn-primary m-1" onClick={() => window.location.replace(`/highScores/${quizId}`)}>View Scoreboard</button>
+                </div>
+                <div className="card-footer text-muted d-flex justify-content-evenly flex-wrap">
+                    <button type="button" className="btn btn-light m-1 myBtn" onClick={() => window.location.reload()}>Try Again</button>
+                    <button type="button" className="btn btn-light m-1 myBtn" onClick={() => window.location.replace('/')}>View Other Quizzes</button>
+                    {Auth.loggedIn()?<button type="button" className="btn btn-light m-1 myBtn" onClick={handleAddFavorite}>Save Quiz to Favorites</button>:null}
+                </div>
+            </div>
         </div>
     )
 }

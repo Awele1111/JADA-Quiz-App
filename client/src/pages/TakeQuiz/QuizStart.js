@@ -6,7 +6,7 @@ import { TOGGLE_TAKING_QUIZ } from '../../utils/actions';
 import { useQuizContext } from '../../utils/quizContext';
 
 
-const QuizStart = ({ quizData, quizId, setQuestionNumber }) => {
+const QuizStart = ({ quizData, quizId, setQuestionNumber, quizStyle}) => {
     const [state, dispatch] = useQuizContext();
     const [favMessage, setFavMessage] = useState("");
 
@@ -40,14 +40,27 @@ const QuizStart = ({ quizData, quizId, setQuestionNumber }) => {
 
     return (
         <div className="d-flex flex-column align-items-center p-4 mx-4">
-            <h2>{quizData.title}</h2>
-            <h3>by {quizData.creator.username}</h3>
-            <h4>{quizData.description}</h4>
-            {!Auth.loggedIn()?<a href='/login'>Log in to have your score recorded</a>:null}
-            <button className="btn btn-primary w-25 m-1" onClick={handleQuizStart}>Start Quiz</button>
-            <button type="button" className="btn btn-primary w-25 m-1" onClick={() => window.location.replace(`/highScores/${quizId}`)}>Highscores</button>
-            {Auth.loggedIn()?<button type="button" className="btn btn-primary w-25 m-1" onClick={handleAddFavorite}>Save Quiz to Favorites</button>:null}
-            <p className='fs-4'>{favMessage}</p>
+            <div className="card text-center quizStartContainer" style={quizStyle}>
+                <div class="card-header">
+                    <h2 className="card-title">{quizData.title}</h2>
+                    <h5>Created by {quizData.creator.username}</h5>
+                </div>
+                <div className="card-body quizInfoBody">
+                    <h5 className="card-text mb-5">{quizData.description}</h5>
+                    <button className="btn btn-primary m-4" onClick={handleQuizStart}>Start Quiz</button>
+                </div>
+                    {!Auth.loggedIn()?(
+                        <div className="card-body d-flex flex-column align-items-center">
+                            <h7 className="mb-2">Log in before you start if you want your score saved!</h7>
+                            <button className='btn btn-primary' onClick={() => window.location.assign('/login')}>Login</button>
+                        </div>
+                        ):null
+                    }
+                <div className="card-footer text-muted d-flex justify-content-evenly flex-wrap">
+                    <button type="button" className="btn btn-light m-1 myBtn" onClick={() => window.location.replace(`/highScores/${quizId}`)}>Highscores</button>
+                    {Auth.loggedIn()?<button type="button" className="btn btn-light m-1 myBtn" onClick={handleAddFavorite}>Save Quiz to Favorites</button>:null} 
+                </div>
+            </div>
         </div>
     )
 }

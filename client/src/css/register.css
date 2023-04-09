@@ -8,8 +8,9 @@
   margin: 0 auto;
   max-width: 400px;
   height: 100vh;
-  background: linear-gradient(135deg, #376088, pink);
+  background: linear-gradient(135deg, var(--dullBlue), var(--lightPink));
   margin-top: 80px;
+  margin-bottom: 80px;
   border-radius: 22px;
   border-top: 22px;
   padding-bottom: 30px;
@@ -19,7 +20,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: #007bff;
+    border: var(--coolBlue);
   }
   
   .register-label {
@@ -34,7 +35,7 @@
     margin: 10px 0;
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--lightGray);
     width: 300px;
     font-size: 16px;
     font-family: sans-serif;
@@ -45,8 +46,8 @@
     padding: 10px 20px;
     border-radius: 5px;
     border: none;
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--coolBlue);
+    color: var(--white);
     font-size: 16px;
     cursor: pointer;
     margin: 10px;
@@ -54,7 +55,7 @@
   }
   
   .register-button[type="submit"]:hover {
-    background-color: rgb(76, 0, 51);
+    background-color: var(--magenta);
   }
   
   .link-button{
@@ -65,11 +66,11 @@
     margin-bottom: 27px;
     border-radius: 50px;
     border-style: hidden;
-    background-color: #ccc;
+    background-color: var(--lightGray);
 
   }
   .link-button:hover{
-    background-color: rgb(174, 174, 197);
+    background-color: var(--darkerLightGray);
 
   }
   
@@ -88,8 +89,8 @@
   }
   .register-body {
     /* background: linear-gradient( #7c99b8, #7e4ab2, rgb(160, 135, 160)); */
-    background-color: linear-gradient(to bottom right,pink, #0072ff);
-    border: #0072ff;
+    background-color: linear-gradient(to bottom right,var(--lightPink), var(--coolBlue));
+    border: var(--coolBlue);
     border-style: hidden;
     
   }

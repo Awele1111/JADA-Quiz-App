@@ -18,7 +18,7 @@ if (loading) {
 
 return (
     <>
-    <div className='mb-5 mx-4 vh-100'>
+    <div className='mb-5 mx-4'>
     <h2 className='ms-5 mb-4'>{quizData.title} Scoreboard:</h2>
     <div className='mainContainer container'>
     <table className="table mb-4">
