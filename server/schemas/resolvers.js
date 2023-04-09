@@ -142,14 +142,50 @@ const resolvers = {
 
     addAttempt: async (parent, { quizId, score, time }, context) => {
       if (context.user) {
-        return Quiz.findOneAndUpdate(
-          { _id: quizId },
-          {
-            $addToSet: {
-              highscores: { score, time, username: context.user.username },
+        let quiz = await Quiz.findById({ _id: quizId });
+        let newPersonalBest = true;
+        let newHighscore = true;
+
+        for(let scoreObj of quiz.highscores){
+          if(scoreObj.score > score){
+            newHighscore = false;
+            if(scoreObj.username === context.user.username){
+              newPersonalBest = false;
             }
+          } else if(scoreObj.score === score && scoreObj.time < time){
+            newHighscore = false;
+            if(scoreObj.username === context.user.username){
+              newPersonalBest = false;
+            }       
           }
-        );
+        }
+
+        if(newPersonalBest){
+          await Quiz.findOneAndUpdate(
+            { _id: quizId },
+            { $pull: {
+                highscores: {
+                  username: context.user.username
+                }
+              }
+            }
+          );
+          await Quiz.findOneAndUpdate(
+            { _id: quizId },
+            {
+              $addToSet: {
+                highscores: { score, time, username: context.user.username },
+              }
+            }
+          );
+          if(newHighscore){
+            return {message: 'You Got A New High Score!!!!!'}
+          }else {
+            return {message: 'New Personal Record!'}
+          }
+        } else {
+          return {message: 'You did not beat your previous score so this attempt will not be saved. Keep Trying!'}
+        }
       }
       throw new AuthenticationError('You need to be logged in')
     },
