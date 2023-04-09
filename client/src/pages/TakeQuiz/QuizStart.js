@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import Auth from '../../utils/auth';
 import { useMutation } from '@apollo/client';
 import { ADD_FAVORITE } from '../../utils/mutations';
@@ -8,6 +8,7 @@ import { useQuizContext } from '../../utils/quizContext';
 
 const QuizStart = ({ quizData, quizId, setQuestionNumber }) => {
     const [state, dispatch] = useQuizContext();
+    const [favMessage, setFavMessage] = useState("");
 
     const [addFavorite, { favError }] = useMutation(ADD_FAVORITE);
 
@@ -30,6 +31,11 @@ const QuizStart = ({ quizData, quizId, setQuestionNumber }) => {
         } catch (err) {
             console.error(err);
         }
+
+        setFavMessage("Added to favorites!")
+        setTimeout(async function(){
+            setFavMessage("");
+        }, 1000)
     }
 
     return (
@@ -41,6 +47,7 @@ const QuizStart = ({ quizData, quizId, setQuestionNumber }) => {
             <button className="btn btn-primary w-25 m-1" onClick={handleQuizStart}>Start Quiz</button>
             <button type="button" className="btn btn-primary w-25 m-1" onClick={() => window.location.replace(`/highScores/${quizId}`)}>Highscores</button>
             {Auth.loggedIn()?<button type="button" className="btn btn-primary w-25 m-1" onClick={handleAddFavorite}>Save Quiz to Favorites</button>:null}
+            <p className='fs-4'>{favMessage}</p>
         </div>
     )
 }
