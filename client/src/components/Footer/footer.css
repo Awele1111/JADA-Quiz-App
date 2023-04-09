@@ -1,27 +1,20 @@
 
 .footer {
-    background-color: rgb(114, 182, 250);
-    padding: 10px;
-    text-align: center;
-    font-size: 14px;
-    margin-top: 14px;
+    background-color: var(--darkGray);
+    color: var(--lightBlue);
+    text-align: center; 
   }
 
 #donationLink {
-  font-weight: bolder;
-}
-
-
-#donationLink:hover {
-  cursor: pointer;
-  color: white;
+  width: fit-content;
 }
 
 #donationLink:hover {
   cursor: pointer;
-  color: white;
+  color: var(--white);
 }
-  .footer:hover {
-    background-color: rgb(160, 66, 160);
-    color: aliceblue;
-  }
+
+/* .footer:hover {
+  background-color: rgb(160, 66, 160);
+  color: aliceblue;
+} */

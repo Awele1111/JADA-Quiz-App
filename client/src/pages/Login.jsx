@@ -85,7 +85,7 @@ export const Login = (props) => {
 
   return (
     <div className="login-body">
-      <body className="login-body">
+      <main className="login-body">
         <div className="auth-form-container">
           <h2 className="login-h2">Login</h2>
           {invalidLogin && (
@@ -128,7 +128,7 @@ export const Login = (props) => {
             Don't have an account? signup/register here
           </button>
         </div>
-      </body>
+      </main>
     </div>
   );
 };

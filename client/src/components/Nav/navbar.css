@@ -1,20 +1,21 @@
 .nav-item a,
 #logOutLink {
-  color: rgb(114, 171, 250);
+  color: var(--lightBlue);
   text-decoration: none;
 }
 
 .nav-item a:hover,
-#logOutLink:hover {
+#logOutLink:hover,
+#pageTitle:hover {
   cursor: pointer;
-  color: white;
+  color: var(--white);
 }
 
 #offcanvasDarkNavbarLabel {
-  color: rgb(114, 157, 250);
+  color: var(--lightBlue);
   text-decoration: underline;
 }
 
 #pageTitle {
-  color: rgb(114, 134, 250);
+  color: var(--lightBlue);
 }
