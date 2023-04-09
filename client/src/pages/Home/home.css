@@ -1,27 +1,24 @@
-*{
-    font-family: 'Times New Roman', Times, serif;
-}.welcomeInfo {
+.welcomeInfo {
     text-align: center;
     margin: 30px calc(30vw - 50px);
     border-style: hidden;
     border-radius: 20px;
 
     padding: 20px;
-    background-color: rgba(181, 52, 188, 0.439) ;
+    background-color: var(--lightPurple) ;
     font-family: 'Times New Roman', Times, serif;
     font-weight: bold;
 }
-
+/* 
 .welcomeInfo:hover {
     color: aliceblue;
-}
-
+} */
 
 #homeMain {
     height: max-content;
     margin: 0 5vw;
     width: 90vw;
-    background-color: rgba(181, 52, 188, 0.439) ;
+    background-color: var(--lightPurple);
     border-radius: 40px;
 }
 
@@ -30,8 +27,8 @@
 }
 
 .myOverlay:hover {
-    background-color: purple;
-    color: whitesmoke;
+    background-color: var(--purple);
+    color: var(--white);
     opacity: 0.9;
     cursor: pointer;
 }

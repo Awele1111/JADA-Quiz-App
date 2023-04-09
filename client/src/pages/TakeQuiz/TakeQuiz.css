@@ -1,0 +1,26 @@
+.quizStartContainer, 
+.quizQuestionContainer,
+.quizFinishedContainer{
+    width: 50vw;
+    border-radius: 20px;
+}
+
+.quizInfoBody{
+    min-height: 20vh;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.questionPageBody{
+    min-height: calc(100vh - 78px);
+}
+
+.logginLinkFromQuiz{
+    text-decoration: none;
+    width: fit-content;
+}
+
+.questionChoiceLabel{
+    text-align: left;
+}

@@ -7,10 +7,10 @@
 }
 
 .profileContainer {
-    background: salmon;
+    background: var(--lightPurple);
     width: 46vw;
     text-align: center;
-    min-height: 100vh;
+    min-height: 70vh;
     border-radius: 30px;
 }
 

@@ -4,11 +4,11 @@
     padding-bottom: 200px;
 }
 
-.quizItem {
+.quizLink {
     font-size: x-large;
 }
 
-.quizItem:hover {
+.quizLink:hover {
     color: white;
     cursor: pointer;
 }

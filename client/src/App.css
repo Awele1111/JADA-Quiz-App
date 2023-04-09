@@ -1,5 +1,29 @@
-body {
-    /* background: lightblue; */
-    background: linear-gradient(to bottom right,pink, #0072ff);
+:root {
+    --lightPink: #ffc0cb;
+    --coolBlue: #0072ff;
+    --darkGray: #212529;
+    --dullBlue: #376088;
+    --magenta: #4c0033;
+    --lightGray: #cccccc;
+    --white: #ffffff;
+    --darkerLightGray: #aeaec5;
+    --lightBlue: #72abfa;
+    --purple: #800080;
+    --lightPurple: #b534bc70;
 }
 
+html {
+    background-color: var(--darkGray);
+}
+
+body {
+    background: linear-gradient(to bottom right,var(--lightPink), var(--coolBlue));
+}
+
+* {
+    font-family:'Times New Roman', Times, serif;
+}
+
+#fullPageContent {
+    min-height: calc(100vh - 136px);
+}
