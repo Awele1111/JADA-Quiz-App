@@ -1,8 +1,12 @@
 
 .footer {
-    background-color: #ae5959;
+    background-color: salmon;
     padding: 10px;
     text-align: center;
     font-size: 14px;
+    margin-top: 14px;
   }
-  
+
+  .footer:hover {
+    background-color: rgb(160, 66, 160);
+  }
