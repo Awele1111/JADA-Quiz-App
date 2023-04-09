@@ -72,7 +72,7 @@ const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, sco
                         </div>
                     </div>
                     <div className="card-footer d-flex flex-column align-items-center">
-                        <button className='btn btn-primary w-25 m-3' onClick={handleAnswerSubmit}>Next Question</button>
+                        <button className='btn btn-primary m-3' onClick={handleAnswerSubmit}>Next Question</button>
                         <p className='fs-4'>{answerMessage}</p>
                     </div>
                 </div>

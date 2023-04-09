@@ -51,12 +51,12 @@ const QuizScore = ({ quizData, quizId, score, quizStyle }) => {
                     ):(
                         <p className="card-text">Your score will not be saved since you are not logged in</p>
                     )}
-                    <button type="button" className="btn btn-primary w-25 m-1" onClick={() => window.location.replace(`/highScores/${quizId}`)}>View Scoreboard</button>
+                    <button type="button" className="btn btn-primary m-1" onClick={() => window.location.replace(`/highScores/${quizId}`)}>View Scoreboard</button>
                 </div>
-                <div className="card-footer text-muted d-flex justify-content-between">
-                    <button type="button" className="btn btn-secondary w-25 m-1" onClick={() => window.location.reload()}>Try Again</button>
-                    <button type="button" className="btn btn-secondary w-25 m-1" onClick={() => window.location.replace('/')}>View Other Quizzes</button>
-                    {Auth.loggedIn()?<button type="button" className="btn btn-secondary w-25 m-1" onClick={handleAddFavorite}>Save Quiz to Favorites</button>:null}
+                <div className="card-footer text-muted d-flex justify-content-evenly flex-wrap">
+                    <button type="button" className="btn btn-light m-1 myBtn" onClick={() => window.location.reload()}>Try Again</button>
+                    <button type="button" className="btn btn-light m-1 myBtn" onClick={() => window.location.replace('/')}>View Other Quizzes</button>
+                    {Auth.loggedIn()?<button type="button" className="btn btn-light m-1 myBtn" onClick={handleAddFavorite}>Save Quiz to Favorites</button>:null}
                 </div>
             </div>
         </div>

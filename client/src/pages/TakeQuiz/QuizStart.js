@@ -41,7 +41,7 @@ const QuizStart = ({ quizData, quizId, setQuestionNumber, quizStyle}) => {
                 </div>
                 <div className="card-body quizInfoBody">
                     <h5 className="card-text mb-5">{quizData.description}</h5>
-                    <button className="btn btn-primary w-25 m-4" onClick={handleQuizStart}>Start Quiz</button>
+                    <button className="btn btn-primary m-4" onClick={handleQuizStart}>Start Quiz</button>
                 </div>
                     {!Auth.loggedIn()?(
                         <div className="card-body d-flex flex-column align-items-center">
@@ -50,9 +50,9 @@ const QuizStart = ({ quizData, quizId, setQuestionNumber, quizStyle}) => {
                         </div>
                         ):null
                     }
-                <div className="card-footer text-muted d-flex justify-content-evenly">
-                    <button type="button" className="btn btn-secondary w-25 m-1" onClick={() => window.location.replace(`/highScores/${quizId}`)}>Highscores</button>
-                    {Auth.loggedIn()?<button type="button" className="btn btn-secondary w-25 m-1 addToFavoriteBtn" onClick={handleAddFavorite}>Save Quiz to Favorites</button>:null} 
+                <div className="card-footer text-muted d-flex justify-content-evenly flex-wrap">
+                    <button type="button" className="btn btn-light m-1 myBtn" onClick={() => window.location.replace(`/highScores/${quizId}`)}>Highscores</button>
+                    {Auth.loggedIn()?<button type="button" className="btn btn-light m-1 myBtn" onClick={handleAddFavorite}>Save Quiz to Favorites</button>:null} 
                 </div>
             </div>
         </div>

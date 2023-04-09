@@ -1,9 +1,10 @@
 .quizStartContainer, 
 .quizQuestionContainer,
 .quizFinishedContainer{
-    width: 50vw;
+    width: 75vw;
     border-radius: 20px;
 }
+
 
 .quizInfoBody{
     min-height: 20vh;
@@ -23,4 +24,18 @@
 
 .questionChoiceLabel{
     text-align: left;
+}
+
+.myBtn{
+    width: 175px;
+}
+
+
+@media screen and (max-width: 396px) {
+    .quizStartContainer, 
+    .quizQuestionContainer,
+    .quizFinishedContainer{
+        width: 95vw;
+        border-radius: 20px;
+    }
 }
