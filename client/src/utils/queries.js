@@ -113,7 +113,7 @@ query CountByCategory {
 `;
 
 export const QUERY_DONATE = gql`
-  query donate($donationAmount: Float!) {
+  query donate($donationAmount: Int!) {
     donate(donationAmount: $donationAmount) {
       session
     }
