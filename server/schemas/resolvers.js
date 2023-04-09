@@ -1,7 +1,8 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Quiz } = require('../models')
 const { signToken } = require('../utils/auth');
-const { ObjectId } = require('mongoose');
+require('dotenv').config();
+const stripe = require('stripe')(process.env.STRIPE_SK);
 
 const resolvers = {
   Query: {
@@ -57,6 +58,35 @@ const resolvers = {
       );
       console.log(myCategories);
       return myCategories;
+    },
+
+    donate: async (parent, { donationAmount }, context) => {
+      const url = new URL(context.headers.referer).origin;
+      
+      const product = await stripe.products.create({
+        name: 'Donation',
+      });
+
+      const price = await stripe.prices.create({
+        product: product.id,
+        unit_amount: donationAmount * 100,
+        currency: 'usd',
+      });
+
+      line_items = [{ 
+        price: price.id,
+        quantity: 1
+      }]
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items,
+        mode: 'payment',
+        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${url}/`
+      });
+
+      return { session: session.id };
     }
   },
 

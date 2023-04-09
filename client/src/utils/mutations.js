@@ -144,4 +144,4 @@ mutation removeFavorite($quizId: ID!) {
       }
     }
   }
-  `;
+`;

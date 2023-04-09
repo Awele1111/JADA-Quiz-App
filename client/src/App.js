@@ -11,11 +11,12 @@ import { setContext } from '@apollo/client/link/context';
 import './App.css'
 import { QuizProvider } from './utils/quizContext';
 
+import Nav from './components/Nav/Navbar';
+import Footer from './components/Footer/Footer';
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import Home from './pages/Home/Home';
 import CreateQuiz from './pages/CreateQuiz/CreateQuiz';
-import Nav from './components/Nav/Navbar'
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import TakeQuiz from './pages/TakeQuiz/TakeQuiz';
 import HighScores from './pages/TakeQuiz/HighScore';
@@ -66,6 +67,7 @@ function App() {
                 <Route path='/highScores/:id' component={HighScores} />
                 <Route render={() => <h1>Wrong page!</h1>} />
               </Switch>
+              <Footer />
             </QuizProvider>
           </>
         </Router>
