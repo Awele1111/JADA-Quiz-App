@@ -64,11 +64,12 @@
     align-items: center;
     margin-bottom: 27px;
     border-radius: 50px;
-    border-style: solid;
+    border-style: hidden;
     background-color: #ccc;
+
   }
   .link-button:hover{
-    background-color: blue;
+    background-color: rgb(174, 174, 197);
 
   }
   
