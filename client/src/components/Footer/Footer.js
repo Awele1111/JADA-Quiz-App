@@ -37,8 +37,8 @@ const Footer = () => {
 
     return (
         <>
-            <footer>
-                <button className='btn btn-primary' data-bs-toggle="modal" data-bs-target="#donateModal">Dontate</button>
+            <footer className='footer'>
+                <h5 className="m-3" id="donationLink" data-bs-toggle="modal" data-bs-target="#donateModal">Donate To Education Charities!</h5>
             </footer>
             <div className="modal fade" id="donateModal" data-bs-backdrop="static" tabIndex="-1" aria-labelledby="donateModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered">
