@@ -7,6 +7,20 @@
     margin-top: 14px;
   }
 
+#donationLink {
+  font-weight: bolder;
+}
+
+
+#donationLink:hover {
+  cursor: pointer;
+  color: white;
+}
+
+#donationLink:hover {
+  cursor: pointer;
+  color: white;
+}
   .footer:hover {
     background-color: rgb(160, 66, 160);
     color: aliceblue;

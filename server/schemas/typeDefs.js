@@ -63,6 +63,10 @@ const typeDefs = gql`
         token: ID!
         user: User
     }
+
+    type Donation {
+        session: ID
+    }
   
     type Query {
         myQuizzes(creator: ID!): [Quiz]
@@ -73,6 +77,7 @@ const typeDefs = gql`
         me: User
         highScores(_id: ID!): Quiz
         countByCategory: [Category]!
+        donate(donationAmount: Int!): Donation
     }
 
     type Mutation {
