@@ -1,9 +1,10 @@
 
 .footer {
-    background-color: #ae5959;
+    background-color: rgb(114, 182, 250);
     padding: 10px;
     text-align: center;
     font-size: 14px;
+    margin-top: 14px;
   }
 
 #donationLink {
@@ -15,3 +16,12 @@
   cursor: pointer;
   color: white;
 }
+
+#donationLink:hover {
+  cursor: pointer;
+  color: white;
+}
+  .footer:hover {
+    background-color: rgb(160, 66, 160);
+    color: aliceblue;
+  }
