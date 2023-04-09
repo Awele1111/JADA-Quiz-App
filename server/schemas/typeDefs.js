@@ -77,7 +77,7 @@ const typeDefs = gql`
         me: User
         highScores(_id: ID!): Quiz
         countByCategory: [Category]!
-        donate(donationAmount: Int!): Donation
+        donate(donationAmount: Float!): Donation
     }
 
     type Mutation {
