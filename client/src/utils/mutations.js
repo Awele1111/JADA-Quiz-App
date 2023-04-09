@@ -79,12 +79,7 @@ mutation deleteQuiz($quizId: ID!) {
 export const ADD_ATTEMPT = gql`
 mutation addAttempt($quizId: ID!, $score: Int, $time: Float) {
     addAttempt(quizId: $quizId, score: $score, time: $time) {
-      _id
-      highscores {
-        score
-        time
-        username
-      }
+      message
     }
   }
   `;
@@ -144,4 +139,4 @@ mutation removeFavorite($quizId: ID!) {
       }
     }
   }
-  `;
+`;

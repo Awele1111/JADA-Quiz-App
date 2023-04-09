@@ -63,6 +63,14 @@ const typeDefs = gql`
         token: ID!
         user: User
     }
+
+    type Donation {
+        session: ID
+    }
+
+    type QuizAttemptRespose {
+        message: String
+    }
   
     type Query {
         myQuizzes(creator: ID!): [Quiz]
@@ -73,6 +81,7 @@ const typeDefs = gql`
         me: User
         highScores(_id: ID!): Quiz
         countByCategory: [Category]!
+        donate(donationAmount: Int!): Donation
     }
 
     type Mutation {
@@ -90,7 +99,7 @@ const typeDefs = gql`
             highscores: [AttemptInput]
             ): Quiz
 
-        addAttempt(score: Int, time: Float, quizId: ID!): Quiz
+        addAttempt(score: Int, time: Float, quizId: ID!): QuizAttemptRespose
         
         updateQuiz(
             quizId: ID!

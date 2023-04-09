@@ -1,7 +1,8 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Quiz } = require('../models')
 const { signToken } = require('../utils/auth');
-const { ObjectId } = require('mongoose');
+require('dotenv').config();
+const stripe = require('stripe')(process.env.STRIPE_SK);
 
 const resolvers = {
   Query: {
@@ -55,8 +56,37 @@ const resolvers = {
           }
         ],
       );
-      console.log(myCategories);
       return myCategories;
+    },
+
+    donate: async (parent, { donationAmount }, context) => {
+      
+      const url = new URL(context.headers.referer).origin;
+
+      const product = await stripe.products.create({
+        name: 'Donation',
+      });
+
+      const price = await stripe.prices.create({
+        product: product.id,
+        unit_amount: donationAmount,
+        currency: 'usd',
+      });
+
+      line_items = [{ 
+        price: price.id,
+        quantity: 1
+      }]
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items,
+        mode: 'payment',
+        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${url}/`
+      });
+
+      return { session: session.id };
     }
   },
 
@@ -112,14 +142,50 @@ const resolvers = {
 
     addAttempt: async (parent, { quizId, score, time }, context) => {
       if (context.user) {
-        return Quiz.findOneAndUpdate(
-          { _id: quizId },
-          {
-            $addToSet: {
-              highscores: { score, time, username: context.user.username },
+        let quiz = await Quiz.findById({ _id: quizId });
+        let newPersonalBest = true;
+        let newHighscore = true;
+
+        for(let scoreObj of quiz.highscores){
+          if(scoreObj.score > score){
+            newHighscore = false;
+            if(scoreObj.username === context.user.username){
+              newPersonalBest = false;
             }
+          } else if(scoreObj.score === score && scoreObj.time < time){
+            newHighscore = false;
+            if(scoreObj.username === context.user.username){
+              newPersonalBest = false;
+            }       
           }
-        );
+        }
+
+        if(newPersonalBest){
+          await Quiz.findOneAndUpdate(
+            { _id: quizId },
+            { $pull: {
+                highscores: {
+                  username: context.user.username
+                }
+              }
+            }
+          );
+          await Quiz.findOneAndUpdate(
+            { _id: quizId },
+            {
+              $addToSet: {
+                highscores: { score, time, username: context.user.username },
+              }
+            }
+          );
+          if(newHighscore){
+            return {message: 'You Got A New High Score!!!!!'}
+          }else {
+            return {message: 'New Personal Record!'}
+          }
+        } else {
+          return {message: 'You did not beat your previous score so this attempt will not be saved. Keep Trying!'}
+        }
       }
       throw new AuthenticationError('You need to be logged in')
     },

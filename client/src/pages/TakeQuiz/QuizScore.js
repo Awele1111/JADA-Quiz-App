@@ -12,8 +12,7 @@ const QuizScore = ({ quizData, quizId, score }) => {
     const timeTaken = localStorage.getItem("finishTime") - localStorage.getItem("startTime") - state.pauseTime;
 
     const [addFavorite, { favError }] = useMutation(ADD_FAVORITE);
-    const [addAttempt, { attemptError }] = useMutation(ADD_ATTEMPT);
-    
+    const [addAttempt, attemptMutation] = useMutation(ADD_ATTEMPT);
     
     if(!attemptAdded && Auth.loggedIn()) {
         setAttemptAdded(true);
@@ -24,6 +23,10 @@ const QuizScore = ({ quizData, quizId, score }) => {
         } catch (err) {
             console.error(err);
         }
+    }
+
+    if(attemptMutation.loading){
+        return <>Loading...</>
     }
 
     const handleAddFavorite = async () => {
@@ -45,6 +48,7 @@ const QuizScore = ({ quizData, quizId, score }) => {
         <div className='d-flex flex-column align-items-center p-4 mx-4'>    
             <h2>Quiz Finished!</h2>
             <h4>You scored {Math.round(100*score/quizData.questions.length)}% in {timeTaken/1000} seconds!</h4>
+            <p>{attemptMutation.data?.addAttempt.message}</p>
             <button type="button" className="btn btn-primary w-25 m-1" onClick={() => window.location.reload()}>Try Again</button>
             <button type="button" className="btn btn-primary w-25 m-1" onClick={() => window.location.replace(`/highScores/${quizId}`)}>Highscores</button>
             <button type="button" className="btn btn-primary w-25 m-1" onClick={() => window.location.replace('/')}>View Other Quizzes</button>

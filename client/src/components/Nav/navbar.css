@@ -1,6 +1,6 @@
 .nav-item a,
 #logOutLink {
-  color: salmon;
+  color: rgb(114, 171, 250);
   text-decoration: none;
 }
 
@@ -11,10 +11,10 @@
 }
 
 #offcanvasDarkNavbarLabel {
-  color: salmon;
+  color: rgb(114, 157, 250);
   text-decoration: underline;
 }
 
 #pageTitle {
-  color: salmon;
+  color: rgb(114, 134, 250);
 }
