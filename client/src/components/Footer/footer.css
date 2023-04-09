@@ -5,4 +5,13 @@
     text-align: center;
     font-size: 14px;
   }
-  
+
+#donationLink {
+  font-weight: bolder;
+}
+
+
+#donationLink:hover {
+  cursor: pointer;
+  color: white;
+}
