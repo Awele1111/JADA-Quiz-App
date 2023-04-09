@@ -1,6 +1,6 @@
 
 .footer {
-    background-color: salmon;
+    background-color: rgb(114, 182, 250);
     padding: 10px;
     text-align: center;
     font-size: 14px;
@@ -9,4 +9,5 @@
 
   .footer:hover {
     background-color: rgb(160, 66, 160);
+    color: aliceblue;
   }
