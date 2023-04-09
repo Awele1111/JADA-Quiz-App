@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { useParams } from 'react-router-dom';
 import './createQuiz.css'
 import trashLogo from '../../assets/trashLogo.svg';
 import { useMutation, useQuery } from '@apollo/client';
@@ -344,7 +343,7 @@ const CreateQuiz = (props) => {
 						}
                     </div>
 					<div className="modal-footer d-flex justify-content-center">
-						<p>You can edit this quiz at any time from you profile page</p>
+						<p>You can edit this quiz at any time from your profile page</p>
 					</div>
                     <div className="modal-footer d-flex justify-content-between">
                         <button type="button" className="btn btn-primary" onClick={() => window.location.assign('/')}>Home Page</button>
