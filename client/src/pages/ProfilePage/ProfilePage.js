@@ -89,7 +89,7 @@ const ProfilePage = () => {
                     <h1 className='mb-5 mt-3'>Your Created Quizzes</h1>
                     <MyQuizzes userId={user._id} />
                     <div className='mt-5'>
-                        <button className='btn btn-secondary'
+                        <button className='btn btn-light'
                             onClick={() => window.location.assign('/createQuiz')}>
                             Create New Quiz
                         </button>
