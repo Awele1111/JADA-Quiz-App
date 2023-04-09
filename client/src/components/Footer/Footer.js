@@ -18,15 +18,20 @@ const Footer = () => {
 
     const handleDonationLink = () => {
         document.getElementById('paymentAmountError').innerHTML = '';
-        let donationAmount = document.getElementById('donationAmount').value * 1;
-
-        if(isNaN(donationAmount)){
+        let dollars = document.getElementById('donationAmount').value * 1;
+        if(isNaN(dollars)){
             document.getElementById('paymentAmountError').innerHTML = 'You must input a valid number!';
         } else {
-            document.getElementById('paymentAmountError').innerHTML = 'Loading...';
-            goToDonate({
-                variables: { donationAmount },
-            });
+            let cents = dollars * 100;
+            let donationAmount = cents.toFixed(0) * 1;
+            if(donationAmount < 50){
+                document.getElementById('paymentAmountError').innerHTML = 'Donations must be at least $0.50';
+            } else {
+                document.getElementById('paymentAmountError').innerHTML = 'Loading...';
+                goToDonate({
+                    variables: { donationAmount },
+                });
+            }
         }
     }
 
@@ -48,11 +53,11 @@ const Footer = () => {
                         </div>
                         <div className="modal-body d-flex flex-column justify-content-center">
                             <p>All donations go to education charities.</p>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">$</span>
+                            <div className="input-group mb-3">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text">$</span>
                                 </div>
-                                <input type="text" class="form-control" aria-label="Amount" id="donationAmount" placeholder='5.00'></input>
+                                <input type="text" className="form-control" aria-label="Amount" id="donationAmount" placeholder='5.00'></input>
                             </div>
                             <p id='paymentAmountError'></p>
                         </div>

@@ -56,20 +56,20 @@ const resolvers = {
           }
         ],
       );
-      console.log(myCategories);
       return myCategories;
     },
 
     donate: async (parent, { donationAmount }, context) => {
-      const url = new URL(context.headers.referer).origin;
       
+      const url = new URL(context.headers.referer).origin;
+
       const product = await stripe.products.create({
         name: 'Donation',
       });
 
       const price = await stripe.prices.create({
         product: product.id,
-        unit_amount: donationAmount * 100,
+        unit_amount: donationAmount,
         currency: 'usd',
       });
 
