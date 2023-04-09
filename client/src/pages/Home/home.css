@@ -3,11 +3,17 @@
 }.welcomeInfo {
     text-align: center;
     margin: 30px calc(30vw - 50px);
-    border-style: solid;
+    border-style: hidden;
     border-radius: 20px;
+
     padding: 20px;
     background-color: rgba(181, 52, 188, 0.439) ;
     font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
+.welcomeInfo:hover {
+    color: aliceblue;
 }
 
 

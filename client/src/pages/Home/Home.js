@@ -61,8 +61,9 @@ const Home = () => {
                     <div className='welcomeInfo'>
                         <h3>Welcome To The JADA Quiz App!</h3>
                         <br/>
-                        <p>Browse our user created Quizzes and test your knowledge!  <br/>
-                        Login or sign up to save your favorite quizzes, to save your highscores and to create your own quizzes for other users!</p>
+                        <p> - Browse our user created Quizzes and test your knowledge!  <br/>
+                        
+                        - Login or sign up to save your favorite quizzes, to save your highscores and to create your own quizzes for other users!</p>
                     </div>
                 )}
             
