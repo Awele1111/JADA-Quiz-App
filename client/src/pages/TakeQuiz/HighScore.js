@@ -15,7 +15,6 @@ const quizData = data?.highScores || [];
 if (loading) {
     return <div>Loading...</div>
 }
-console.log(quizData);
 
 return (
     <>
@@ -33,6 +32,7 @@ return (
     </tr>
   </thead>
   <tbody>
+    {/* renders top 10 highscores */}
     {quizData.getScoreboard.slice(0, 10).map((score, index) => (
     <tr key={index}>
       <th scope="row">{index+1}</th>
