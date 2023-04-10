@@ -77,7 +77,7 @@ const QuizStart = ({ quizData, quizId, isFavorited, setIsFavorited, setQuestionN
                         </div>
                         ):null
                     }
-                <div className="card-footer text-muted d-flex justify-content-evenly flex-wrap">
+                <div className="d-flex justify-content-evenly flex-wrap">
                     <button type="button" className="btn btn-light m-1 myBtn" onClick={() => window.location.replace(`/highScores/${quizId}`)}>Highscores</button>
                     {(Auth.loggedIn() && !isFavorited)?<button type="button" className="btn btn-light m-1 myBtn" onClick={handleAddFavorite}>Save Quiz to Favorites</button>:null}
                     {(Auth.loggedIn() && isFavorited)?<button type="button" className="btn btn-light m-1 myBtn" onClick={handleRemoveFavorite}>Remove from Favorites</button>:null}

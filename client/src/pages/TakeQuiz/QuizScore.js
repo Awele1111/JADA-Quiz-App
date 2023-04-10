@@ -79,7 +79,7 @@ const QuizScore = ({ quizData, quizId, isFavorited, setIsFavorited, score, quizS
                     )}
                     <button type="button" className="btn btn-primary m-1" onClick={() => window.location.replace(`/highScores/${quizId}`)}>View Scoreboard</button>
                 </div>
-                <div className="card-footer text-muted d-flex justify-content-evenly flex-wrap">
+                <div className="d-flex justify-content-evenly flex-wrap">
                     <button type="button" className="btn btn-light m-1 myBtn" onClick={() => window.location.reload()}>Try Again</button>
                     <button type="button" className="btn btn-light m-1 myBtn" onClick={() => window.location.replace('/')}>View Other Quizzes</button>
                     {(Auth.loggedIn() && !isFavorited)?<button type="button" className="btn btn-light m-1 myBtn" onClick={handleAddFavorite}>Save Quiz to Favorites</button>:null}

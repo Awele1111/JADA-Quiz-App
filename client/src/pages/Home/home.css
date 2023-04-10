@@ -15,7 +15,7 @@
 } */
 
 #homeMain {
-    height: max-content;
+    min-height: 40vh;
     margin: 0 5vw;
     width: 90vw;
     background-color: var(--lightPurple);
