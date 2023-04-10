@@ -7,7 +7,7 @@
 [deployed application](https://jada-quiz-app.herokuapp.com/)
 
 
-We created an application for users to create and play different quizzes to test their knowledge. This is a full-stack application that uses Apollo server, GraphQL as our query language, Mongoose and MongoDB for our database, Express for our web framework, and React for our frontend. Our site is styled using Bootstrap and React-Bootstrap CSS libraries.
+We created an application for users to create and play different quizzes to test their knowledge. This is a full-stack application that uses a GraphQL API built with Appolo Server, the MERN stack with a React front end, MongoDB database, and Node.js/Express.js server. Our site is styled using Bootstrap and React-Bootstrap CSS libraries.
 
 ## Table of Contents 
 
@@ -42,11 +42,6 @@ Attached below are screenshots of how our website looks:
 ## License
 
 This application has the MIT license.
-
----
-
-🏆 The previous sections are the bare minimum, and your project will ultimately determine the content of this document. You might also want to consider adding the following sections.
-
 
 
 ## Features
