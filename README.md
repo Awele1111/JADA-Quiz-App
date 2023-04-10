@@ -2,8 +2,7 @@
 
 ## Description
 
-
-The goal of our application  is to create a website where users are able to access quizzes. In order fror users to save quizzes, save their highscores and create their own quizzes, they need to be logged in.
+We created an application for users to create and play different quizzes to test their knowledge. This is a full-stack application that uses Apollo server, GraphQL as our query language, Mongoose and MongoDB for our database, Express for our web framework, and React for our frontend. Our site is styled using Bootstrap and React-Bootstrap CSS libraries.
 
 ## Table of Contents 
 
