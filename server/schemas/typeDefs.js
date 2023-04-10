@@ -33,12 +33,14 @@ const typeDefs = gql`
         username: String
         score: Int
         time: Float
+        dateAdded: String
     }
 
     input AttemptInput {
         username: String
         score: Int
         time: Float
+        dateAdded: String
     }
 
     type Category {

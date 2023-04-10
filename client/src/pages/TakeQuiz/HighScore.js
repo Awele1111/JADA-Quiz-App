@@ -15,6 +15,7 @@ const quizData = data?.highScores || [];
 if (loading) {
     return <div>Loading...</div>
 }
+console.log(quizData);
 
 return (
     <>
@@ -28,6 +29,7 @@ return (
       <th scope="col">Score</th>
       <th scope="col">Time</th>
       <th scope="col">Player</th>
+      <th scope="col">Date</th>
     </tr>
   </thead>
   <tbody>
@@ -37,6 +39,7 @@ return (
       <td>{score.score}%</td>
       <td>{score.time} seconds</td>
       <td>{score.username}</td>
+      <td>{score.dateAdded}</td>
     </tr>
     ))}
   </tbody>

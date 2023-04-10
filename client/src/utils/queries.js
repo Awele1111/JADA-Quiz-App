@@ -97,6 +97,7 @@ query HighScores($id: ID!) {
       score
       time
       username
+      dateAdded
     }
   }
 }
