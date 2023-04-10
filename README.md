@@ -2,7 +2,6 @@
 
 ## Description
 
-
 The goal of our application  is to create a website where users are able to access quizzes. In order fror users to save quizzes, save their highscores and create their own quizzes, they need to be logged in.
 
 ## Table of Contents 
