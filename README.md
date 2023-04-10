@@ -52,20 +52,17 @@ This application has the MIT license.
 ## Features
 Features aboutour JADA Quiz Application include:
 
-- When the JADA quiz app is open, it shows a home page that shows all links to categories that users can create quizzes about.
+- When the JADA quiz app is open, it shows a home page that shows all links to categories that users can create quizzes.
 - When user clicks navbar, they are presented with optiosn to navigate the page.
 - User can only create, save quizzes when logged in.
 - User has option to signup as well assign in each time the JADA Quiz is visited.
+- When a user attempts to login with wrong username or password they are presented with error messages.
 - User can customize their quiz page and quizzes to fit their needs.
-
-## How to Contribute
-
-
-## Tests
+- When user clicks on Footer, they are presented with links to a donation site that utilises stripe.
 
 
-# Links
-Code link: https://github.com/Awele1111/JADA-Quiz-App
+
+
 
 
 
