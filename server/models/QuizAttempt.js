@@ -17,7 +17,7 @@ const quizAttemptSchema = new Schema({
   dateAdded: {
     type: Date, 
     default: Date.now,
-    // get: (timestamp) => dateFormat(timestamp),
+    get: (timestamp) => dateFormat(timestamp),
   },
   
 });
