@@ -50,7 +50,7 @@ const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, sco
         <div className='questionPageBody'>
             <div className='d-flex flex-column align-items-center p-4 mx-4'>        
                 <div className="card text-center quizQuestionContainer" style={quizStyle}>
-                    <div class="card-header">
+                    <div className="card-header">
                         <h2 className="card-title text-start m-3">Question {questionNumber}: {quizData.questions[questionNumber-1].question}</h2>
                     </div>
                     <div className="card-body quizInfoBody">
