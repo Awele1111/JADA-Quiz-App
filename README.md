@@ -19,13 +19,13 @@ No necessary installations needed, just view our deployed link https://jada-quiz
 ## Usage
 
 Attached below are screenshots of how our website looks:
-    ![images](src/assets/JADA1.png)
-    ![images](src/assets/JADA2.png)
-    ![images](src/assets/JADA3.png)
-    ![images](src/assets/JADA4.png)
-    ![images](src/assets/JADA5.png)
-    ![images](src/assets/JADA6.png)
-    ![images](src/assets/JADA7.png)
+    ![images](Client/src/assets/JADA1.png)
+    ![images](Client/src/assets/JADA2.png)
+    ![images](Client/src/assets/JADA3.png)
+    ![images](Client/src/assets/JADA4.png)
+    ![images](Client/src/assets/JADA5.png)
+    ![images](Client/src/assets/JADA6.png)
+    ![images](Client/src/assets/JADA7.png)
 
 ## Credits
 
