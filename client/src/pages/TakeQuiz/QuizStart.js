@@ -6,7 +6,7 @@ import { TOGGLE_TAKING_QUIZ } from '../../utils/actions';
 import { useQuizContext } from '../../utils/quizContext';
 
 
-const QuizStart = ({ quizData, quizId, isFavorited, setQuestionNumber, quizStyle}) => {
+const QuizStart = ({ quizData, quizId, isFavorited, setIsFavorited, setQuestionNumber, quizStyle}) => {
     const [state, dispatch] = useQuizContext();
     const [favMessage, setFavMessage] = useState("");
 
@@ -25,8 +25,7 @@ const QuizStart = ({ quizData, quizId, isFavorited, setQuestionNumber, quizStyle
     }
 
     const handleAddFavorite = async () => {
-        console.log("handle add called");
-        isFavorited = true;
+        setIsFavorited(!isFavorited)
 
         try {
             await addFavorite({
@@ -44,8 +43,7 @@ const QuizStart = ({ quizData, quizId, isFavorited, setQuestionNumber, quizStyle
     }
 
     const handleRemoveFavorite = async () => {
-        console.log("handle remove called");
-        isFavorited = false;
+        setIsFavorited(!isFavorited);
 
         try {
             await removeFavorite({

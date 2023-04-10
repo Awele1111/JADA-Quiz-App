@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 import { useQuizContext } from '../../utils/quizContext';
 import { ADD_FAVORITE, ADD_ATTEMPT, REMOVE_FAVORITE } from '../../utils/mutations';
 
-const QuizScore = ({ quizData, quizId, isFavorited, score, quizStyle }) => {
+const QuizScore = ({ quizData, quizId, isFavorited, setIsFavorited, score, quizStyle }) => {
     const [attemptAdded, setAttemptAdded] = useState(false);
     const [favMessage, setFavMessage] = useState("");
     const [state, dispatch] = useQuizContext();
@@ -31,6 +31,8 @@ const QuizScore = ({ quizData, quizId, isFavorited, score, quizStyle }) => {
     }
 
     const handleAddFavorite = async () => {
+        setIsFavorited(!isFavorited)
+        
         try {
             await addFavorite({
                 variables: { quizId: quizId },
@@ -46,6 +48,8 @@ const QuizScore = ({ quizData, quizId, isFavorited, score, quizStyle }) => {
     }
 
     const handleRemoveFavorite = async () => {
+        setIsFavorited(!isFavorited)
+
         try {
             await removeFavorite({
                 variables: { quizId: quizId },
@@ -54,7 +58,6 @@ const QuizScore = ({ quizData, quizId, isFavorited, score, quizStyle }) => {
             console.error(err);
         }
 
-        isFavorited=false;
         setFavMessage("Removed from favorites!")
         setTimeout(async function(){
             setFavMessage("");

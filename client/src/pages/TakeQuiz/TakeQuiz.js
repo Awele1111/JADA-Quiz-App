@@ -10,23 +10,29 @@ import './TakeQuiz.css';
 const TakeQuiz = () => {
     const [questionNumber, setQuestionNumber] = useState(0);
     const [score, setScore] = useState(0);
+    const [isFavorited, setIsFavorited] = useState(false);
+    const [loaded, setLoaded] = useState(false);
     const { id } = useParams();
-    var isFavorited = false;
-
     const user = useQuery(QUERY_ME);
-    if(user.data) {
-        const userFavs = user.data.me.favoriteQuizzes;
-        console.log(userFavs);
-        isFavorited = userFavs.some(element => {
-            if (element._id === id) {
-                return true;
-            }
-        });
-    }
-
     const { loading, data } = useQuery(QUERY_QUIZ, {
         variables: { id: id },
     });
+
+    if(user.loading){
+        return <div>Loading...</div>
+    }
+
+    const userFavs = user.data?.me.favoriteQuizzes || [];
+    let boolFav = userFavs.some(element => {
+        if (element._id === id) {
+            return true;
+        }
+    })
+
+    if(!loaded){
+        setLoaded(true);
+        setIsFavorited(boolFav);
+    }
 
     const quizData = data?.quiz || null;
 
@@ -92,13 +98,13 @@ const TakeQuiz = () => {
             ) : (
                 <div>
                     {questionNumber===0?(
-                        <QuizStart quizData={quizData} quizId={id} isFavorited={isFavorited} setQuestionNumber={setQuestionNumber} quizStyle={quizStyle}/>
+                        <QuizStart quizData={quizData} quizId={id} isFavorited={isFavorited} setIsFavorited={setIsFavorited} setQuestionNumber={setQuestionNumber} quizStyle={quizStyle}/>
                     ):null}
                     {questionNumber>0 && questionNumber<=quizData.questions.length?(
                         <QuizQuestion quizData={quizData} quizId={id} questionNumber={questionNumber} setQuestionNumber={setQuestionNumber} score={score} setScore={setScore} quizStyle={quizStyle}/>
                     ):null}
                     {questionNumber>quizData.questions.length?(
-                        <QuizScore quizData={quizData} quizId={id} isFavorited={isFavorited} score={score} quizStyle={quizStyle}/>
+                        <QuizScore quizData={quizData} quizId={id} isFavorited={isFavorited} setIsFavorited={setIsFavorited} score={score} quizStyle={quizStyle}/>
                     ):null}
                 </div>
             )}
