@@ -4,13 +4,25 @@ import QuizStart from './QuizStart';
 import QuizQuestion from './QuizQuestion';
 import QuizScore from './QuizScore';
 import { useQuery } from '@apollo/client';
-import { QUERY_QUIZ } from '../../utils/queries';
+import { QUERY_QUIZ, QUERY_ME } from '../../utils/queries';
 import './TakeQuiz.css';
 
 const TakeQuiz = () => {
     const [questionNumber, setQuestionNumber] = useState(0);
     const [score, setScore] = useState(0);
     const { id } = useParams();
+    var isFavorited = false;
+
+    const user = useQuery(QUERY_ME);
+    if(user.data) {
+        const userFavs = user.data.me.favoriteQuizzes;
+        console.log(userFavs);
+        isFavorited = userFavs.some(element => {
+            if (element._id === id) {
+                return true;
+            }
+        });
+    }
 
     const { loading, data } = useQuery(QUERY_QUIZ, {
         variables: { id: id },
@@ -24,7 +36,7 @@ const TakeQuiz = () => {
                 <h1>Quiz Cannot Be Found! It must have been deleted!</h1>
             </div>
         )
-    }
+    }    
 
     let quizStyle;
     switch(quizData.style){
@@ -80,13 +92,13 @@ const TakeQuiz = () => {
             ) : (
                 <div>
                     {questionNumber===0?(
-                        <QuizStart quizData={quizData} quizId={id} setQuestionNumber={setQuestionNumber} quizStyle={quizStyle}/>
+                        <QuizStart quizData={quizData} quizId={id} isFavorited={isFavorited} setQuestionNumber={setQuestionNumber} quizStyle={quizStyle}/>
                     ):null}
                     {questionNumber>0 && questionNumber<=quizData.questions.length?(
                         <QuizQuestion quizData={quizData} quizId={id} questionNumber={questionNumber} setQuestionNumber={setQuestionNumber} score={score} setScore={setScore} quizStyle={quizStyle}/>
                     ):null}
                     {questionNumber>quizData.questions.length?(
-                        <QuizScore quizData={quizData} quizId={id} score={score} quizStyle={quizStyle}/>
+                        <QuizScore quizData={quizData} quizId={id} isFavorited={isFavorited} score={score} quizStyle={quizStyle}/>
                     ):null}
                 </div>
             )}
