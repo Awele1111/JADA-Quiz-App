@@ -61,7 +61,7 @@ Features aboutour JADA Quiz Application include:
 # Links
 Code link: https://github.com/Awele1111/JADA-Quiz-App
 
-Demo link: https://awele1111.github.io/Note-taker/
+Demo link: https://awele1111.github.io/JADA-Quiz-App/
 
 Heroku link: https://jada-quiz-app.herokuapp.com/
 
