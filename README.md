@@ -15,6 +15,7 @@ We created an application for users to create and play different quizzes to test
 - [Usage](#usage)
 - [Collaborators](#collaborators)
 - [License](#license)
+- [Features](#features)
 
 ## Installation
 
