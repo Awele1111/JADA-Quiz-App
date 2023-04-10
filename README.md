@@ -4,6 +4,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+[deployed application](https://jada-quiz-app.herokuapp.com/)
+
 
 
 We created an application for users to create and play different quizzes to test their knowledge. This is a full-stack application that uses Apollo server, GraphQL as our query language, Mongoose and MongoDB for our database, Express for our web framework, and React for our frontend. Our site is styled using Bootstrap and React-Bootstrap CSS libraries.
@@ -12,7 +14,7 @@ We created an application for users to create and play different quizzes to test
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Credits](#credits)
+- [Collaborators](#collaborators)
 - [License](#license)
 
 ## Installation
@@ -30,11 +32,12 @@ Attached below are screenshots of how our website looks:
     ![images](client/src/assets/JADA6.png)
     ![images](client/src/assets/JADA7.png)
 
-## Credits
-
-Collaborators: 
-
-
+## Collaborators
+ 
+- [Awele Anita Lan](https://github.com/Awele1111)
+- [Daniel Managlia](https://github.com/dmanaglia)
+- [Jacob Mulcahy](https://github.com/jmulcahy92)
+- [Allison Nault](https://github.com/allisonnault)
 
 
 ## License
