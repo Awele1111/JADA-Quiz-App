@@ -1,7 +1,6 @@
 .quizList {
     place-items: center;
     list-style-position: inside;
-    padding-bottom: 200px;
 }
 
 .quizLink {
