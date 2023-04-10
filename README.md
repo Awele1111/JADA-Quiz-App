@@ -45,11 +45,26 @@ The last section of a high-quality README file is the license. This lets other d
 
 
 ## Features
+Features aboutour JADA Quiz Application include:
 
-If your project has a lot of features, list them here.
+- When the JADA quiz app is open, it shows a home page that shows all links to categories that users can create quizzes about.
+- When user clicks navbar, they are presented with optiosn to navigate the page.
+- User can only create, save quizzes when logged in.
+- User has option to signup as well assign in each time the JADA Quiz is visited.
+- User can customize their quiz page and quizzes to fit their needs.
 
 ## How to Contribute
 
 
 ## Tests
+
+
+# Links
+Code link: https://github.com/Awele1111/JADA-Quiz-App
+
+Demo link: https://awele1111.github.io/Note-taker/
+
+Heroku link: https://jada-quiz-app.herokuapp.com/
+
+
 
