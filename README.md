@@ -2,6 +2,10 @@
 
 ## Description
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
+
 We created an application for users to create and play different quizzes to test their knowledge. This is a full-stack application that uses Apollo server, GraphQL as our query language, Mongoose and MongoDB for our database, Express for our web framework, and React for our frontend. Our site is styled using Bootstrap and React-Bootstrap CSS libraries.
 
 ## Table of Contents 
@@ -35,7 +39,7 @@ Collaborators:
 
 ## License
 
-The last section of a high-quality README file is the license. This lets other developers know what they can and cannot do with your project. If you need help choosing a license, refer to [https://choosealicense.com/](https://choosealicense.com/).
+This application has the MIT license.
 
 ---
 
