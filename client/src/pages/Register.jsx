@@ -158,7 +158,7 @@ export const Register = (props) => {
 
   return (
     <div className="register-body">
-      <body className="register-body">
+      <main className="register-body">
         <div className="auth-form-container">
           <h2 className="register-h2">Register</h2>
           <form className="register-form" onSubmit={handleSubmit}>
@@ -211,7 +211,7 @@ export const Register = (props) => {
             Already have an account? Login here
           </button>
         </div>
-      </body>
+      </main>
     </div>
   );
 };

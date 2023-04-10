@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/client';
 import { useQuizContext } from '../../utils/quizContext';
 import { TOGGLE_TAKING_QUIZ } from '../../utils/actions';
 
-const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, score, setScore }) => {
+const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, score, setScore, quizStyle }) => {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [answerMessage, setAnswerMessage] = useState("");
     const [state, dispatch] = useQuizContext();
@@ -15,7 +15,7 @@ const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, sco
         event.preventDefault();
 
         if (selectedAnswer === null) {
-            return; // tell player to pick an answer to continue?
+            setAnswerMessage('You Must Select An Answer!')
         }
 
         if (quizData.questions[questionNumber-1].choices[selectedAnswer].correct) {
@@ -47,27 +47,35 @@ const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, sco
     }
 
     return (
-        <div>
-            <div className='d-flex flex-column align-items-center p-4 mx-4'>
-                <div className='d-flex flex-column'>
-                    <h2>{questionNumber}: {quizData.questions[questionNumber-1].question}</h2>
-                    {quizData.questions[questionNumber-1].choices.map((choice, index) => {
-                        return (
-                            <div className="form-check mx-3 fs-4">
-                                {index===selectedAnswer?
-                                    <input className="form-check-input" onClick={() => {setSelectedAnswer(index)}} type="radio" name="choices" id={`choice${index}`} value={`choice${index}`} checked />:
-                                    <input className="form-check-input" onClick={() => {setSelectedAnswer(index)}} type="radio" name="choices" id={`choice${index}`} value={`choice${index}`} />}
-                                <label className="form-check-label" for={`choice${index}`}>
-                                    {choice.choice}
-                                </label>
-                            </div>
-                        )
-                    })}
+        <div className='questionPageBody'>
+            <div className='d-flex flex-column align-items-center p-4 mx-4'>        
+                <div className="card text-center quizQuestionContainer" style={quizStyle}>
+                    <div className="card-header">
+                        <h2 className="card-title text-start m-3">Question {questionNumber}: {quizData.questions[questionNumber-1].question}</h2>
+                    </div>
+                    <div className="card-body quizInfoBody">
+                        <div className='container'>
+                            {quizData.questions[questionNumber-1].choices.map((choice, index) => {
+                                return (
+                                    <div className='row'>
+                                        <div className="form-check mx-3 fs-4">
+                                            {index===selectedAnswer?
+                                                <input className="form-check-input col-1" onClick={() => {setSelectedAnswer(index)}} type="radio" name="choices" id={`choice${index}`} value={`choice${index}`} checked />:
+                                                <input className="form-check-input" onClick={() => {setSelectedAnswer(index)}} type="radio" name="choices" id={`choice${index}`} value={`choice${index}`} />}
+                                            <label className="form-check-label col-11 questionChoiceLabel" for={`choice${index}`}>
+                                                {choice.choice}
+                                            </label>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                    <div className="card-footer d-flex flex-column align-items-center">
+                        <button className='btn btn-primary m-3' onClick={handleAnswerSubmit}>Next Question</button>
+                        <p className='fs-4'>{answerMessage}</p>
+                    </div>
                 </div>
-            </div>
-            <div className='d-flex flex-column align-items-center'>
-                <button className='btn btn-primary w-25 m-3' onClick={handleAnswerSubmit}>Next Question</button>
-                <p className='fs-4'>{answerMessage}</p>
             </div>
         </div>
     )

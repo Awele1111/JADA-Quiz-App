@@ -18,10 +18,10 @@ if (loading) {
 
 return (
     <>
-    <div className='mb-5 vh-100'>
+    <div className='mb-5 mx-4'>
     <h2 className='ms-5 mb-4'>{quizData.title} Scoreboard:</h2>
     <div className='mainContainer container'>
-    <table className="table">
+    <table className="table mb-4">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -41,7 +41,7 @@ return (
     ))}
   </tbody>
 </table>
-<button type="button" className="btn btn-light pageLink"><a href={`/takeQuiz/${id}`}>Play again</a></button>
+<button type="button" className="btn btn-primary" onClick={()=> window.location.replace(`/takeQuiz/${id}`)}>Back to Quiz</button>
     </div>
 
     </div>
