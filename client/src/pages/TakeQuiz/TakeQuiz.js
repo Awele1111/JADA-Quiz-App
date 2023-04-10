@@ -44,7 +44,7 @@ const TakeQuiz = () => {
             quizStyle = {
                 color: '#ffffff',
                 backgroundColor: '#212529'
-            }; //done
+            }; 
             break
         case 'brown':
             quizStyle = {
