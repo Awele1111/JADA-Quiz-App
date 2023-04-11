@@ -1,3 +1,4 @@
+// imports
 import React, { useState } from 'react';
 import Auth from '../../utils/auth';
 import { useMutation } from '@apollo/client';
@@ -5,17 +6,21 @@ import { useQuizContext } from '../../utils/quizContext';
 import { ADD_FAVORITE, ADD_ATTEMPT, REMOVE_FAVORITE } from '../../utils/mutations';
 
 const QuizScore = ({ quizData, quizId, isFavorited, setIsFavorited, score, quizStyle }) => {
+    // new states, context
     const [attemptAdded, setAttemptAdded] = useState(false);
     const [favMessage, setFavMessage] = useState("");
     const [state] = useQuizContext();
     
-    //gets time taken by subtracting start time AND pauseTime from the finish time
+    // calculate how much total time the user spent on the quiz
     const timeTaken = localStorage.getItem("finishTime") - localStorage.getItem("startTime") - state.pauseTime;
 
-    const [addFavorite] = useMutation(ADD_FAVORITE);
-    const [removeFavorite] = useMutation(REMOVE_FAVORITE);
+    // mutations
+    const [addFavorite, { addFavError }] = useMutation(ADD_FAVORITE);
+    const [removeFavorite, { remFavError }] = useMutation(REMOVE_FAVORITE);
+
     const [addAttempt, attemptMutation] = useMutation(ADD_ATTEMPT);
     
+    // adds attempt to high scores for this quiz
     if(!attemptAdded && Auth.loggedIn()) {
         setAttemptAdded(true);
         try {
@@ -27,10 +32,12 @@ const QuizScore = ({ quizData, quizId, isFavorited, setIsFavorited, score, quizS
         }
     }
 
+    // if still adding attempt, display simple 'loading' page
     if(attemptMutation.loading){
         return <>Loading...</>
     }
 
+    // handler for adding favorite; see quizStart
     const handleAddFavorite = async () => {
         setIsFavorited(!isFavorited)
         
@@ -48,6 +55,7 @@ const QuizScore = ({ quizData, quizId, isFavorited, setIsFavorited, score, quizS
         }, 1000)
     }
 
+    // handler for removing favorite; see quizStart
     const handleRemoveFavorite = async () => {
         setIsFavorited(!isFavorited)
 
@@ -65,6 +73,7 @@ const QuizScore = ({ quizData, quizId, isFavorited, setIsFavorited, score, quizS
         }, 1000)
     }
 
+    // html and bootstrap for QuizScore component, including user's score and time, and buttons to view high scores, try again, view other quizzes, and add to/remove from user's favorites
     return (
         <div className='d-flex flex-column align-items-center p-4 mx-4'>    
             <div className="card text-center quizFinishedContainer" style={quizStyle}>
@@ -92,4 +101,5 @@ const QuizScore = ({ quizData, quizId, isFavorited, setIsFavorited, score, quizS
     )
 }
 
+// export component to use in TakeQuiz.js
 export default QuizScore;
