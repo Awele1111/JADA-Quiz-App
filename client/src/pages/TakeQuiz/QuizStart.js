@@ -1,3 +1,4 @@
+// imports
 import React, { useState, useContext } from 'react';
 import Auth from '../../utils/auth';
 import { useMutation } from '@apollo/client';
@@ -7,12 +8,14 @@ import { useQuizContext } from '../../utils/quizContext';
 
 
 const QuizStart = ({ quizData, quizId, isFavorited, setIsFavorited, setQuestionNumber, quizStyle}) => {
+    // set up states, mutations, context
     const [state, dispatch] = useQuizContext();
     const [favMessage, setFavMessage] = useState("");
 
     const [addFavorite, { addFavError }] = useMutation(ADD_FAVORITE);
     const [removeFavorite, { remFavError }] = useMutation(REMOVE_FAVORITE);
 
+    // handler for 'start quiz' button; toggles context, saves a start time, sets "question number" state to 1
     const handleQuizStart = (event) => {
         event.preventDefault();
 
@@ -24,6 +27,7 @@ const QuizStart = ({ quizData, quizId, isFavorited, setIsFavorited, setQuestionN
         setQuestionNumber(1);
     }
 
+    // handler for 'add to favorites' button; toggles 'isFavorited' state to true, attempts to add quiz to user's favorites, and display a message for 1 second indicating success
     const handleAddFavorite = async () => {
         setIsFavorited(!isFavorited)
 
@@ -34,7 +38,6 @@ const QuizStart = ({ quizData, quizId, isFavorited, setIsFavorited, setQuestionN
         } catch (err) {
             console.error(err);
         }
-
         
         setFavMessage("Added to favorites!")
         setTimeout(async function(){
@@ -42,6 +45,7 @@ const QuizStart = ({ quizData, quizId, isFavorited, setIsFavorited, setQuestionN
         }, 1000)
     }
 
+    // handler for 'remove from favorites' button; toggles 'isFavorited' state to false, attempts to remove quiz from user's favorites, and display a message for 1 second indicating success
     const handleRemoveFavorite = async () => {
         setIsFavorited(!isFavorited);
 
@@ -59,6 +63,7 @@ const QuizStart = ({ quizData, quizId, isFavorited, setIsFavorited, setQuestionN
         }, 1000)
     }
 
+    // html and bootstrap for quizStart component, including some information on the quiz and buttons to start quiz, view highscores, and (if logged in) add to/remove from user's favorites
     return (
         <div className="d-flex flex-column align-items-center p-4 mx-4">
             <div className="card text-center quizStartContainer" style={quizStyle}>
@@ -88,4 +93,5 @@ const QuizStart = ({ quizData, quizId, isFavorited, setIsFavorited, setQuestionN
     )
 }
 
+// export component to use in TakeQuiz.js
 export default QuizStart;
