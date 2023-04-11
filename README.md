@@ -89,7 +89,7 @@ No installations necessary, just view our deployed link: [Deployed Application](
 - Because quizzes are ranked partially by time, it is only fair to allow users to pause the quiz if necessary. The duration that a quiz is paused is not counted towards the amount of time the user took to complete the quiz.
   ![Pause Quiz](screenshots/pauseQuiz.png)
 
-- After a user has created a quiz they can at an point update the quiz by clicking the edit button in their profile page. Users can change the privacy setting, the styling, the category, add or remove questions and/or choices, or simply fix any typos. Just be sure to hit 'Save' before leaving the page!
+- After a user has created a quiz they can at a point update the quiz by clicking the edit button in their profile page. Users can change the privacy setting, the styling, the category, add or remove questions and/or choices, or simply fix any typos. Just be sure to hit 'Save' before leaving the page!
   ![Profile Page](screenshots/profilePage.png)
 
 - Users can add any quiz they come across to their favorite quizzes list, and they can always unlike a quiz. Users also have the ability to delete any quiz they have created if they so choose. Just be sure you want to delete it since there is no getting it back once its gone!
