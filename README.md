@@ -4,11 +4,9 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+We created an application for users to create and take different quizzes to test their knowledge. It's a perfect application for anybody who likes trivia or for those who need a good place to study for school! Users can even make their own quizzes private so that other users cannot see their quiz. 
 
-We created an application for users to create and take different quizzes to test their knowledge. It's a perfect application for anybody who like trivia or for those who need a good place to study for school! Users can even make their quizzes private so that other users cannot see their quiz. 
-
-
-This is a full-stack application that uses a GraphQL API built with Appolo Server, the MERN stack with a React front end, MongoDB database, and Node.js/Express.js server. Our site is styled using Bootstrap and React-Bootstrap CSS libraries and is set up to take donations using Stripe.
+This is a full-stack application that uses a GraphQL API built with Appolo Server, the MERN stack with a React front end, MongoDB database, and Node.js/Express.js server. Our site is styled using the Bootstrap CSS library and is set up to take donations using Stripe.
 
 ## Table of Contents 
 
@@ -47,9 +45,9 @@ No installations necessary, just view our deployed link: [Deployed Application](
 
   - [React](https://react.dev/) for front end display.
 
-  - [Bootstrap](https://getbootstrap.com/) for a polished UI and easy styling and spacing of components. Also for build in functionality to key items such as the navbar and modals.
+  - [Bootstrap](https://getbootstrap.com/) for a polished UI and easy styling and spacing of components. Also for built in functionality to key items such as the navbar and modals.
 
-  - [Heroku](https://www.heroku.com/home) to deploy our application to production level.
+  - [Heroku](https://www.heroku.com/home) to deploy our application to the production level.
 
   - [MongoDB](https://www.mongodb.com/) for non-relational data storage.
 
@@ -59,9 +57,9 @@ No installations necessary, just view our deployed link: [Deployed Application](
 
   - [Express](https://www.npmjs.com/package/express) for backend server functionality.
 
-  - [Apollo Server](https://www.apollographql.com/docs/apollo-server/) to host graphQL.
-
   - [GraphQL](https://graphql.org/) for mutating database requests and responses.
+
+  - [Apollo Server](https://www.apollographql.com/docs/apollo-server/) to host graphQL.
 
   - [JSON Web Token](https://www.npmjs.com/package/jsonwebtoken) to generate uniques session token.
 
@@ -71,31 +69,30 @@ No installations necessary, just view our deployed link: [Deployed Application](
 
   - [Stripe](https://stripe.com/docs/api) for prebuild payment forms that handles security of sensitive user information.
 
-
 ## Features
 
 - Users are remembered for up to two hours so if they leave the page and come back within two hours they will remain logged in.
 
 - When a user attempts to login with wrong username or password they are presented with error messages.
 
-- User can fully customize and personalize their quizzes by making them private and by changing the styling to a specific color they like.
+- Users can fully customize and personalize their quizzes by making them private and by changing the styling to a specific color they like.
   ![Create Quiz](screenshots/createQuiz.png)
 
-- Although donations are still in testing mode, users will soon have the ability to donate money to education charities through the site. By clicking on the link in the footer, users can input how much money they would like to donate at which point they are redirected to a payment form.
+- Although donations are still in testing mode, users will soon have the ability to donate money to education charities through the website. By clicking on the link in the footer, users can input how much money they would like to donate at which point they are redirected to a payment form.
   ![Donation Input](screenshots/donationInput.png)
   ![Stripe Checkout](screenshots/donationStripe.png)
 
-- Highscores are ranked not only by score but by time. An appropriate message is  displayed after the user finishes the quiz alerting them if they got a new personal record, or if they got a new overall high score.
+- Highscores are ranked not only by score but by time. Also, an appropriate message is displayed after the user finishes the quiz alerting them if they got a new personal record, or if they got a new overall high score.
   ![Quiz Finished](screenshots/quizFinished.png)
   ![Highscores Page](screenshots/highscores.png)
 
-- Because quizzes are ranked partially by time, it is only fair to allow users to pause the quiz if necessary. The time in which a quiz is paused is not counted towards the amound of time the user took to complete the quiz.
+- Because quizzes are ranked partially by time, it is only fair to allow users to pause the quiz if necessary. The duration that a quiz is paused is not counted towards the amount of time the user took to complete the quiz.
   ![Pause Quiz](screenshots/pauseQuiz.png)
 
 - After a user has created a quiz they can at an point update the quiz by clicking the edit button in their profile page. Users can change the privacy setting, the styling, the category, add or remove questions and/or choices, or simply fix any typos. Just be sure to hit 'Save' before leaving the page!
   ![Profile Page](screenshots/profilePage.png)
 
-- Users can add any quiz they come across to their favorite quizzes list, any they can always unlike a quiz. Users also have the ability to delete any quiz they have created if they so choose. Just be sure you want to delete it since there is no getting it back once its gone!
+- Users can add any quiz they come across to their favorite quizzes list, and they can always unlike a quiz. Users also have the ability to delete any quiz they have created if they so choose. Just be sure you want to delete it since there is no getting it back once its gone!
   ![Delete Quiz](screenshots/deleteQuizConfirm.png)
 
 - Users who click on the delete quiz button or the Exit Quiz button are prompted to confirm since these actions result in the loss of data.
@@ -105,19 +102,19 @@ No installations necessary, just view our deployed link: [Deployed Application](
 
 While the web application has a great deal of functionality, it was built in less than a week. Given more time our team would like to develop more features and functionality:
 
-- Allow users to choose if a question should be multiple choice or input. We strayed away from this since user inputs would have to match exactly if they were to get the question correct. On trivia night the judges can overlook mispelling of a name or capitalization of a letter, however a computer cannot. For quizzes on math however, this would be a great feature.
+- Allow users to choose if a question should be multiple choice or input. We strayed away from this since user inputs would have to match exactly to be counted as correct. On trivia night the judges can overlook mispelling of a name, however a computer cannot do so very easily. For quizzes on math however, this would be a great feature.
 
-- Allow users to share private quizzes with a specific user or users, kind of like a friends list. Although the quiz might be private to the most users on the application it would be nice if the user wanted to share a quiz with their study group for instance.
+- Allow users to share private quizzes with a specific user or users, kind of like a friends list. Although the quiz might be private to the most users on the application, it would be nice if the user wanted to share a quiz with their study group for instance.
 
-- Allow the web application to be downloaded. Currently there is no use of cache storage or offline mode. It would be nice to implement this so that users do not need to go online to navigate to the application everytime they wish to study or take a quiz, they could simply pull up the application on their computer even without internet connection.
+- Allow the web application to be downloadable. Currently the application does not use cache storage or offline mode at all. It would be nice to implement this so that users do not need to go online to navigate to the application everytime they wish to study or take a quiz, they could simply pull up the application on their computer even without internet connection.
 
-- Allow users to create a setting page where they can update their username and their overall UI, similarly to how each quiz can have a personal styling it would be nice to allow users to choose their own UI styling.
+- Create a settings page for all users where they can update their username and their overall UI. Similar to how each quiz can have a personalized style, it would be nice to allow users to choose their own UI styling.
 
-- Create a 'forgot password link' so that users can be sent an email to change their password if they forget it. This way they won't loose access to any of their favorite quizzes- especially if they wish to update those quizzes or if they are private!
+- Create a 'forgot password link' so that users can be sent an email to change their password if they forget it. This way they won't loose access to any of their favorite quizzes; especially if they wish to update their quizzes or if their quizzes are private!
 
 - Create an option when designing quizzes to either display the answer immediately or to keep the answer hidden. Our team remarked as we were testing out each others quizzes how some questions are so fun you wish you could just get the answer right away!
 
-- Going along with this it would be nice to give quiz creators an optional message to display after each question where they could explain the answer.
+- Similarly, it would be nice to give quiz creators an optional message to display after each question where they could explain the answer.
 
 - Lastly our team thought it would be nice to add a 'Featured Quizzes' list that shows the top 5 or 10 quizzes ranked by how many users have liked each quiz.
 
