@@ -39,7 +39,7 @@ No installations necessary, just view our deployed link: [Deployed Application](
   
   ![Logged in nav bar](screenshots/navBar.png)
 
-  From here the website is intuitive and easy to navigate. Checkout our features section for more details on some of our key feature! Most importantly, good luck and have fun!
+  From here the website is intuitive and easy to navigate. Checkout our features section for more details on some of our coolest features! Most importantly, good luck and have fun!
 
 ## Credits
 
