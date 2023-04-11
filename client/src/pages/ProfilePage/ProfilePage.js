@@ -29,8 +29,6 @@ const ProfilePage = () => {
         user = favoritesQuery.data?.me || {};
     }
 
-    console.log(user);
-
     if (!user?._id) {
         return (
             <h4>

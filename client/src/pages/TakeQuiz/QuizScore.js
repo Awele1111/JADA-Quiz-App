@@ -9,7 +9,7 @@ const QuizScore = ({ quizData, quizId, isFavorited, setIsFavorited, score, quizS
     // new states, context
     const [attemptAdded, setAttemptAdded] = useState(false);
     const [favMessage, setFavMessage] = useState("");
-    const [state, dispatch] = useQuizContext();
+    const [state] = useQuizContext();
     
     // calculate how much total time the user spent on the quiz
     const timeTaken = localStorage.getItem("finishTime") - localStorage.getItem("startTime") - state.pauseTime;
@@ -17,6 +17,7 @@ const QuizScore = ({ quizData, quizId, isFavorited, setIsFavorited, score, quizS
     // mutations
     const [addFavorite, { addFavError }] = useMutation(ADD_FAVORITE);
     const [removeFavorite, { remFavError }] = useMutation(REMOVE_FAVORITE);
+
     const [addAttempt, attemptMutation] = useMutation(ADD_ATTEMPT);
     
     // adds attempt to high scores for this quiz
@@ -76,7 +77,7 @@ const QuizScore = ({ quizData, quizId, isFavorited, setIsFavorited, score, quizS
     return (
         <div className='d-flex flex-column align-items-center p-4 mx-4'>    
             <div className="card text-center quizFinishedContainer" style={quizStyle}>
-                <div class="card-header">
+                <div className="card-header">
                     <h2 className="card-title">Quiz Finished!</h2>
                     <h5>You scored {Math.round(100*score/quizData.questions.length)}% in {timeTaken/1000} seconds!</h5>
                 </div>

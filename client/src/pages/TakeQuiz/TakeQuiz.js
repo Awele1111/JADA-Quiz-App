@@ -54,6 +54,7 @@ const TakeQuiz = () => {
         )
     }    
 
+    // sets the styling for each child component's container to a simple style that just adjusts the background color and the text color if needed
     let quizStyle;
     switch(quizData.style){
         case 'black':

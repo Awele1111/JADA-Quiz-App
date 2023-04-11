@@ -8,7 +8,10 @@ import { useQuizContext } from '../../utils/quizContext';
 
 
 const Nav = () => {
+    //global context to track if user has started a quiz and to update the pausetime if the user pauses a quiz
     const [state, dispatch] = useQuizContext();
+    //state that tracks the time at which the user pauses a quiz to calculate the total amount of time pauses
+    //total paused time is the dispacted and added to the global context and then subtracted from time taken to complete the quiz
     const [startPauseTime, setStartPauseTime] = useState(0);
 
     const pauseTime = () => {
@@ -20,6 +23,7 @@ const Nav = () => {
         dispatch({ type: ADD_TO_PAUSE_TIME, payload: totalTimePaused});
     }
 
+    //this ensures that the toggling between modals functions properly since they are not always the same instance of the modal
     const toggleModal = (modalNum) => {
         var pauseQuizModalEl = document.querySelector('#pauseQuizModal');
         var pauseQuizModal = Modal.getOrCreateInstance(pauseQuizModalEl);
@@ -32,15 +36,15 @@ const Nav = () => {
         } else if(modalNum === 2){
             confirmExitModal.hide();
             pauseQuizModal.show();
-        } else {
-            console.log('something went wrong');
         }
     }
 
     return (
         <>
+            {/* navbar is a bootstrap design that utilizes bootsrap script to function */}
             <nav className="navbar navbar-dark bg-dark mb-4">
                     {
+                        // regular navbar will only appear if user is not taking a quiz
                         !state.takingQuiz ? (
                             <div className="container-fluid">
                                 <a className="navbar-brand" id='pageTitle' href='/'>J.A.D.A. Quiz App</a>
@@ -85,6 +89,7 @@ const Nav = () => {
                                 </div>
                             </div>
                         ):(
+                            //if user is taking a quiz than only a 'pause time' button will appear in the navbar
                             <div className="container-fluid">
                                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pauseQuizModal" onClick={pauseTime}>
                                     Pause Quiz
@@ -93,6 +98,7 @@ const Nav = () => {
                         )
                     }
             </nav>
+            {/* when the user clicks pause a static modal pops up that can only be closed by clicking resume quiz or by exiting the quiz */}
             <div className="modal fade" id="pauseQuizModal" data-bs-backdrop="static" tabIndex="-1" aria-labelledby="pauseQuizModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
@@ -106,6 +112,7 @@ const Nav = () => {
                     </div>
                 </div>
             </div>
+            {/* if user selects exit then a second modal will pop up that informs the user their current progress will be lost at which point they can exit or cancel */}
             <div className="modal fade" id="confirmExitModal" data-bs-backdrop="static" tabIndex="-1" aria-labelledby="confirmExitModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
