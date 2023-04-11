@@ -13,8 +13,8 @@ import { QuizProvider } from './utils/quizContext';
 
 import Nav from './components/Nav/Navbar';
 import Footer from './components/Footer/Footer';
-import { Login } from "./pages/Login";
-import { Register } from "./pages/Register";
+import { Login } from "./pages/Login/Login";
+import { Register } from "./pages/Register/Register";
 import Home from './pages/Home/Home';
 import CreateQuiz from './pages/CreateQuiz/CreateQuiz';
 import ProfilePage from './pages/ProfilePage/ProfilePage';

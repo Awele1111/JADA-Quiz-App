@@ -7,12 +7,13 @@ import { ADD_FAVORITE, ADD_ATTEMPT, REMOVE_FAVORITE } from '../../utils/mutation
 const QuizScore = ({ quizData, quizId, isFavorited, setIsFavorited, score, quizStyle }) => {
     const [attemptAdded, setAttemptAdded] = useState(false);
     const [favMessage, setFavMessage] = useState("");
-    const [state, dispatch] = useQuizContext();
+    const [state] = useQuizContext();
     
+    //gets time taken by subtracting start time AND pauseTime from the finish time
     const timeTaken = localStorage.getItem("finishTime") - localStorage.getItem("startTime") - state.pauseTime;
 
-    const [addFavorite, { addFavError }] = useMutation(ADD_FAVORITE);
-    const [removeFavorite, { remFavError }] = useMutation(REMOVE_FAVORITE);
+    const [addFavorite] = useMutation(ADD_FAVORITE);
+    const [removeFavorite] = useMutation(REMOVE_FAVORITE);
     const [addAttempt, attemptMutation] = useMutation(ADD_ATTEMPT);
     
     if(!attemptAdded && Auth.loggedIn()) {
@@ -67,7 +68,7 @@ const QuizScore = ({ quizData, quizId, isFavorited, setIsFavorited, score, quizS
     return (
         <div className='d-flex flex-column align-items-center p-4 mx-4'>    
             <div className="card text-center quizFinishedContainer" style={quizStyle}>
-                <div class="card-header">
+                <div className="card-header">
                     <h2 className="card-title">Quiz Finished!</h2>
                     <h5>You scored {Math.round(100*score/quizData.questions.length)}% in {timeTaken/1000} seconds!</h5>
                 </div>

@@ -6,11 +6,14 @@ import { useQuizContext } from '../../utils/quizContext';
 import './footer.css';
 const stripePromise = loadStripe('pk_test_51MujM1INNDbfLrrCUrGEsa9TKUfAnfFpzbYjy8HlPt41JTjQDdEWV8XgKEFr4JISJeAKNReNjc6LV44y4U8a0s5300Jg18hMRS');
 
+//footer component opens up a modal that contains an input if a user wishes to donate money to charity (stripe still in test mode)
 const Footer = () => {
+    // footer will not render while the user is taking the quiz
     const [state] = useQuizContext();
 
     const [goToDonate, { data }] = useLazyQuery(QUERY_DONATE);
 
+    //once a stripe session is created on the backend the page will redirect to the stripe donation checkout
     useEffect(() => {
         if (data) {
           stripePromise.then((res) => {
@@ -19,6 +22,7 @@ const Footer = () => {
         }
       }, [data]);
 
+    //when the user inputs a number this checks to ensure it is a valid number and will then pass the number in cents to stripe on the backend
     const handleDonationLink = () => {
         document.getElementById('paymentAmountError').innerHTML = '';
         let dollars = document.getElementById('donationAmount').value * 1;
@@ -37,7 +41,7 @@ const Footer = () => {
             }
         }
     }
-
+    //resets the monetary input and error message if user closes the donation modal
     const resetDonationInfo = () => {
         document.getElementById('paymentAmountError').innerHTML = '';
         document.getElementById('donationAmount').value = '';

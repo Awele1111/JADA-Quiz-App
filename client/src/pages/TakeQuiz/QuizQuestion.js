@@ -57,12 +57,12 @@ const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, sco
                         <div className='container'>
                             {quizData.questions[questionNumber-1].choices.map((choice, index) => {
                                 return (
-                                    <div className='row'>
+                                    <div className='row' key={index}>
                                         <div className="form-check mx-3 fs-4">
                                             {index===selectedAnswer?
                                                 <input className="form-check-input col-1" onClick={() => {setSelectedAnswer(index)}} type="radio" name="choices" id={`choice${index}`} value={`choice${index}`} checked />:
                                                 <input className="form-check-input" onClick={() => {setSelectedAnswer(index)}} type="radio" name="choices" id={`choice${index}`} value={`choice${index}`} />}
-                                            <label className="form-check-label col-11 questionChoiceLabel" for={`choice${index}`}>
+                                            <label className="form-check-label col-11 questionChoiceLabel" htmlFor={`choice${index}`}>
                                                 {choice.choice}
                                             </label>
                                         </div>
