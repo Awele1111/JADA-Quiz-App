@@ -7,7 +7,8 @@
 
 We created an application for users to create and take different quizzes to test their knowledge. It's a perfect application for anybody who like trivia or for those who need a good place to study for school! Users can even make their quizzes private so that other users cannot see their quiz. 
 
-The JADA Quiz App is a full-stack application that uses Apollo server, GraphQL as our query language, Mongoose and MongoDB for our database, Express for our web framework, and React for our frontend. Our site is styled using Bootstrap.
+
+This is a full-stack application that uses a GraphQL API built with Appolo Server, the MERN stack with a React front end, MongoDB database, and Node.js/Express.js server. Our site is styled using Bootstrap and React-Bootstrap CSS libraries and is set up to take donations using Stripe.
 
 ## Table of Contents 
 
