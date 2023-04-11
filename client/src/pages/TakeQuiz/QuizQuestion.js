@@ -1,16 +1,18 @@
+// imports
 import React, { useState } from 'react';
 import Auth from '../../utils/auth';
-import { useMutation } from '@apollo/client';
 
 import { useQuizContext } from '../../utils/quizContext';
 import { TOGGLE_TAKING_QUIZ } from '../../utils/actions';
 
 const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, score, setScore, quizStyle }) => {
+    // states and context
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [answerMessage, setAnswerMessage] = useState("");
     const [state, dispatch] = useQuizContext();
 
-
+    // handler for submitting answer; prods user to select an answer if they haven't, or tells them whether they were correct/incorrect, adjusts score accordingly, and increments questionNumber
+    // if it's the last question, record the time so we can calculate total amount of time taken and toggle context
     const handleAnswerSubmit = async (event) => {
         event.preventDefault();
 
@@ -46,6 +48,7 @@ const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, sco
         }
     }
 
+    // html and bootstrap for QuizQuestion component, including question, answers with radio buttons, and a 'next question' button
     return (
         <div className='questionPageBody'>
             <div className='d-flex flex-column align-items-center p-4 mx-4'>        
@@ -81,4 +84,5 @@ const QuizQuestion = ({ quizData, quizId, questionNumber, setQuestionNumber, sco
     )
 }
 
+// export component to use in TakeQuiz.js
 export default QuizQuestion;

@@ -1,3 +1,4 @@
+// imports
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom'
 import QuizStart from './QuizStart';
@@ -8,6 +9,7 @@ import { QUERY_QUIZ, QUERY_ME } from '../../utils/queries';
 import './TakeQuiz.css';
 
 const TakeQuiz = () => {
+    // initialize all states, pull quiz id from params, attempt me/quiz queries
     const [questionNumber, setQuestionNumber] = useState(0);
     const [score, setScore] = useState(0);
     const [isFavorited, setIsFavorited] = useState(false);
@@ -18,24 +20,32 @@ const TakeQuiz = () => {
         variables: { id: id },
     });
 
+    // if user is still loading, return a "loading screen"
     if(user.loading){
         return <div>Loading...</div>
     }
 
+    // pull logged in user's favorite quizzes array (or set it as an empty array if user isn't logged in or is otherwise missing that array)
     const userFavs = user.data?.me.favoriteQuizzes || [];
+
+    // check favorited quizzes to see if the current quiz is there, and store that boolean for use below 
     let boolFav = userFavs.some(element => {
         if (element._id === id) {
             return true;
         }
     })
 
+    // executes only the first time the virtual dom makes it through the above code, particularly the 'me' query
+    // saves value of above boolFav into 'isFavorited' state
     if(!loaded){
         setLoaded(true);
         setIsFavorited(boolFav);
     }
 
+    // saves quizData from quiz query, or returns null
     const quizData = data?.quiz || null;
 
+    // if there's no quizData, display a "quiz not found" page
     if(!quizData){
         return (
             <div>
@@ -91,6 +101,8 @@ const TakeQuiz = () => {
             break
     }
 
+    // TakeQuiz parent element; conditionally renders children elements based on where user is in the process of taking a quiz (start page -> question pages -> score page)
+    // passes required states into these children elements
     return (
         <main>
             {loading ? (
@@ -112,4 +124,5 @@ const TakeQuiz = () => {
     )
 }
 
+//export for use in App.js
 export default TakeQuiz;
